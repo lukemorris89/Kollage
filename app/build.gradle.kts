@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.google.services)
     id(libs.plugins.firebase.appdistribution.get().pluginId)
     alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.ktlint)
 }
 
 val appVersionCode: Int
@@ -191,4 +192,6 @@ dependencies {
     androidTestImplementation(libs.test.runner)
     androidTestImplementation(libs.test.rules)
     androidTestUtil(libs.test.orchestrator)
+
+    debugImplementation(libs.leakcanary.android)
 }
