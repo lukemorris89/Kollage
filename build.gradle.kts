@@ -1,0 +1,15 @@
+buildscript {
+    dependencies {
+        classpath(libs.gradle.build.tools)
+        classpath(libs.detekt.gradle.plugin)
+    }
+}
+
+plugins {
+    id(libs.plugins.android.application.get().pluginId) apply false
+    id(libs.plugins.kotlin.android.get().pluginId) apply false
+    id(libs.plugins.android.library.get().pluginId) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.devtools.ksp) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+}
