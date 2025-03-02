@@ -2,8 +2,8 @@ name: UAT Deployment workflow
 
 on:
   workflow_dispatch: # Allows manually triggering a UAT build from any branch
-#  push:
-#    branches: [ 'release/**', 'hotfix/**' ] # Whenever new code is pushed to release or hotfix branches
+  push:
+    branches: [ 'release/**', 'hotfix/**', 'uat' ] # Whenever new code is pushed to release or hotfix branches
 
 jobs:
   deployment-uat:

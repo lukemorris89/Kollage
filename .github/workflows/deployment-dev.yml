@@ -2,9 +2,9 @@ name: DEV Deployment workflow
 
 on:
   workflow_dispatch: # Allows manually triggering of a Dev build from any branch
-#  push:
-#    branches:
-#      - develop # Whenever new code is pushed to develop
+  push:
+    branches:
+      - develop # Whenever new code is pushed to develop
 
 jobs:
   deployment-dev:

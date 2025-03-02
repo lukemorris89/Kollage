@@ -12,6 +12,8 @@ on:
         description: 'Version code as integer (e.g. 1)'
         required: true
         default: '1'
+  push:
+    branches: [ 'main' ]
 
 jobs:
   deployment-prod:
