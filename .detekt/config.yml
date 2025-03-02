@@ -67,7 +67,7 @@ style:
 formatting:
   active: true
   android: true
-  autoCorrect: false
+  autoCorrect: true
   PackageName:
     active: false
   MaximumLineLength:
