@@ -115,6 +115,7 @@ android {
                 "META-INF/AL2.0",
                 "META-INF/LGPL2.1",
                 "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
             ),
         )
     }
@@ -182,7 +183,6 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
 
-    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
