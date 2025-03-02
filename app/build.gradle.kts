@@ -13,11 +13,6 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
-val appVersionCode: Int
-    get() = getEnvironmentPropertyOrNull("APP_VERSION_CODE")?.toInt()
-        ?: getFilePropertyOrNull("app_version.properties", "APP_VERSION_CODE")?.toInt()
-        ?: 1
-
 val appVersionName: String
     get() = getEnvironmentPropertyOrNull("APP_VERSION_NAME")
         ?: getFileProperty("app_version.properties", "APP_VERSION_NAME")
@@ -27,6 +22,15 @@ android {
 
     defaultConfig {
         applicationId = "dev.rarebit.kollage"
+
+        val properties = Properties()
+        val propertiesFile = project.rootProject.file("app_version.properties")
+        if (propertiesFile.exists()) {
+            properties.load(propertiesFile.inputStream())
+        }
+
+        val appVersionCode = properties.getProperty("APP_VERSION_CODE", "1").toInt()
+
         versionCode = appVersionCode
         versionName = appVersionName
 
@@ -152,11 +156,6 @@ fun getEnvironmentSystemPropertyOrNull(property: String): String? =
 fun getEnvironmentPropertyOrNull(property: String): String? {
     return getEnvironmentSystemPropertyOrNull(property)
         ?: getEnvironmentLocalPropertyOrNull(property)
-}
-
-fun getEnvironmentProperty(property: String): String {
-    return getEnvironmentPropertyOrNull(property)
-        ?: throw IllegalArgumentException("$property environment property not available!")
 }
 
 dependencies {
