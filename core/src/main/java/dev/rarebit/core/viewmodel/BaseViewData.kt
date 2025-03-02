@@ -1,8 +1,8 @@
 package dev.rarebit.core.viewmodel
 
 import dev.rarebit.core.view.ViewDataResource
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 
 open class BaseViewData
 

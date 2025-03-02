@@ -191,9 +191,3 @@ dependencies {
     androidTestImplementation(libs.test.rules)
     androidTestUtil(libs.test.orchestrator)
 }
-
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt> detekt@{
-    setSource(files(project.projectDir))
-    exclude("**/*.kts")
-    exclude("**/build/**")
-}
