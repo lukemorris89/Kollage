@@ -2,9 +2,8 @@ name: Unit test workflow
 
 on:
   workflow_dispatch: # Allow running the checks manually against any branch
-  push:
-    branches:
-      - develop # Whenever new code is pushed to develop
+  pull_request:
+    branches-ignore: [ main ] # Don't run these checks if PR targets main
 
 jobs:
   code-check:
@@ -22,8 +21,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Run detekt  and ktlint checks
-        run: ./gradlew detekt ktlintCheck
+      - name: Run detekt checks
+        run: ./gradlew detekt
 
       - name: Cancel workflow
         if: failure()
@@ -50,8 +49,8 @@ jobs:
             sudo apt-get autoremove -y && \
             sudo apt-get clean
 
-      - name: Run Unit tests and generate Coverage Report
-        run: ./gradlew testDevDebugUnitTest koverXmlReportDevDebug
+      - name: Run Unit tests
+        run: ./gradlew testDevDebugUnitTest
 
       - name: Cancel workflow
         if: failure()

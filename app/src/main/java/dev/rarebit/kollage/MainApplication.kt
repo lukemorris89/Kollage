@@ -5,7 +5,7 @@ import dev.rarebit.kollage.di.appModule
 import org.koin.android.ext.koin.androidContext
 import timber.log.Timber
 
-class MainApplication: Application() {
+class MainApplication : Application() {
     private fun startKoin() {
         org.koin.core.context.startKoin {
             androidContext(this@MainApplication)
