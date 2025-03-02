@@ -31,8 +31,6 @@ firebaseAppdistributionGradle = "5.1.1"
 firebaseBom = "33.10.0"
 firebaseCrashlytics = "3.0.3"
 googleServices = "4.4.2"
-appcompat = "1.7.0"
-material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -62,6 +60,7 @@ kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collec
 # Coroutines
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -105,8 +104,6 @@ test-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "tu
 test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "orchestrator" }
 test-runner = { group = "androidx.test", name = "runner", version.ref = "supportTest" }
 test-rules = { group = "androidx.test", name = "rules", version.ref = "testRules" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

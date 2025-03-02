@@ -17,6 +17,10 @@ gradlePlugin {
             id = "detekt-plugin"
             implementationClass = "plugins.DetektConfigurationPlugin"
         }
+        create("configure-test-platform") {
+            id = "configure-test-platform"
+            implementationClass = "plugins.ConfigureTestPlatformPlugin"
+        }
     }
 }
 

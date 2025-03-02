@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Kollage"
 include(":app")
 include(":core")
+include(":test-utils")
