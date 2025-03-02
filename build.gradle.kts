@@ -2,6 +2,8 @@ buildscript {
     dependencies {
         classpath(libs.gradle.build.tools)
         classpath(libs.detekt.gradle.plugin)
+        classpath(libs.google.services)
+        classpath(libs.firebase.appdistribution.gradle)
     }
 }
 
@@ -12,4 +14,5 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.devtools.ksp) apply false
     alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
 }

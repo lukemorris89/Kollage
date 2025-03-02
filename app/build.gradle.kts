@@ -1,6 +1,5 @@
-import plugins.Configuration.COMPILE_SDK
-import plugins.Configuration.MIN_SDK
-import plugins.Configuration.TARGET_SDK
+import com.google.firebase.appdistribution.gradle.AppDistributionExtension
+import java.util.Properties
 
 plugins {
     id(libs.plugins.android.application.get().pluginId)
@@ -8,26 +7,86 @@ plugins {
     id("core-plugin")
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.firebase.crashlytics)
 }
+
+val appVersionCode: Int
+    get() = getEnvironmentPropertyOrNull("APP_VERSION_CODE")?.toInt()
+        ?: getFilePropertyOrNull("app_version.properties", "APP_VERSION_CODE")?.toInt()
+        ?: 1
+
+val appVersionName: String
+    get() = getEnvironmentPropertyOrNull("APP_VERSION_NAME")
+        ?: getFileProperty("app_version.properties", "APP_VERSION_NAME")
 
 android {
     namespace = "dev.rarebit.kollage"
 
     defaultConfig {
         applicationId = "dev.rarebit.kollage"
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = appVersionCode
+        versionName = appVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            versionNameSuffix = "-debug"
+            enableUnitTestCoverage = true
+            configure<AppDistributionExtension> {
+                serviceCredentialsFile = "app/google-application-credentials.json"
+                appId = getEnvironmentPropertyOrNull("APP_DISTRIBUTION_APP_ID")
+                artifactType = "APK"
+            }
+        }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
+            configure<AppDistributionExtension> {
+                serviceCredentialsFile = "app/google-application-credentials.json"
+                appId = getEnvironmentPropertyOrNull("APP_DISTRIBUTION_APP_ID")
+                artifactType = "APK"
+                groups = "mobile-devs"
+            }
+        }
+    }
+
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("dev") {
+            dimension = "version"
+
+            configure<AppDistributionExtension> {
+                releaseNotes = "Git action Development Build version: ${defaultConfig.versionCode}"
+            }
+
+            applicationIdSuffix = ".dev"
+            signingConfig = signingConfigs.getByName("internal")
+        }
+
+        create("uat") {
+            dimension = "version"
+
+            configure<AppDistributionExtension> {
+                releaseNotes = "Git action UAT Build version: ${defaultConfig.versionCode}"
+            }
+            applicationIdSuffix = ".uat"
+            signingConfig = signingConfigs.getByName("internal")
+        }
+
+        create("prod") {
+            dimension = "version"
+
+            configure<AppDistributionExtension> {
+                releaseNotes = "Git action Production Build version: ${defaultConfig.versionCode}"
+            }
+            signingConfig = signingConfigs.getByName("production")
         }
     }
 
@@ -39,6 +98,43 @@ android {
             ),
         )
     }
+}
+
+fun getFilePropertyOrNull(
+    file: String,
+    property: String,
+): String? =
+    Properties().let {
+        runCatching {
+            it.load(project.rootProject.file(file).inputStream())
+            it.getProperty(property)
+        }.getOrNull()
+    }
+
+fun getFileProperty(
+    file: String,
+    property: String,
+): String {
+    return getFilePropertyOrNull(file, property)
+        ?: throw IllegalArgumentException("$property property not available or file $file not available!")
+}
+
+fun getEnvironmentLocalPropertyOrNull(property: String): String? =
+    getFilePropertyOrNull("local.properties", property)
+
+fun getEnvironmentSystemPropertyOrNull(property: String): String? =
+    runCatching {
+        System.getenv(property)
+    }.getOrNull()
+
+fun getEnvironmentPropertyOrNull(property: String): String? {
+    return getEnvironmentSystemPropertyOrNull(property)
+        ?: getEnvironmentLocalPropertyOrNull(property)
+}
+
+fun getEnvironmentProperty(property: String): String {
+    return getEnvironmentPropertyOrNull(property)
+        ?: throw IllegalArgumentException("$property environment property not available!")
 }
 
 dependencies {
