@@ -7,7 +7,7 @@ plugins {
     id("core-plugin")
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.devtools.ksp)
-    id(libs.plugins.google.services.get().pluginId)
+    alias(libs.plugins.google.services)
     id(libs.plugins.firebase.appdistribution.get().pluginId)
     alias(libs.plugins.firebase.crashlytics)
 }
@@ -180,4 +180,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 }
