@@ -31,9 +31,6 @@ class MainActivity : ComponentActivity() {
                             name = "Android",
                             modifier = Modifier.padding(innerPadding)
                         )
-                        Button(onClick = { throw RuntimeException("Test Crash") }) {
-                            Text(text = "Test Crash")
-                        }
                     }
                 }
             }
