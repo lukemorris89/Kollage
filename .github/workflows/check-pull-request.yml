@@ -2,8 +2,9 @@ name: Unit test workflow
 
 on:
   workflow_dispatch: # Allow running the checks manually against any branch
-#  pull_request:
-#    branches-ignore: [ main ] # Don't run these checks if PR targets main
+  push:
+    branches:
+      - develop # Whenever new code is pushed to develop
 
 jobs:
   code-check:
