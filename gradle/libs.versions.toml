@@ -32,10 +32,12 @@ firebaseAppdistributionGradle = "5.1.1"
 firebaseBom = "33.10.0"
 firebaseCrashlytics = "3.0.3"
 googleServices = "4.4.2"
+ktlint = "0.0.26"
+ktlintPlugin = "12.1.1"
+kover = "0.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -68,7 +70,6 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-appdistribution-gradle = { module = "com.google.firebase:firebase-appdistribution-gradle", version.ref = "firebaseAppdistributionGradle" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 
 # Koin
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
@@ -86,6 +87,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 detekt-compose = { module = "com.twitter.compose.rules:detekt", version.ref = "detektCompose" }
 detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+ktlint = { module = "com.twitter.compose.rules:ktlint", version.ref = "ktlint" }
 
 # Logging
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
@@ -118,4 +120,6 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
 firebase-appdistribution = {id = "com.google.firebase.appdistribution", version.ref = "firebaseAppdistributionGradle" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 

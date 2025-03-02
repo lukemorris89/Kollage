@@ -21,6 +21,10 @@ gradlePlugin {
             id = "configure-test-platform"
             implementationClass = "plugins.ConfigureTestPlatformPlugin"
         }
+        create("configure-kover") {
+            id = "configure-kover"
+            implementationClass = "plugins.ConfigureKoverPlugin"
+        }
     }
 }
 
