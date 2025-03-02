@@ -114,6 +114,7 @@ android {
             listOf(
                 "META-INF/AL2.0",
                 "META-INF/LGPL2.1",
+                "META-INF/LICENSE.md",
             ),
         )
     }
