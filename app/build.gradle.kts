@@ -7,6 +7,8 @@ plugins {
     id("core-plugin")
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.devtools.ksp)
+    id(libs.plugins.google.services.get().pluginId)
+    id(libs.plugins.firebase.appdistribution.get().pluginId)
     alias(libs.plugins.firebase.crashlytics)
 }
 
@@ -32,7 +34,7 @@ android {
 
     signingConfigs {
         // Keystore file is not in the project, encoded base64 version of it is stored in GitHub secrets.
-        // Text version is encoded with command base64 --i csi.staging.keystore --o csi.staging.txt
+        // Text version is encoded with command base64 --i keystore.jks --o keystore.txt
         register("production") {
             storeFile = file("keystore.jks")
             storePassword = getEnvironmentPropertyOrNull("STORE_PASSWORD")

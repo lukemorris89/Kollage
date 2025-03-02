@@ -52,23 +52,6 @@ jobs:
       - name: Run Unit tests and generate Coverage Report
         run: ./gradlew testDevDebugUnitTest koverXmlReportDevDebug
 
-      - name: Extract Code Coverage from Report
-        run: |
-          source scripts/extract-jacoco-code-coverage.sh
-          echo "TEST_REPORT_MESSAGE=$TEST_REPORT_MESSAGE" >> $GITHUB_ENV
-
-      - name: Post Code Coverage report
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "${{ env.TEST_REPORT_MESSAGE }}"
-            })
-
       - name: Cancel workflow
         if: failure()
         uses: andymckay/cancel-action@0.4
