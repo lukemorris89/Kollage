@@ -191,4 +191,7 @@ dependencies {
     androidTestImplementation(libs.test.runner)
     androidTestImplementation(libs.test.rules)
     androidTestUtil(libs.test.orchestrator)
+
+    debugImplementation(libs.leakcanary.android)
+
 }
