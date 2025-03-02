@@ -1,25 +1,30 @@
 #!/bin/bash
-source "$(dirname "${BASH_SOURCE[0]}")/echo.sh"
 
-PROPERTIES_FILE="$1"
-PROPERTY_KEY="$2"
-PROPERTY_VALUE="$3"
-
-echoTitle "Properties Writer"
-echoText "- File: $PROPERTIES_FILE"
-echoText "-- Key: $PROPERTY_KEY"
-echoText "-- Value: $PROPERTY_VALUE"
-
-if ! grep -R "^[#]*\s*${PROPERTY_KEY}=.*" "$PROPERTIES_FILE" > /dev/null; then
-  echoSuccess "APPENDING because '${PROPERTY_KEY}' not found"
-  echo "$PROPERTY_KEY=$PROPERTY_VALUE" >> "$PROPERTIES_FILE"
-else
-  echoSuccess "SETTING because '${PROPERTY_KEY}' found already"
-  # sed property -i has difference between platforms.
-  # For OSX it requires the argument '', while for Ubuntu it doesn't
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    sed -i '' "s/^[#]*\s*${PROPERTY_KEY}=.*/$PROPERTY_KEY=$PROPERTY_VALUE/" "$PROPERTIES_FILE"
-  else
-    sed -i "s/^[#]*\s*${PROPERTY_KEY}=.*/$PROPERTY_KEY=$PROPERTY_VALUE/" "$PROPERTIES_FILE"
-  fi
+# Check if the correct number of arguments are provided
+if [ "$#" -ne 3 ]; then
+  echo "Usage: $0 <properties_file> <property_name> <property_value>"
+  exit 1
 fi
+
+properties_file="$1"
+property_name="$2"
+property_value="$3"
+
+# Check if the properties file exists, create it if it doesn't
+if [ ! -f "$properties_file" ]; then
+  echo "Creating properties file: $properties_file"
+  touch "$properties_file"
+fi
+
+# Use sed to update or add the property
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS
+  sed -i "" -e "/^${property_name}=/s/=.*$/=${property_value}/" "$properties_file" || \
+    echo "${property_name}=${property_value}" >> "$properties_file"
+else
+  # Linux
+  sed -i -e "/^${property_name}=/s/=.*$/=${property_value}/" "$properties_file" || \
+    echo "${property_name}=${property_value}" >> "$properties_file"
+fi
+
+echo "Updated ${property_name} in ${properties_file} to ${property_value}"
