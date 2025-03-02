@@ -30,6 +30,23 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        // Keystore file is not in the project, encoded base64 version of it is stored in GitHub secrets.
+        // Text version is encoded with command base64 --i csi.staging.keystore --o csi.staging.txt
+        register("production") {
+            storeFile = file("keystore.jks")
+            storePassword = getEnvironmentPropertyOrNull("STORE_PASSWORD")
+            keyAlias = getEnvironmentPropertyOrNull("KEY_ALIAS")
+            keyPassword = getEnvironmentPropertyOrNull("KEY_PASSWORD")
+        }
+        register("internal") {
+            storeFile = file("keystore.jks")
+            storePassword = getEnvironmentPropertyOrNull("STORE_PASSWORD")
+            keyAlias = getEnvironmentPropertyOrNull("KEY_ALIAS")
+            keyPassword = getEnvironmentPropertyOrNull("KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         debug {
             versionNameSuffix = "-debug"

@@ -1,0 +1,74 @@
+name: Unit test workflow
+
+on:
+  workflow_dispatch: # Allow running the checks manually against any branch
+#  pull_request:
+#    branches-ignore: [ main ] # Don't run these checks if PR targets main
+
+jobs:
+  code-check:
+    name: "Code Check"
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Run detekt  and ktlint checks
+        run: ./gradlew detekt ktlintCheck
+
+      - name: Cancel workflow
+        if: failure()
+        uses: andymckay/cancel-action@0.4
+
+  unit-tests:
+    name: "Unit Tests"
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Install XML tools
+        run: |
+          sudo apt-get update && \
+            sudo apt-get -y --no-install-recommends install libxml2-utils && \
+            sudo apt-get autoremove -y && \
+            sudo apt-get clean
+
+      - name: Run Unit tests and generate Coverage Report
+        run: ./gradlew testDevDebugUnitTest koverXmlReportDevDebug
+
+      - name: Extract Code Coverage from Report
+        run: |
+          source scripts/extract-jacoco-code-coverage.sh
+          echo "TEST_REPORT_MESSAGE=$TEST_REPORT_MESSAGE" >> $GITHUB_ENV
+
+      - name: Post Code Coverage report
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "${{ env.TEST_REPORT_MESSAGE }}"
+            })
+
+      - name: Cancel workflow
+        if: failure()
+        uses: andymckay/cancel-action@0.4
