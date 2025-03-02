@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1081584897097",
+    "project_id": "kollage-6d2c3",
+    "storage_bucket": "kollage-6d2c3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081584897097:android:8b7e7bbb614ff4a1318398",
+        "android_client_info": {
+          "package_name": "dev.rarebit.kollage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiS1PfnFTSGl1oBUqqPQ_ITcMU3_Y8CTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081584897097:android:cd847285b8c13452318398",
+        "android_client_info": {
+          "package_name": "dev.rarebit.kollage.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiS1PfnFTSGl1oBUqqPQ_ITcMU3_Y8CTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -38,7 +38,4 @@ dependencies {
 
     // Linting
     api(libs.detekt.gradle.plugin)
-
-    // Testing
-
 }
