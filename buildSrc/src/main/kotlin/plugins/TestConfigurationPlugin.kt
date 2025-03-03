@@ -8,7 +8,7 @@ import org.gradle.api.tasks.testing.Test
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 import plugins.ext.configureExtension
 
-internal class ConfigureTestPlatformPlugin : Plugin<Project> {
+internal class TestConfigurationPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         target.afterEvaluate {

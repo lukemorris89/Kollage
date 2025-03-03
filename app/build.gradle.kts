@@ -161,18 +161,12 @@ fun getEnvironmentPropertyOrNull(property: String): String? {
 dependencies {
     // Modules
     implementation(project(":core"))
-    implementation(project(":test-utils"))
+    implementation(project(":design"))
+    testImplementation(project(":test-utils"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+
 
     // Room
     implementation(libs.androidx.room.runtime)
@@ -185,12 +179,13 @@ dependencies {
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.test.espresso.intents)
     androidTestImplementation(libs.test.runner)
     androidTestImplementation(libs.test.rules)
     androidTestUtil(libs.test.orchestrator)
 
     debugImplementation(libs.leakcanary.android)
+    debugImplementation(libs.compose.ui.test.manifest)
 }

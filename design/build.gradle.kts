@@ -1,0 +1,46 @@
+plugins {
+    id(libs.plugins.android.library.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id("design-plugin")
+}
+
+android {
+    namespace = "dev.rarebit.design"
+    kotlinOptions {
+        kotlinOptions.freeCompilerArgs += listOf(
+            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+        )
+    }
+}
+
+dependencies {
+    // Modules
+    implementation(project(":core"))
+    testImplementation(project(":test-utils"))
+
+    // Jetpack Compose
+    api(platform(libs.compose.bom))
+    api(libs.compose.ui)
+    api(libs.compose.ui.tooling)
+    api(libs.compose.ui.tooling.preview)
+    api(libs.androidx.activity.compose)
+    api(libs.compose.ui.animation)
+    api(libs.compose.ui.foundation)
+
+    // Material design
+    api(libs.compose.material3)
+
+    // AndroidX lifecycle
+    api(libs.androidx.lifecycle.viewmodel.compose)
+    api(libs.androidx.lifecycle.runtime.compose)
+
+    // Android Navigation Library
+    api(libs.androidx.navigation.compose)
+
+    // Koin
+    api(libs.koin.android.compose)
+
+    // BottomSheet
+    api(libs.bottomSheetDialog)
+}

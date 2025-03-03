@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.ui.theme
+package dev.rarebit.design.theme
 
 import androidx.compose.ui.graphics.Color
 
