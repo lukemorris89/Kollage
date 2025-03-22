@@ -20,8 +20,8 @@ import dev.rarebit.design.theme.White
 
 @Composable
 fun PrimaryButton(
-    @DrawableRes iconRes: Int? = null,
     text: String,
+    @DrawableRes iconRes: Int? = null,
     buttonColours: ButtonColours = ButtonColours.Primary,
     contentDescription: String? = null,
     onClick: () -> Unit,
