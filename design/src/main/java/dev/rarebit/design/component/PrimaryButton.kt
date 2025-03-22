@@ -4,15 +4,18 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.KollageTheme
@@ -20,13 +23,17 @@ import dev.rarebit.design.theme.White
 
 @Composable
 fun PrimaryButton(
+    modifier: Modifier = Modifier,
     text: String,
     @DrawableRes iconRes: Int? = null,
     buttonColours: ButtonColours = ButtonColours.Primary,
+    buttonHeight: ButtonHeight = ButtonHeight.Medium,
     contentDescription: String? = null,
     onClick: () -> Unit,
 ) {
     Button(
+        modifier = modifier
+            .height(buttonHeight.height),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = buttonColours.containerColour,
@@ -102,6 +109,12 @@ enum class ButtonColours(
         contentColour = Black,
         borderColour = Black,
     )
+}
+
+enum class ButtonHeight(val height: Dp) {
+    Large(60.dp),
+    Medium(52.dp),
+    Small(44.dp),
 }
 
 @Preview
