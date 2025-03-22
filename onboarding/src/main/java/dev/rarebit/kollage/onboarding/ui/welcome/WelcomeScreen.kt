@@ -8,10 +8,11 @@ import dev.rarebit.kollage.onboarding.ui.welcome.data.WelcomeViewEvent
 import dev.rarebit.kollage.onboarding.ui.welcome.data.WelcomeViewModel
 import org.koin.androidx.compose.koinViewModel
 
+@Suppress("UnusedParameter")
 @Composable
 fun WelcomeScreen(
-    viewModel: WelcomeViewModel = koinViewModel(),
     navHostController: NavHostController,
+    viewModel: WelcomeViewModel = koinViewModel(),
 ) {
     val viewData = viewModel.viewData.collectAsState()
     WelcomeContent(

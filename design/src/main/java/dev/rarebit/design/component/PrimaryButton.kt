@@ -23,8 +23,8 @@ import dev.rarebit.design.theme.White
 
 @Composable
 fun PrimaryButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes iconRes: Int? = null,
     buttonColours: ButtonColours = ButtonColours.Primary,
     buttonHeight: ButtonHeight = ButtonHeight.Medium,
