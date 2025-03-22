@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
+import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.onboarding.ui.welcome.data.WelcomeViewEvent
 import dev.rarebit.kollage.onboarding.ui.welcome.data.WelcomeViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -28,7 +29,7 @@ fun WelcomeScreen(
         viewModel.viewEvent.collect { event ->
             when (event.consume()) {
                 is WelcomeViewEvent.NavigateToHomeScreen -> {
-                    // TODO add navigation
+                    navHostController.navigate(AppRoute.Home)
                 }
                 else -> {}
             }
