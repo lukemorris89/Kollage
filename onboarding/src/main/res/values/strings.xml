@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_app_name">Kollage</string>
+    <string name="welcome_begin">Begin</string>
+    <string name="welcome_terms">By pressing “Begin”, you agree to our Terms \nand Privacy Policy</string>
+</resources>

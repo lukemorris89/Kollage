@@ -11,6 +11,7 @@ plugins {
     id(libs.plugins.firebase.appdistribution.get().pluginId)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val appVersionName: String
@@ -162,6 +163,7 @@ dependencies {
     // Modules
     implementation(project(":core"))
     implementation(project(":design"))
+    implementation(project(":onboarding"))
     testImplementation(project(":test-utils"))
 
     implementation(libs.androidx.core.ktx)
