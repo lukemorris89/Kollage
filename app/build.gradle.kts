@@ -163,6 +163,7 @@ dependencies {
     // Modules
     implementation(project(":core"))
     implementation(project(":design"))
+    implementation(project(":navigation"))
     implementation(project(":onboarding"))
     testImplementation(project(":test-utils"))
 

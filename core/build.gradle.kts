@@ -26,10 +26,6 @@ dependencies {
     api(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.coroutines.android)
 
-    // Android Navigation Library
-    api(libs.androidx.navigation.compose)
-    api(libs.androidx.navigation.ui.ktx)
-
     // Logging
     api(libs.timber)
 
