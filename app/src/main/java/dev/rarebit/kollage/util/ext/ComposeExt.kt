@@ -1,4 +1,4 @@
-package dev.rarebit.design.ext
+package dev.rarebit.kollage.util.ext
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable

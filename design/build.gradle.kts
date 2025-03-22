@@ -24,19 +24,11 @@ dependencies {
     api(libs.compose.ui)
     api(libs.compose.ui.tooling)
     api(libs.compose.ui.tooling.preview)
-    api(libs.androidx.activity.compose)
     api(libs.compose.ui.animation)
     api(libs.compose.ui.foundation)
 
     // Material design
     api(libs.compose.material3)
-
-    // AndroidX lifecycle
-    api(libs.androidx.lifecycle.viewmodel.compose)
-    api(libs.androidx.lifecycle.runtime.compose)
-
-    // Android Navigation Library
-    api(libs.androidx.navigation.compose)
 
     // Koin
     api(libs.koin.android.compose)
