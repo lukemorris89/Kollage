@@ -30,8 +30,8 @@ class CoreConfigurationPlugin : Plugin<Project> {
             }
         }
         target.plugins.apply("detekt-plugin")
-        target.plugins.apply("configure-test-platform")
-        target.plugins.apply("configure-kover")
+        target.plugins.apply("test-plugin")
+        target.plugins.apply("kover-plugin")
     }
 
     private val configureLibrary: (LibraryExtension) -> Unit = { library ->

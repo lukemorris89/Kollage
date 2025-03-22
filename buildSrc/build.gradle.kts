@@ -17,13 +17,17 @@ gradlePlugin {
             id = "detekt-plugin"
             implementationClass = "plugins.DetektConfigurationPlugin"
         }
-        create("configure-test-platform") {
-            id = "configure-test-platform"
-            implementationClass = "plugins.ConfigureTestPlatformPlugin"
+        create("test-plugin") {
+            id = "test-plugin"
+            implementationClass = "plugins.TestConfigurationPlugin"
         }
-        create("configure-kover") {
-            id = "configure-kover"
-            implementationClass = "plugins.ConfigureKoverPlugin"
+        create("kover-plugin") {
+            id = "kover-plugin"
+            implementationClass = "plugins.KoverConfigurationPlugin"
+        }
+        register("design-plugin") {
+            id = "design-plugin"
+            implementationClass = "plugins.DesignConfigurationPlugin"
         }
     }
 }

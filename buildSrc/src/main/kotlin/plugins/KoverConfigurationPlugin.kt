@@ -5,7 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 
 @ExperimentalStdlibApi
-class ConfigureKoverPlugin : Plugin<Project> {
+class KoverConfigurationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val catalog = target.extensions
             .getByType(VersionCatalogsExtension::class.java)
