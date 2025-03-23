@@ -16,7 +16,7 @@ fun Context.hasCameraPermission(): Boolean {
 }
 
 fun Context.openAppSettings() {
-    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", "dev.rarebit.nirbi", null)).also {
+    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", "dev.rarebit.kollage", null)).also {
         startActivity(it)
     }
 }
