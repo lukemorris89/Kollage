@@ -1,0 +1,11 @@
+package dev.rarebit.kollage.onboarding.ui.permissions.data
+
+import dev.rarebit.core.viewmodel.BaseViewData
+
+data class PermissionsViewData(
+    val title: String,
+    val description: String,
+    val ctaLabel: String,
+    val showPermissionRationaleBottomsheet: Boolean,
+    val showPermissionDeniedBottomsheet: Boolean,
+): BaseViewData()
