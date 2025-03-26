@@ -25,6 +25,13 @@ class PermissionsViewModel(
             ctaLabel = R.string.permissions_cta_label.asString,
             showPermissionRationaleBottomsheet = false,
             showPermissionDeniedBottomsheet = false,
+            permissionRationaleDescription = R.string.permissions_rationale_description.asString,
+            permissionRationalePrimaryCtaLabel = R.string.permissions_cta_label.asString,
+            permissionRationaleSecondaryCtaLabel = R.string.permissions_dismiss.asString,
+            permissionDeniedTitle = R.string.permissions_denied.asString,
+            permissionDeniedDescription = R.string.permissions_denied_description.asString,
+            permissionDeniedPrimaryCtaLabel = R.string.permissions_open_settings.asString,
+            permissionDeniedSecondaryCtaLabel = R.string.permissions_dismiss.asString,
         )
     )
     override val viewData: StateFlow<PermissionsViewData>
@@ -34,8 +41,20 @@ class PermissionsViewModel(
     override val viewEvent: SharedFlow<ViewEvent<PermissionsViewEvent>>
         get() = _viewEvent
 
-    fun onPrimaryCtaClicked() {
+    fun checkPermissions() {
         _viewEvent.tryEmit(PermissionsViewEvent.CheckPermissions)
+    }
+
+    fun onResume() {
+
+    }
+
+    fun requestPermissions() {
+        _viewEvent.tryEmit(PermissionsViewEvent.RequestPermissions)
+    }
+
+    fun openAppSettings() {
+        _viewEvent.tryEmit(PermissionsViewEvent.OpenAppSettings)
     }
 
     fun onPermissionGranted() {

@@ -6,4 +6,9 @@
     <string name="permissions_title">Allow camera access</string>
     <string name="permissions_description">To enable the app to function properly, camera access is required. Tap the button below to continue.</string>
     <string name="permissions_cta_label">Grant permissions</string>
+    <string name="permissions_denied">Permissions denied</string>
+    <string name="permissions_dismiss">Dismiss</string>
+    <string name="permissions_open_settings">Open Settings</string>
+    <string name="permissions_rationale_description">Camera access is required to capture photos directly within the app. Please grant these permissions to enable app features.</string>
+    <string name="permissions_denied_description">Camera permissions have been denied, and are required for this app to function. You can grant access to the camera from the app settings.</string>
 </resources>

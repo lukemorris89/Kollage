@@ -20,6 +20,8 @@ import dev.rarebit.design.component.WeightSpacer
 import dev.rarebit.design.modifier.regularScreen
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.White
+import dev.rarebit.kollage.onboarding.ui.permissions.component.PermissionDeniedBottomsheet
+import dev.rarebit.kollage.onboarding.ui.permissions.component.PermissionRationaleBottomsheet
 import dev.rarebit.kollage.onboarding.ui.permissions.data.PermissionsViewData
 
 @Composable
@@ -36,6 +38,7 @@ fun PermissionsContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
+        WeightSpacer(1f)
         Text(
             text = viewData.title,
             style = MaterialTheme.typography.headlineLarge.copy(
@@ -56,6 +59,20 @@ fun PermissionsContent(
             buttonColours = ButtonColours.Secondary,
             text = viewData.ctaLabel,
             onClick = { onViewAction(PermissionsViewAction.OnClickPrimaryCta) },
+        )
+    }
+
+    if (viewData.showPermissionRationaleBottomsheet) {
+        PermissionRationaleBottomsheet(
+            viewData = viewData,
+            onViewAction = onViewAction,
+        )
+    }
+
+    if (viewData.showPermissionDeniedBottomsheet) {
+        PermissionDeniedBottomsheet(
+            viewData = viewData,
+            onViewAction = onViewAction,
         )
     }
 }
