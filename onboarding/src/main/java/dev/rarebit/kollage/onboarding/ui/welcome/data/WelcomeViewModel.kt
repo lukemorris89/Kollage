@@ -32,6 +32,6 @@ class WelcomeViewModel(
         get() = _viewEvent
 
     fun onPrimaryCtaClicked() {
-        _viewEvent.tryEmit(WelcomeViewEvent.NavigateToHomeScreen)
+        _viewEvent.tryEmit(WelcomeViewEvent.CheckPermissions)
     }
 }
