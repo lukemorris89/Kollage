@@ -4,6 +4,7 @@ import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
 import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
+import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -34,5 +35,9 @@ class HomeViewModel(
                 selectedTab = item,
             )
         }
+    }
+
+    fun onClickAddNewCollage() {
+        _viewEvent.tryEmit(HomeViewEvent.NavigateToNewCollage)
     }
 }

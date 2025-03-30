@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
+import dev.rarebit.kollage.ui.home.data.HomeViewEvent
 import dev.rarebit.kollage.ui.home.data.HomeViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -26,6 +27,10 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect { event ->
             when (event) {
+                HomeViewEvent.NavigateToNewCollage -> {
+                    // TODO add navigation to tutorial or new collage
+                }
+
                 null -> Unit
             }
         }
@@ -36,5 +41,7 @@ context(HomeViewModel)
 private fun onViewAction(viewAction: HomeViewAction) {
     when (viewAction) {
         is HomeViewAction.OnClickBottomNavigationTab -> onClickBottomNavigationTab(viewAction.item)
+        is HomeViewAction.OnClickFab -> onClickAddNewCollage()
+        is HomeViewAction.OnClickCreateNew -> onClickAddNewCollage()
     }
 }

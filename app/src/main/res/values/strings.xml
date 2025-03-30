@@ -2,4 +2,6 @@
     <string name="app_name">Kollage</string>
     <string name="gallery">Gallery</string>
     <string name="more">More</string>
+    <string name="you_haven_t_created_anything_yet">You haven\'t created anything yet</string>
+    <string name="create_new">Create new</string>
 </resources>
