@@ -8,5 +8,4 @@ fun HomeGallery() {
 
 @Composable
 fun EmptyHomeGallery() {
-
 }

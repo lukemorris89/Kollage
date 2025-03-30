@@ -2,7 +2,6 @@ package dev.rarebit.kollage.ui.home
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -32,7 +31,7 @@ fun HomeContent(
     viewData: HomeViewData,
     onViewAction: (HomeViewAction) -> Unit,
 ) {
-    val navigationItems = listOf(
+    val navigationItems = persistentListOf(
         NavigationItem.Gallery,
         NavigationItem.More,
     )

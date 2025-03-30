@@ -28,7 +28,6 @@ fun HomeScreen(
             when (event) {
                 null -> Unit
             }
-
         }
     }
 }

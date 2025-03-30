@@ -4,4 +4,4 @@ import dev.rarebit.core.viewmodel.BaseViewData
 
 data class HomeViewData(
     val selectedTab: NavigationItem = NavigationItem.Gallery,
-): BaseViewData()
+) : BaseViewData()

@@ -15,4 +15,4 @@ data class PermissionsViewData(
     val permissionDeniedDescription: String,
     val permissionDeniedPrimaryCtaLabel: String,
     val permissionDeniedSecondaryCtaLabel: String,
-): BaseViewData()
+) : BaseViewData()
