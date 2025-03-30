@@ -18,7 +18,7 @@ class HomeViewModel(
 
     private val _viewData = MutableStateFlow(
         HomeViewData(
-            currentTabIndex = 0,
+            selectedTab = NavigationItem.Gallery,
         )
     )
     override val viewData: StateFlow<HomeViewData>
@@ -28,10 +28,10 @@ class HomeViewModel(
     override val viewEvent: SharedFlow<ViewEvent<HomeViewEvent>>
         get() = _viewEvent
 
-    fun onClickBottomNavigationTab(index: Int) {
+    fun onClickBottomNavigationTab(item: NavigationItem) {
         _viewData.update { currentState ->
             currentState.copy(
-                currentTabIndex = index,
+                selectedTab = item,
             )
         }
     }
