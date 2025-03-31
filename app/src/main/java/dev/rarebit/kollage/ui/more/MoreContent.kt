@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -45,11 +44,11 @@ fun MoreContent(
                 )
             )
             VerticalSpacer(paddingSmall)
-            HorizontalDivider(
-                modifier = Modifier.padding(end = 64.dp),
-                color = LightGrey,
-                thickness = 1.dp
-            )
+//            HorizontalDivider(
+//                modifier = Modifier.padding(end = 64.dp),
+//                color = LightGrey,
+//                thickness = 1.dp
+//            )
             VerticalSpacer(paddingMedium)
             MoreButton(
                 text = viewData.termsAndConditionsText

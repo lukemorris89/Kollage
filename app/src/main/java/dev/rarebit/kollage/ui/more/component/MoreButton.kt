@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import dev.rarebit.design.component.ButtonHeight
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.White
-import dev.rarebit.design.theme.paddingLarge
+import dev.rarebit.design.theme.paddingMedium
 
 @Composable
 fun MoreButton(
@@ -36,12 +36,12 @@ fun MoreButton(
             .clickable(enabled = enabled) {
                 onClick()
             }
-            .padding(horizontal = paddingLarge),
+            .padding(horizontal = paddingMedium),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyLarge.copy(
+            style = MaterialTheme.typography.titleMedium.copy(
                 color = Black
             ),
             maxLines = 1,
