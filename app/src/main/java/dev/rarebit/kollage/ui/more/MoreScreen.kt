@@ -1,48 +1,40 @@
-package dev.rarebit.kollage.ui.home
+package dev.rarebit.kollage.ui.more
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
-import dev.rarebit.kollage.ui.home.data.HomeViewEvent
-import dev.rarebit.kollage.ui.home.data.HomeViewModel
+import dev.rarebit.kollage.ui.more.data.MoreViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(
+fun MoreScreen(
     navHostController: NavHostController,
-    viewModel: HomeViewModel = koinViewModel()
+    viewModel: MoreViewModel = koinViewModel()
 ) {
     val viewData by viewModel.viewData.collectAsState()
-    HomeContent(
+    MoreContent(
         viewData = viewData,
         onViewAction = {
             with(viewModel) {
                 onViewAction(it)
             }
         },
-        navHostController = navHostController,
     )
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect { event ->
             when (event) {
-                HomeViewEvent.NavigateToNewCollage -> {
-                    // TODO add navigation to tutorial or new collage
-                }
-
                 null -> Unit
             }
         }
     }
 }
 
-context(HomeViewModel)
-private fun onViewAction(viewAction: HomeViewAction) {
+context(MoreViewModel)
+private fun onViewAction(viewAction: MoreViewAction) {
     when (viewAction) {
-        is HomeViewAction.OnClickBottomNavigationTab -> onClickBottomNavigationTab(viewAction.item)
-        is HomeViewAction.OnClickFab -> onClickAddNewCollage()
-        is HomeViewAction.OnClickCreateNew -> onClickAddNewCollage()
+        else -> Unit
     }
 }

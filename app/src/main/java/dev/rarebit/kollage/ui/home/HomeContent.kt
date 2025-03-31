@@ -4,6 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -12,14 +13,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavHostController
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.design.theme.paddingSmall
 import dev.rarebit.kollage.ui.gallery.GalleryContent
+import dev.rarebit.kollage.ui.gallery.GalleryScreen
 import dev.rarebit.kollage.ui.home.component.BottomNavBar
 import dev.rarebit.kollage.ui.home.data.HomeViewData
 import dev.rarebit.kollage.ui.home.data.NavigationItem
+import dev.rarebit.kollage.ui.more.MoreScreen
 import kotlinx.collections.immutable.persistentListOf
 import dev.rarebit.design.R as DR
 
@@ -28,6 +32,7 @@ import dev.rarebit.design.R as DR
 fun HomeContent(
     viewData: HomeViewData,
     onViewAction: (HomeViewAction) -> Unit,
+    navHostController: NavHostController,
 ) {
     val navigationItems = persistentListOf(
         NavigationItem.Gallery,
@@ -36,7 +41,8 @@ fun HomeContent(
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(Black),
+            .background(Black)
+            .safeDrawingPadding(),
         bottomBar = {
             BottomNavBar(
                 modifier = Modifier.padding(
@@ -49,25 +55,6 @@ fun HomeContent(
                 onClickTab = { onViewAction(HomeViewAction.OnClickBottomNavigationTab(it)) },
             )
         },
-        floatingActionButton = {
-            if (!viewData.showEmptyGallery) {
-                FloatingActionButton(
-                    modifier = Modifier
-                        .padding(end = paddingSmall),
-                    containerColor = White,
-                    contentColor = Black,
-                    shape = CircleShape,
-                    onClick = {
-                        onViewAction(HomeViewAction.OnClickFab)
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = DR.drawable.ic_add),
-                        contentDescription = null,
-                    )
-                }
-            }
-        }
     ) { contentPadding ->
         Crossfade(
             modifier = Modifier.padding(contentPadding),
@@ -75,13 +62,16 @@ fun HomeContent(
         ) { selectedTab ->
             when (selectedTab) {
                 NavigationItem.Gallery -> {
-                    GalleryContent(
-                        viewData = viewData,
-                        onViewAction = onViewAction,
+                    GalleryScreen(
+                        navHostController = navHostController,
                     )
                 }
 
-                NavigationItem.More -> {}
+                NavigationItem.More -> {
+                    MoreScreen(
+                        navHostController = navHostController,
+                    )
+                }
             }
         }
     }

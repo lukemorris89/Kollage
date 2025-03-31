@@ -2,6 +2,7 @@ package dev.rarebit.kollage.ui.gallery
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -18,14 +19,14 @@ import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.kollage.R
+import dev.rarebit.kollage.ui.gallery.data.GalleryViewData
 import dev.rarebit.kollage.ui.home.HomeViewAction
-import dev.rarebit.kollage.ui.home.data.HomeViewData
 import dev.rarebit.design.R as DR
 
 @Composable
 fun EmptyGalleryContent(
-    viewData: HomeViewData,
-    onViewAction: (HomeViewAction) -> Unit,
+    viewData: GalleryViewData,
+    onViewAction: (GalleryViewAction) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -34,7 +35,7 @@ fun EmptyGalleryContent(
     ) {
         Text(
             modifier = Modifier.padding(horizontal = paddingLarge),
-            text = stringResource(R.string.you_haven_t_created_anything_yet),
+            text = viewData.emptyDescription,
             style = MaterialTheme.typography.titleLarge.copy(
                 color = White,
                 textAlign = TextAlign.Center,
@@ -43,11 +44,11 @@ fun EmptyGalleryContent(
 
         VerticalSpacer(height = 54.dp)
         PrimaryButton(
-            text = stringResource(R.string.create_new),
+            text = viewData.primaryCtaLabel,
             buttonColours = ButtonColours.Secondary,
-            iconRes = DR.drawable.ic_add
+            iconRes = DR.drawable.ic_add,
         ) {
-            onViewAction(HomeViewAction.OnClickCreateNew)
+            onViewAction(GalleryViewAction.OnClickCreateNew)
         }
     }
 }

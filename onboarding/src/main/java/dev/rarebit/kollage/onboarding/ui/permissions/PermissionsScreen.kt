@@ -50,7 +50,7 @@ fun PermissionsScreen(
             }
         )
 
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
         with(viewModel) {
             if (ContextCompat.checkSelfPermission(
                     context,

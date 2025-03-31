@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,24 +34,23 @@ fun PermissionsContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Black)
             .regularScreen()
-            .systemBarsPadding(),
+            .safeDrawingPadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         WeightSpacer(1f)
         Text(
             text = viewData.title,
-            style = MaterialTheme.typography.headlineLarge.copy(
-                color = White,
-            ),
+            style = MaterialTheme.typography.headlineLarge,
         )
         VerticalSpacer(24.dp)
         Text(
+            modifier = Modifier
+                .padding(horizontal = 32.dp)
+            ,
             text = viewData.description,
             style = MaterialTheme.typography.bodyMedium.copy(
-                color = White,
                 textAlign = TextAlign.Center,
             ),
         )

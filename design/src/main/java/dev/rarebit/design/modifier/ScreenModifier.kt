@@ -8,7 +8,5 @@ import dev.rarebit.design.theme.paddingLarge
 fun Modifier.regularScreen(
     paddingValues: PaddingValues = PaddingValues(paddingLarge),
 ) = this.then(
-    Modifier
-        .padding(paddingValues)
-        .then(Modifier.padding(paddingValues))
+    Modifier.padding(paddingValues)
 )

@@ -3,6 +3,7 @@ package dev.rarebit.design.component
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
@@ -28,6 +29,7 @@ fun PrimaryButton(
     @DrawableRes iconRes: Int? = null,
     buttonColours: ButtonColours = ButtonColours.Primary,
     buttonHeight: ButtonHeight = ButtonHeight.Medium,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 32.dp),
     contentDescription: String? = null,
     onClick: () -> Unit,
 ) {
@@ -45,7 +47,8 @@ fun PrimaryButton(
             width = 1.dp,
             color = buttonColours.borderColour,
         ),
-        elevation = ButtonDefaults.buttonElevation()
+        elevation = ButtonDefaults.buttonElevation(),
+        contentPadding = contentPadding,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

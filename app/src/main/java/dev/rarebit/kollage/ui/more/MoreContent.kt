@@ -1,59 +1,36 @@
-package dev.rarebit.kollage.ui.gallery
+package dev.rarebit.kollage.ui.more
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import dev.rarebit.kollage.R
 import dev.rarebit.design.component.VerticalSpacer
-import dev.rarebit.design.theme.Black
+import dev.rarebit.design.component.WeightSpacer
 import dev.rarebit.design.theme.LightGrey
 import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.design.theme.paddingMedium
 import dev.rarebit.design.theme.paddingSmall
-import dev.rarebit.kollage.ui.gallery.data.GalleryViewData
-import dev.rarebit.design.R as DR
+import dev.rarebit.kollage.ui.more.component.MoreButton
+import dev.rarebit.kollage.ui.more.data.MoreViewData
 
 @Composable
-fun GalleryContent(
-    viewData: GalleryViewData,
-    onViewAction: (GalleryViewAction) -> Unit,
+fun MoreContent(
+    viewData: MoreViewData,
+    onViewAction: (MoreViewAction) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        floatingActionButton = {
-            if (!viewData.isEmptyGallery) {
-                FloatingActionButton(
-                    modifier = Modifier
-                        .padding(end = paddingSmall),
-                    containerColor = White,
-                    contentColor = Black,
-                    shape = CircleShape,
-                    onClick = {
-                        onViewAction(GalleryViewAction.OnClickCreateNew)
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = DR.drawable.ic_add),
-                        contentDescription = null,
-                    )
-                }
-            }
-        },
     ) { contentPadding ->
         Column(
             modifier = Modifier
@@ -74,12 +51,27 @@ fun GalleryContent(
                 thickness = 1.dp
             )
             VerticalSpacer(paddingMedium)
-            if (viewData.isEmptyGallery) {
-                EmptyGalleryContent(
-                    viewData = viewData,
-                    onViewAction = onViewAction,
-                )
+            MoreButton(
+                text = viewData.termsAndConditionsText
+            ) {
+                // TODO add click to t&cs
             }
+            VerticalSpacer(paddingMedium)
+            MoreButton(
+                text = viewData.privacyPolicyText
+            ) {
+                // TODO add click to privacy policy
+            }
+            VerticalSpacer(paddingLarge)
+            WeightSpacer(1f)
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = viewData.createdByText,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Center,
+                    color = LightGrey
+                )
+            )
         }
     }
 }

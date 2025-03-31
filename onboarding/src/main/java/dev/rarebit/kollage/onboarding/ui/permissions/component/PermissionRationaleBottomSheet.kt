@@ -15,6 +15,7 @@ import dev.rarebit.design.component.ButtonColours
 import dev.rarebit.design.component.PrimaryButton
 import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.modifier.bottomSheetShape
+import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.design.theme.paddingSmall
@@ -59,6 +60,7 @@ private fun PermissionRationaleBottomsheetContent(
             text = viewData.permissionRationaleDescription,
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Center,
+                color = Black,
             ),
         )
         VerticalSpacer(paddingLarge)
