@@ -7,4 +7,4 @@ data class GalleryViewData(
     val isEmptyGallery: Boolean,
     val primaryCtaLabel: String,
     val emptyDescription: String,
-): BaseViewData()
+) : BaseViewData()

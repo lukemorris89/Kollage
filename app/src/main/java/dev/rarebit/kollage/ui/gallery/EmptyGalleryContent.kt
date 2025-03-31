@@ -2,7 +2,6 @@ package dev.rarebit.kollage.ui.gallery
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -10,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.rarebit.design.component.ButtonColours
@@ -18,9 +16,7 @@ import dev.rarebit.design.component.PrimaryButton
 import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingLarge
-import dev.rarebit.kollage.R
 import dev.rarebit.kollage.ui.gallery.data.GalleryViewData
-import dev.rarebit.kollage.ui.home.HomeViewAction
 import dev.rarebit.design.R as DR
 
 @Composable

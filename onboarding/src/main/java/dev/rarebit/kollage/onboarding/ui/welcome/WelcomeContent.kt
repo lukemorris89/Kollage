@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +22,6 @@ import dev.rarebit.design.modifier.regularScreen
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.DarkGrey
 import dev.rarebit.design.theme.White
-import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.design.theme.paddingMedium
 import dev.rarebit.kollage.onboarding.ui.welcome.data.WelcomeViewData
 

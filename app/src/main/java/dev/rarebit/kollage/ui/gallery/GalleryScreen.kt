@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import dev.rarebit.kollage.ui.gallery.data.GalleryViewEvent
 import dev.rarebit.kollage.ui.gallery.data.GalleryViewModel
-import dev.rarebit.kollage.ui.home.data.HomeViewEvent
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

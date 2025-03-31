@@ -1,13 +1,11 @@
 package dev.rarebit.kollage.onboarding.ui.permissions
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +18,6 @@ import dev.rarebit.design.component.PrimaryButton
 import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.component.WeightSpacer
 import dev.rarebit.design.modifier.regularScreen
-import dev.rarebit.design.theme.Black
-import dev.rarebit.design.theme.White
 import dev.rarebit.kollage.onboarding.ui.permissions.component.PermissionDeniedBottomsheet
 import dev.rarebit.kollage.onboarding.ui.permissions.component.PermissionRationaleBottomsheet
 import dev.rarebit.kollage.onboarding.ui.permissions.data.PermissionsViewData
@@ -47,8 +43,7 @@ fun PermissionsContent(
         VerticalSpacer(24.dp)
         Text(
             modifier = Modifier
-                .padding(horizontal = 32.dp)
-            ,
+                .padding(horizontal = 32.dp),
             text = viewData.description,
             style = MaterialTheme.typography.bodyMedium.copy(
                 textAlign = TextAlign.Center,

@@ -7,4 +7,4 @@ data class MoreViewData(
     val termsAndConditionsText: String,
     val privacyPolicyText: String,
     val createdByText: String,
-): BaseViewData()
+) : BaseViewData()

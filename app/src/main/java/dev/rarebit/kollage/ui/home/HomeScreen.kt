@@ -42,7 +42,5 @@ context(HomeViewModel)
 private fun onViewAction(viewAction: HomeViewAction) {
     when (viewAction) {
         is HomeViewAction.OnClickBottomNavigationTab -> onClickBottomNavigationTab(viewAction.item)
-        is HomeViewAction.OnClickFab -> onClickAddNewCollage()
-        is HomeViewAction.OnClickCreateNew -> onClickAddNewCollage()
     }
 }

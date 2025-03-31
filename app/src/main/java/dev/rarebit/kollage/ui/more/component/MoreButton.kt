@@ -22,8 +22,8 @@ import dev.rarebit.design.theme.paddingMedium
 
 @Composable
 fun MoreButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
