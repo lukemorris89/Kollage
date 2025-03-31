@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.onboarding.ui.tutorial.data
+package dev.rarebit.kollage.ui.tutorial.data
 
 import dev.rarebit.core.viewmodel.BaseViewEvent
 

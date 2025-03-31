@@ -7,6 +7,7 @@ import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.kollage.R
+import dev.rarebit.kollage.data.repository.DataRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class GalleryViewModel(
     override val resourceProvider: ResourceProvider,
+    private val dataRepository: DataRepository,
 ) : BaseViewModel<GalleryViewData, GalleryViewEvent>(),
     WithResourceProvider {
 
@@ -33,6 +35,10 @@ class GalleryViewModel(
         get() = _viewEvent
 
     fun onClickAddNewCollage() {
-        _viewEvent.tryEmit(GalleryViewEvent.NavigateToNewCollage)
+        if (dataRepository.getHasCompletedTutorial()) {
+            _viewEvent.tryEmit(GalleryViewEvent.NavigateToNewCollage)
+        } else {
+            _viewEvent.tryEmit(GalleryViewEvent.NavigateToTutorial)
+        }
     }
 }

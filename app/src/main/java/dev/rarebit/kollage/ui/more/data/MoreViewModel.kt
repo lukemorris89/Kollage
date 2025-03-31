@@ -4,6 +4,7 @@ import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
 import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
+import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.kollage.R
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,9 +20,12 @@ class MoreViewModel(
     private val _viewData = MutableStateFlow(
         MoreViewData(
             title = R.string.more.asString,
+            legalTitle = R.string.legal.asString,
             termsAndConditionsText = R.string.terms_and_conditions.asString,
             privacyPolicyText = R.string.privacy_policy.asString,
             createdByText = R.string.created_by_rarebit.asString,
+            settingsTitle = R.string.app_settings.asString,
+            reviewPermissionsText = R.string.review_permissions.asString
         )
     )
     override val viewData: StateFlow<MoreViewData>
@@ -30,4 +34,8 @@ class MoreViewModel(
     private val _viewEvent = viewEventFlow<MoreViewEvent>()
     override val viewEvent: SharedFlow<ViewEvent<MoreViewEvent>>
         get() = _viewEvent
+
+    fun onClickReviewPermissions() {
+        _viewEvent.tryEmit(MoreViewEvent.OpenAppSettings)
+    }
 }

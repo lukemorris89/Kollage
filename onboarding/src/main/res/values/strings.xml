@@ -14,6 +14,7 @@
     <string name="next">Next</string>
     <string name="start">Start</string>
     <string name="skip">Skip</string>
+    <string name="back">Back</string>
     <string name="tutorial_step_1_description">To create a kollage layer, drag your finger across the area of the screen you\'d like to capture.</string>
     <string name="tutorial_step_2_description">To see camera options, tap the Settings button.</string>
     <string name="tutorial_step_3_description">The bottom buttons help you modify and capture your kollage.</string>

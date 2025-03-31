@@ -50,6 +50,13 @@ fun MoreContent(
                 thickness = 1.dp
             )
             VerticalSpacer(paddingMedium)
+            Text(
+                text = viewData.legalTitle,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = White
+                )
+            )
+            VerticalSpacer(paddingMedium)
             MoreButton(
                 text = viewData.termsAndConditionsText
             ) {
@@ -60,6 +67,19 @@ fun MoreContent(
                 text = viewData.privacyPolicyText
             ) {
                 // TODO add click to privacy policy
+            }
+            VerticalSpacer(paddingLarge)
+            Text(
+                text = viewData.settingsTitle,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = White
+                )
+            )
+            VerticalSpacer(paddingMedium)
+            MoreButton(
+                text = viewData.reviewPermissionsText
+            ) {
+                onViewAction(MoreViewAction.OnClickReviewPermissions)
             }
             VerticalSpacer(paddingLarge)
             WeightSpacer(1f)

@@ -2,6 +2,7 @@ package dev.rarebit.core.di
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import dev.rarebit.core.application.ApplicationContextProvider
 import dev.rarebit.core.application.ApplicationProvider
 import dev.rarebit.core.buildinfo.BuildInfoProvider
@@ -28,4 +29,10 @@ val coreModule = module {
         }
     }
     single<Logger> { LoggerImpl() }
+    single<SharedPreferences> {
+        androidContext().getSharedPreferences(
+            "kollage_shared_preferences",
+            Context.MODE_PRIVATE
+        )
+    }
 }

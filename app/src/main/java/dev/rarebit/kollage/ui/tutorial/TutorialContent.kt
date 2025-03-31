@@ -1,8 +1,6 @@
-package dev.rarebit.kollage.onboarding.ui.tutorial
+package dev.rarebit.kollage.ui.tutorial
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,18 +9,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import dev.rarebit.design.component.ButtonColours
+import dev.rarebit.design.component.HorizontalSpacer
 import dev.rarebit.design.component.PrimaryButton
 import dev.rarebit.design.modifier.regularScreen
-import dev.rarebit.kollage.onboarding.ui.tutorial.data.TutorialViewData
-import dev.rarebit.design.R as DR
+import dev.rarebit.design.theme.White
+import dev.rarebit.design.theme.paddingLarge
+import dev.rarebit.design.theme.paddingSmall
+import dev.rarebit.kollage.ui.tutorial.data.TutorialViewData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,27 +35,7 @@ fun TutorialContent(
         pageCount = { viewData.pages.size },
         initialPage = viewData.currentPageIndex
     )
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { },
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            onViewAction(TutorialViewAction.OnClickBack)
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(
-                                id = DR.drawable.ic_back,
-                            ),
-                            contentDescription = null,
-                        )
-                    }
-                },
-            )
-        }
-    ) { contentPadding ->
+    Scaffold { contentPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -66,28 +47,35 @@ fun TutorialContent(
                 state = pagerState,
                 beyondViewportPageCount = 2,
             ) { pageIndex ->
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                    Text(
+                        modifier = Modifier.padding(horizontal = paddingLarge),
+                        text = viewData.pages[viewData.currentPageIndex].description,
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            color = White,
+                            textAlign = TextAlign.Center,
+                        )
+                    )
+                }
             }
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                AnimatedVisibility(
-                    visible = viewData.showSkip,
-                    enter = expandHorizontally(
-                        expandFrom = Alignment.Start
-                    ),
-                    exit = shrinkHorizontally(
-                        shrinkTowards = Alignment.Start
-                    )
-                ) {
-                    PrimaryButton(
-                        modifier = Modifier.weight(1f),
-                        text = viewData.skipCtaLabel,
-                    ) {
-                        onViewAction(TutorialViewAction.OnClickSkipCta)
-                    }
-                }
                 PrimaryButton(
                     modifier = Modifier.weight(1f),
+                    buttonColours = ButtonColours.PrimaryOutlined,
+                    text = viewData.backCtaLabel,
+                ) {
+                    onViewAction(TutorialViewAction.OnClickBack)
+                }
+                HorizontalSpacer(paddingSmall)
+                PrimaryButton(
+                    modifier = Modifier.weight(1f),
+                    buttonColours = ButtonColours.Secondary,
                     text = viewData.primaryCtaLabel
                 ) {
                     onViewAction(TutorialViewAction.OnClickPrimaryCta)

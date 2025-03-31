@@ -5,9 +5,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.rarebit.kollage.onboarding.ui.permissions.PermissionsScreen
-import dev.rarebit.kollage.onboarding.ui.tutorial.TutorialScreen
 import dev.rarebit.kollage.onboarding.ui.welcome.WelcomeScreen
 import dev.rarebit.kollage.ui.home.HomeScreen
+import dev.rarebit.kollage.ui.tutorial.TutorialScreen
 
 @Composable
 fun AppNavHost(
