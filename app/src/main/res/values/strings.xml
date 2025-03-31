@@ -8,4 +8,8 @@
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="created_by_rarebit">Created by Rarebit.dev</string>
+    <string name="app_settings">App settings</string>
+    <string name="review_permissions">Review permissions</string>
+    <string name="legal">Legal</string>
+    <string name="back">Back</string>
 </resources>

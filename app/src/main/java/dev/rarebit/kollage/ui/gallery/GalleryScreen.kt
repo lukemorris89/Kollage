@@ -4,7 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import dev.rarebit.core.permission.hasCameraPermission
+import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.ui.gallery.data.GalleryViewEvent
 import dev.rarebit.kollage.ui.gallery.data.GalleryViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -14,6 +17,7 @@ fun GalleryScreen(
     navHostController: NavHostController,
     viewModel: GalleryViewModel = koinViewModel()
 ) {
+    val context = LocalContext.current
     val viewData by viewModel.viewData.collectAsState()
     GalleryContent(
         viewData = viewData,
@@ -26,9 +30,16 @@ fun GalleryScreen(
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect { event ->
-            when (event) {
+            when (event.consume()) {
+                GalleryViewEvent.NavigateToTutorial -> {
+                    navHostController.navigate(AppRoute.Tutorial)
+                }
                 GalleryViewEvent.NavigateToNewCollage -> {
-                    // TODO add navigation to tutorial or new collage
+                    if (context.hasCameraPermission()) {
+                        navHostController.navigate(AppRoute.CreateCollage)
+                    } else {
+                        navHostController.navigate(AppRoute.Permissions)
+                    }
                 }
 
                 null -> Unit

@@ -11,4 +11,10 @@ sealed interface AppRoute {
 
     @Serializable
     data object Home : AppRoute
+
+    @Serializable
+    data object Tutorial : AppRoute
+
+    @Serializable
+    data object CreateCollage : AppRoute
 }

@@ -1,5 +1,7 @@
 package dev.rarebit.kollage.ui.gallery
 
-sealed class GalleryViewAction() {
+import dev.rarebit.core.viewmodel.BaseViewAction
+
+sealed class GalleryViewAction : BaseViewAction() {
     data object OnClickCreateNew : GalleryViewAction()
 }

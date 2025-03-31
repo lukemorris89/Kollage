@@ -13,6 +13,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import dev.rarebit.core.permission.hasCameraPermission
 import dev.rarebit.core.permission.openAppSettings
 import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.onboarding.ui.permissions.data.PermissionsViewEvent
@@ -52,12 +54,11 @@ fun PermissionsScreen(
 
     LaunchedEffect(Unit) {
         with(viewModel) {
-            if (ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.CAMERA
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                navHostController.navigate(AppRoute.Home)
+            if (context.hasCameraPermission()) {
+                val navOptions = NavOptions.Builder().apply {
+                    setPopUpTo<AppRoute.Home>(inclusive = false)
+                }.build()
+                navHostController.navigate(AppRoute.CreateCollage, navOptions)
             }
             viewEvent.collect { event ->
                 when (event.consume()) {
