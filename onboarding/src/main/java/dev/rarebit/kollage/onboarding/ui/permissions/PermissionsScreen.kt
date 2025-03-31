@@ -62,8 +62,11 @@ fun PermissionsScreen(
             }
             viewEvent.collect { event ->
                 when (event.consume()) {
-                    PermissionsViewEvent.NavigateToHomeScreen -> {
-                        navHostController.navigate(AppRoute.Home)
+                    PermissionsViewEvent.NavigateToCreateCollageScreen -> {
+                        val navOptions = NavOptions.Builder().apply {
+                            setPopUpTo<AppRoute.Home>(inclusive = false)
+                        }.build()
+                        navHostController.navigate(AppRoute.CreateCollage, navOptions)
                     }
 
                     PermissionsViewEvent.CheckPermissions ->
@@ -72,7 +75,10 @@ fun PermissionsScreen(
                                 context,
                                 Manifest.permission.CAMERA
                             ) == PackageManager.PERMISSION_GRANTED -> {
-                                navHostController.navigate(AppRoute.Home)
+                                val navOptions = NavOptions.Builder().apply {
+                                    setPopUpTo<AppRoute.Home>(inclusive = false)
+                                }.build()
+                                navHostController.navigate(AppRoute.CreateCollage, navOptions)
                             }
 
                             ActivityCompat.shouldShowRequestPermissionRationale(

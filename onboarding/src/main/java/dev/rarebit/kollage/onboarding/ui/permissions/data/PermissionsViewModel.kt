@@ -54,7 +54,7 @@ class PermissionsViewModel(
     }
 
     fun onPermissionGranted() {
-        _viewEvent.tryEmit(PermissionsViewEvent.NavigateToHomeScreen)
+        _viewEvent.tryEmit(PermissionsViewEvent.NavigateToCreateCollageScreen)
     }
 
     fun togglePermissionRationaleBottomsheet(isDisplayed: Boolean) {
