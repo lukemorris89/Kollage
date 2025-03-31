@@ -19,6 +19,7 @@ import dev.rarebit.kollage.onboarding.ui.permissions.data.PermissionsViewEvent
 import dev.rarebit.kollage.onboarding.ui.permissions.data.PermissionsViewModel
 import org.koin.androidx.compose.koinViewModel
 
+@Suppress("CyclomaticComplexMethod")
 @Composable
 fun PermissionsScreen(
     navHostController: NavHostController,
@@ -49,7 +50,7 @@ fun PermissionsScreen(
             }
         )
 
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
         with(viewModel) {
             if (ContextCompat.checkSelfPermission(
                     context,
@@ -74,7 +75,8 @@ fun PermissionsScreen(
                             }
 
                             ActivityCompat.shouldShowRequestPermissionRationale(
-                                context as Activity, Manifest.permission.CAMERA
+                                context as Activity,
+                                Manifest.permission.CAMERA
                             ) -> {
                                 with(viewModel) {
                                     onViewAction(
@@ -128,7 +130,6 @@ private fun onViewAction(viewAction: PermissionsViewAction) {
         PermissionsViewAction.OnClickPermissionRationalePrimaryCta -> {
             togglePermissionRationaleBottomsheet(false)
             requestPermissions()
-
         }
 
         PermissionsViewAction.OnClickPermissionRationaleSecondaryCta -> {
@@ -138,7 +139,6 @@ private fun onViewAction(viewAction: PermissionsViewAction) {
         PermissionsViewAction.OnClickPermissionDeniedPrimaryCta -> {
             togglePermissionDeniedBottomsheet(false)
             openAppSettings()
-
         }
 
         PermissionsViewAction.OnClickPermissionDeniedSecondaryCta -> {

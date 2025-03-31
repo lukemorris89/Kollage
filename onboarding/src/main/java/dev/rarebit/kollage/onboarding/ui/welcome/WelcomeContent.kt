@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,11 +16,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.rarebit.design.component.ButtonColours
 import dev.rarebit.design.component.PrimaryButton
+import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.component.WeightSpacer
 import dev.rarebit.design.modifier.regularScreen
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.DarkGrey
 import dev.rarebit.design.theme.White
+import dev.rarebit.design.theme.paddingMedium
 import dev.rarebit.kollage.onboarding.ui.welcome.data.WelcomeViewData
 
 @Composable
@@ -33,7 +35,7 @@ fun WelcomeContent(
             .fillMaxSize()
             .background(Black)
             .regularScreen()
-            .systemBarsPadding(),
+            .safeDrawingPadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -51,6 +53,7 @@ fun WelcomeContent(
             text = viewData.ctaLabel,
             onClick = { onViewAction(WelcomeViewAction.OnClickPrimaryCta) },
         )
+        VerticalSpacer(paddingMedium)
         Text(
             modifier = Modifier.padding(16.dp),
             text = viewData.termsText,

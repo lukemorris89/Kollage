@@ -2,4 +2,10 @@
     <string name="app_name">Kollage</string>
     <string name="gallery">Gallery</string>
     <string name="more">More</string>
+    <string name="you_haven_t_created_anything_yet">You haven\'t created anything yet</string>
+    <string name="create_new">Create new</string>
+    <string name="gallery_empty_description">Looks like you haven\'t created\nany kollages yet</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="created_by_rarebit">Created by Rarebit.dev</string>
 </resources>

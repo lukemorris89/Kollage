@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.ui.home.data
+package dev.rarebit.kollage.ui.gallery.data
 
 import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
@@ -6,38 +6,33 @@ import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
+import dev.rarebit.kollage.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
-class HomeViewModel(
+class GalleryViewModel(
     override val resourceProvider: ResourceProvider,
-) : BaseViewModel<HomeViewData, HomeViewEvent>(),
+) : BaseViewModel<GalleryViewData, GalleryViewEvent>(),
     WithResourceProvider {
 
     private val _viewData = MutableStateFlow(
-        HomeViewData(
-            selectedTab = NavigationItem.Gallery,
+        GalleryViewData(
+            title = R.string.gallery.asString,
+            isEmptyGallery = true,
+            primaryCtaLabel = R.string.create_new.asString,
+            emptyDescription = R.string.gallery_empty_description.asString,
         )
     )
-    override val viewData: StateFlow<HomeViewData>
+    override val viewData: StateFlow<GalleryViewData>
         get() = _viewData.asStateFlow()
 
-    private val _viewEvent = viewEventFlow<HomeViewEvent>()
-    override val viewEvent: SharedFlow<ViewEvent<HomeViewEvent>>
+    private val _viewEvent = viewEventFlow<GalleryViewEvent>()
+    override val viewEvent: SharedFlow<ViewEvent<GalleryViewEvent>>
         get() = _viewEvent
 
-    fun onClickBottomNavigationTab(item: NavigationItem) {
-        _viewData.update { currentState ->
-            currentState.copy(
-                selectedTab = item,
-            )
-        }
-    }
-
     fun onClickAddNewCollage() {
-        _viewEvent.tryEmit(HomeViewEvent.NavigateToNewCollage)
+        _viewEvent.tryEmit(GalleryViewEvent.NavigateToNewCollage)
     }
 }

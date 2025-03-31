@@ -45,10 +45,6 @@ class PermissionsViewModel(
         _viewEvent.tryEmit(PermissionsViewEvent.CheckPermissions)
     }
 
-    fun onResume() {
-
-    }
-
     fun requestPermissions() {
         _viewEvent.tryEmit(PermissionsViewEvent.RequestPermissions)
     }
