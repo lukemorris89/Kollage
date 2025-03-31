@@ -1,5 +1,6 @@
 package dev.rarebit.kollage.ui.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,6 +15,10 @@ fun HomeScreen(
     navHostController: NavHostController,
     viewModel: HomeViewModel = koinViewModel()
 ) {
+    BackHandler {
+        viewModel.onBackPressed()
+    }
+
     val viewData by viewModel.viewData.collectAsState()
     HomeContent(
         viewData = viewData,
@@ -30,6 +35,10 @@ fun HomeScreen(
             when (event) {
                 HomeViewEvent.NavigateToNewCollage -> {
                     // TODO add navigation to tutorial or new collage
+                }
+
+                HomeViewEvent.NavigateBack -> {
+                    navHostController.popBackStack()
                 }
 
                 null -> Unit

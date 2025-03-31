@@ -29,6 +29,18 @@ class HomeViewModel(
     override val viewEvent: SharedFlow<ViewEvent<HomeViewEvent>>
         get() = _viewEvent
 
+    fun onBackPressed() {
+        if (_viewData.value.selectedTab != NavigationItem.Gallery) {
+            _viewData.update { currentState ->
+                currentState.copy(
+                    selectedTab = NavigationItem.Gallery,
+                )
+            }
+        } else {
+            _viewEvent.tryEmit(HomeViewEvent.NavigateBack)
+        }
+    }
+
     fun onClickBottomNavigationTab(item: NavigationItem) {
         _viewData.update { currentState ->
             currentState.copy(

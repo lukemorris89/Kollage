@@ -11,4 +11,11 @@
     <string name="permissions_open_settings">Open Settings</string>
     <string name="permissions_rationale_description">Camera access is required to capture photos directly within the app. Please grant these permissions to enable app features.</string>
     <string name="permissions_denied_description">Camera permissions have been denied, and are required for this app to function. You can grant access to the camera from the app settings.</string>
+    <string name="next">Next</string>
+    <string name="start">Start</string>
+    <string name="skip">Skip</string>
+    <string name="tutorial_step_1_description">To create a kollage layer, drag your finger across the area of the screen you\'d like to capture.</string>
+    <string name="tutorial_step_2_description">To see camera options, tap the Settings button.</string>
+    <string name="tutorial_step_3_description">The bottom buttons help you modify and capture your kollage.</string>
+    <string name="tutorial_step_4_description">Once you\'ve captured your kollage, you can edit, save or share it.</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.rarebit.kollage.onboarding.ui.permissions.PermissionsScreen
+import dev.rarebit.kollage.onboarding.ui.tutorial.TutorialScreen
 import dev.rarebit.kollage.onboarding.ui.welcome.WelcomeScreen
 import dev.rarebit.kollage.ui.home.HomeScreen
 
@@ -31,6 +32,12 @@ fun AppNavHost(
 
         composable<AppRoute.Home> {
             HomeScreen(
+                navHostController = navHostController
+            )
+        }
+
+        composable<AppRoute.Tutorial> {
+            TutorialScreen(
                 navHostController = navHostController
             )
         }

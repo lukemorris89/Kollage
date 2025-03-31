@@ -1,7 +1,6 @@
 package dev.rarebit.kollage.ui.home
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -10,7 +9,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.kollage.ui.gallery.GalleryScreen
 import dev.rarebit.kollage.ui.home.component.BottomNavBar
@@ -33,7 +31,6 @@ fun HomeContent(
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(Black)
             .safeDrawingPadding(),
         bottomBar = {
             BottomNavBar(
