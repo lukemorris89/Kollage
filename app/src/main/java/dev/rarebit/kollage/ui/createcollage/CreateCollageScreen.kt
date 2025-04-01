@@ -37,5 +37,6 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
     when (viewAction) {
         is CreateCollageViewAction.OnPrimaryToolButtonClicked -> onPrimaryToolButtonClicked(viewAction.button)
         is CreateCollageViewAction.OnSecondaryToolButtonClicked -> onSecondaryToolButtonClicked(viewAction.button)
+        is CreateCollageViewAction.OnCropShapeClicked -> onCropShapeSelected(viewAction.shape)
     }
 }

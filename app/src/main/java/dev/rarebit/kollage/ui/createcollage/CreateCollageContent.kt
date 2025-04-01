@@ -9,8 +9,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.modifier.regularScreen
+import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.kollage.ui.createcollage.component.CollageToolRow
+import dev.rarebit.kollage.ui.createcollage.component.SecondaryToolRow
+import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShapeRowContent
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 
 @Composable
@@ -30,6 +34,17 @@ fun CreateCollageContent(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+            if (viewData.showSecondaryToolOptions) {
+                SecondaryToolRow(
+                    content = {
+                        CropShapeRowContent(
+                            viewData = viewData,
+                            onViewAction = onViewAction,
+                        )
+                    }
+                )
+            }
+            VerticalSpacer(paddingLarge)
             CollageToolRow(
                 viewData = viewData,
                 onViewAction = onViewAction,

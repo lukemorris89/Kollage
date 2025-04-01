@@ -36,6 +36,7 @@ import dev.rarebit.design.theme.KollageTheme
 import dev.rarebit.design.theme.LightGrey
 import dev.rarebit.design.theme.White
 import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
+import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import kotlinx.collections.immutable.persistentListOf
 import dev.rarebit.design.R as DR
@@ -46,17 +47,23 @@ fun CollageToolRow(
     viewData: CreateCollageViewData,
     onViewAction: (CreateCollageViewAction) -> Unit,
 ) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .clip(
+                RoundedCornerShape(32.dp)
+            )
+            .then(
+                when {
+                    !viewData.isToolbarExpanded && viewData.selectedPrimaryTool == null -> Modifier.background(
+                        White
+                    )
 
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .wrapContentHeight()                .clip(
-                    RoundedCornerShape(32.dp)
-                )
-                .then(
-                    if (!viewData.isToolbarExpanded) {
-                        Modifier.background(White)
-                    } else {
+                    !viewData.isToolbarExpanded && viewData.selectedPrimaryTool != null ->
+                        Modifier.background(LightGrey)
+
+                    else -> {
                         val colorStops = arrayOf(
                             0.0f to White,
                             0.50f to White,
@@ -69,144 +76,150 @@ fun CollageToolRow(
                             )
                         )
                     }
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            AnimatedVisibility(
-                visible = viewData.isToolbarExpanded,
-                enter = expandVertically(),
-                exit = shrinkVertically()
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    viewData.secondaryToolButtons.forEach {
-                        val isSelected = it == viewData.selectedSecondaryTool
-                        Box(
-                            modifier = Modifier
-                                .width(54.dp)
-                                .padding(bottom = 8.dp)
-                                .clip(
-                                    RoundedCornerShape(
-                                        topStart = 0.dp,
-                                        topEnd = 0.dp,
-                                        bottomStart = 100.dp,
-                                        bottomEnd = 100.dp
-                                    )
-                                )
-                                .background(
-                                    if (isSelected) {
-                                        LightGrey
-                                    } else {
-                                        White
-                                    }
-                                )
-                                .padding(top = 8.dp)
-                                .then(
-                                    if (isSelected) {
-                                        Modifier.border(
-                                            width = 1.dp,
-                                            brush = Brush.verticalGradient(
-                                                colors = listOf(
-                                                    White,
-                                                    DarkGrey
-                                                )
-                                            ),
-                                            shape = RoundedCornerShape(
-                                                topStart = 0.dp,
-                                                topEnd = 0.dp,
-                                                bottomStart = 100.dp,
-                                                bottomEnd = 100.dp
-                                            )
-                                        )
-                                    } else Modifier
-                                ),
-
-                            contentAlignment = Alignment.Center
-                        ) {
-                            IconButton(
-                                onClick = {
-                                    onViewAction(
-                                        CreateCollageViewAction.OnSecondaryToolButtonClicked(
-                                            it
-                                        )
-                                    )
-                                    it.onClick()
-                                }
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = it.iconRes),
-                                    tint = Black,
-                                    contentDescription = null,
-                                )
-                            }
-                        }
-                    }
                 }
-            }
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly,
+    ) {
+        AnimatedVisibility(
+            visible = viewData.isToolbarExpanded,
+            enter = expandVertically(),
+            exit = shrinkVertically()
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-        viewData.primaryToolButtons.forEach {
-            val isSelected = it == viewData.selectedPrimaryTool
-            Box(
-                modifier = Modifier
-                    .width(54.dp)
-                    .padding(bottom = 8.dp)
-                    .clip(
-                        RoundedCornerShape(
-                            topStart = 0.dp,
-                            topEnd = 0.dp,
-                            bottomStart = 100.dp,
-                            bottomEnd = 100.dp
-                        )
-                    )
-                    .background(
-                        when {
-                            viewData.selectedPrimaryTool == null -> White
-                            isSelected -> White
-                            else -> LightGrey
-                        }
-                    )
-                    .then(
-                        if (isSelected) {
-                            Modifier.border(
-                                width = 1.dp,
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        White,
-                                        DarkGrey
-                                    )
-                                ),
-                                shape = RoundedCornerShape(
+                viewData.secondaryToolButtons.forEach {
+                    val isSelected = it == viewData.selectedSecondaryTool
+                    Box(
+                        modifier = Modifier
+                            .width(54.dp)
+                            .padding(bottom = 8.dp)
+                            .clip(
+                                RoundedCornerShape(
                                     topStart = 0.dp,
                                     topEnd = 0.dp,
                                     bottomStart = 100.dp,
                                     bottomEnd = 100.dp
                                 )
                             )
-                        } else Modifier
-                    ).padding(top = 8.dp),
+                            .background(
+                                if (isSelected) {
+                                    LightGrey
+                                } else {
+                                    White
+                                }
+                            )
+                            .padding(top = 8.dp)
+                            .then(
+                                if (isSelected) {
+                                    Modifier.border(
+                                        width = 1.dp,
+                                        brush = Brush.verticalGradient(
+                                            colors = listOf(
+                                                White,
+                                                DarkGrey
+                                            )
+                                        ),
+                                        shape = RoundedCornerShape(
+                                            topStart = 0.dp,
+                                            topEnd = 0.dp,
+                                            bottomStart = 100.dp,
+                                            bottomEnd = 100.dp
+                                        )
+                                    )
+                                } else Modifier
+                            ),
 
-                contentAlignment = Alignment.Center
-            ) {
-                IconButton(
-                    onClick = {
-                        onViewAction(CreateCollageViewAction.OnPrimaryToolButtonClicked(it))
-                        it.onClick()
+                        contentAlignment = Alignment.Center
+                    ) {
+                        IconButton(
+                            onClick = {
+                                onViewAction(
+                                    CreateCollageViewAction.OnSecondaryToolButtonClicked(
+                                        it
+                                    )
+                                )
+                                it.onClick()
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = it.iconRes),
+                                tint = Black,
+                                contentDescription = null,
+                            )
+                        }
                     }
-                ) {
-                    Icon(
-                        painter = painterResource(id = it.iconRes),
-                        tint = Black,
-                        contentDescription = null,
-                    )
                 }
             }
         }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            viewData.primaryToolButtons.forEach {
+                val isSelected = it == viewData.selectedPrimaryTool
+                Box(
+                    modifier = Modifier
+                        .width(54.dp)
+                        .padding(bottom = 8.dp)
+                        .clip(
+                            RoundedCornerShape(
+                                topStart = 0.dp,
+                                topEnd = 0.dp,
+                                bottomStart = 100.dp,
+                                bottomEnd = 100.dp
+                            )
+                        )
+                        .background(
+                            when {
+                                viewData.selectedPrimaryTool == null -> White
+                                isSelected -> White
+                                else -> LightGrey
+                            }
+                        )
+                        .then(
+                            if (isSelected) {
+                                Modifier.border(
+                                    width = 1.dp,
+                                    brush = Brush.verticalGradient(
+                                        colors = listOf(
+                                            White,
+                                            DarkGrey
+                                        )
+                                    ),
+                                    shape = RoundedCornerShape(
+                                        topStart = 0.dp,
+                                        topEnd = 0.dp,
+                                        bottomStart = 100.dp,
+                                        bottomEnd = 100.dp
+                                    )
+                                )
+                            } else Modifier
+                        )
+                        .padding(top = 8.dp),
+
+                    contentAlignment = Alignment.Center
+                ) {
+                    IconButton(
+                        onClick = {
+                            onViewAction(
+                                CreateCollageViewAction.OnPrimaryToolButtonClicked(
+                                    it
+                                )
+                            )
+                            it.onClick()
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = it.iconRes),
+                            tint = Black,
+                            contentDescription = null,
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -257,7 +270,8 @@ private fun CollageToolRowSecondarySelectedPreview() {
     }
 }
 
-private val previewButtons = persistentListOf(
+private
+val previewButtons = persistentListOf(
     CollageToolButton(
         iconRes = DR.drawable.ic_add,
         onClick = {}
@@ -275,10 +289,14 @@ private val previewButtons = persistentListOf(
         onClick = {}
     ),
 )
-private val previewViewData = CreateCollageViewData(
+
+private
+val previewViewData = CreateCollageViewData(
     primaryToolButtons = previewButtons,
     secondaryToolButtons = previewButtons,
     selectedPrimaryTool = null,
     selectedSecondaryTool = null,
     isToolbarExpanded = false,
+    selectedCropShape = CropShape.SQUARE,
+    showSecondaryToolOptions = false,
 )

@@ -5,8 +5,10 @@ import dev.rarebit.core.view.ViewEvent
 import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.viewEventFlow
+import dev.rarebit.kollage.R
 import dev.rarebit.kollage.data.repository.DataRepository
 import dev.rarebit.kollage.ui.createcollage.component.CollageToolButton
+import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -21,59 +23,59 @@ private val dataRepository: DataRepository,
 ) : BaseViewModel<CreateCollageViewData, CreateCollageViewEvent>(),
 WithResourceProvider {
 
-    private val previewPrimaryButtons = persistentListOf(
+    private val primaryButtons = persistentListOf(
         CollageToolButton(
-            iconRes = DR.drawable.ic_add,
+            iconRes = DR.drawable.ic_undo,
+            hasSecondaryButtons = false,
+            onClick = {
+            }
+        ),
+        CollageToolButton(
+            iconRes = DR.drawable.ic_camera_switch,
+            hasSecondaryButtons = false,
+            onClick = {
+            }
+        ),
+        CollageToolButton(
+            iconRes = DR.drawable.ic_edit,
             hasSecondaryButtons = true,
             onClick = {
             }
         ),
         CollageToolButton(
-            iconRes = DR.drawable.ic_menu,
-            hasSecondaryButtons = true,
-            onClick = {
-            }
-        ),
-        CollageToolButton(
-            iconRes = DR.drawable.ic_gallery,
-            hasSecondaryButtons = true,
-            onClick = {
-            }
-        ),
-        CollageToolButton(
-            iconRes = DR.drawable.ic_back,
-            hasSecondaryButtons = true,
+            iconRes = DR.drawable.ic_check,
+            hasSecondaryButtons = false,
             onClick = {
             }
         ),
     )
-    private val previewSecondaryButtons = persistentListOf(
+    private val editSecondaryButtons = persistentListOf(
         CollageToolButton(
-            iconRes = DR.drawable.ic_add,
+            iconRes = DR.drawable.ic_shape,
+            label = R.string.shape.asString,
             onClick = {}
         ),
         CollageToolButton(
-            iconRes = DR.drawable.ic_menu,
+            iconRes = DR.drawable.ic_alpha,
+            label = R.string.alpha.asString,
             onClick = {}
         ),
         CollageToolButton(
-            iconRes = DR.drawable.ic_gallery,
-            onClick = {}
-        ),
-        CollageToolButton(
-            iconRes = DR.drawable.ic_back,
+            iconRes = DR.drawable.ic_filter,
+            label = R.string.filter.asString,
             onClick = {}
         ),
     )
 
-    private val primaryButtonsList = persistentListOf<CollageToolButton>()
     private val _viewData = MutableStateFlow(
         CreateCollageViewData(
-            primaryToolButtons = previewPrimaryButtons,
-            secondaryToolButtons = previewSecondaryButtons,
+            primaryToolButtons = primaryButtons,
+            secondaryToolButtons = editSecondaryButtons,
             selectedPrimaryTool = null,
             selectedSecondaryTool = null,
             isToolbarExpanded = false,
+            selectedCropShape = CropShape.SQUARE,
+            showSecondaryToolOptions = false,
         )
     )
     override val viewData: StateFlow<CreateCollageViewData>
@@ -87,12 +89,17 @@ WithResourceProvider {
         _viewData.update { currentState ->
             currentState.copy(
                 selectedPrimaryTool = button,
-                isToolbarExpanded = button != currentState.selectedPrimaryTool && button.hasSecondaryButtons,
+                isToolbarExpanded = if (button == currentState.selectedPrimaryTool) {
+                    !currentState.isToolbarExpanded && button.hasSecondaryButtons
+                } else {
+                    button.hasSecondaryButtons
+                },
                 selectedSecondaryTool = if (button != currentState.selectedPrimaryTool) {
                     null
                 } else {
                     currentState.selectedSecondaryTool
-                }
+                },
+                showSecondaryToolOptions = false
             )
         }
     }
@@ -100,7 +107,16 @@ WithResourceProvider {
     fun onSecondaryToolButtonClicked(button: CollageToolButton) {
         _viewData.update { currentState ->
             currentState.copy(
-                selectedSecondaryTool = button
+                selectedSecondaryTool = button,
+                showSecondaryToolOptions = !currentState.showSecondaryToolOptions,
+            )
+        }
+    }
+
+    fun onCropShapeSelected(cropShape: CropShape) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                selectedCropShape = cropShape,
             )
         }
     }
