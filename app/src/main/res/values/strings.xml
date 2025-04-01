@@ -12,4 +12,8 @@
     <string name="review_permissions">Review permissions</string>
     <string name="legal">Legal</string>
     <string name="back">Back</string>
+    <string name="shape">Shape</string>
+    <string name="alpha">Alpha</string>
+    <string name="filter">Filter</string>
+    <string name="colour">Colour</string>
 </resources>

@@ -51,7 +51,7 @@ fun TutorialContent(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
+                ) {
                     Text(
                         modifier = Modifier.padding(horizontal = paddingLarge),
                         text = viewData.pages[viewData.currentPageIndex].description,
