@@ -1,5 +1,8 @@
 package dev.rarebit.kollage.ui.createcollage
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,14 +30,18 @@ fun CreateCollageContent(
     ) { contentPadding ->
         Column(
             modifier = Modifier
-            .fillMaxSize()
-            .regularScreen()
+                .fillMaxSize()
+                .regularScreen()
                 .padding(contentPadding)
-            .safeDrawingPadding(),
+                .safeDrawingPadding(),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            AnimatedVisibility(
+                visible = viewData.showSecondaryToolOptions,
+                enter = fadeIn(),
+                exit = fadeOut()
             ) {
-            if (viewData.showSecondaryToolOptions) {
                 SecondaryToolRow(
                     content = {
                         CropShapeRowContent(

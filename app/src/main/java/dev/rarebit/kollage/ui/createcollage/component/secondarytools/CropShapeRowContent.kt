@@ -1,11 +1,9 @@
 package dev.rarebit.kollage.ui.createcollage.component.secondarytools
 
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,7 +32,7 @@ fun CropShapeRowContent(
     Row(
         modifier = Modifier.fillMaxWidth().padding(start = paddingLarge),
         verticalAlignment = Alignment.CenterVertically,
-        ) {
+    ) {
         Text(
             text = stringResource(R.string.shape),
             style = MaterialTheme.typography.titleMedium.copy(

@@ -18,10 +18,10 @@ import kotlinx.coroutines.flow.update
 import dev.rarebit.design.R as DR
 
 class CreateCollageViewModel(
-override val resourceProvider: ResourceProvider,
-private val dataRepository: DataRepository,
+    override val resourceProvider: ResourceProvider,
+    private val dataRepository: DataRepository,
 ) : BaseViewModel<CreateCollageViewData, CreateCollageViewEvent>(),
-WithResourceProvider {
+    WithResourceProvider {
 
     private val primaryButtons = persistentListOf(
         CollageToolButton(
@@ -52,17 +52,14 @@ WithResourceProvider {
     private val editSecondaryButtons = persistentListOf(
         CollageToolButton(
             iconRes = DR.drawable.ic_shape,
-            label = R.string.shape.asString,
             onClick = {}
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_alpha,
-            label = R.string.alpha.asString,
             onClick = {}
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_filter,
-            label = R.string.filter.asString,
             onClick = {}
         ),
     )
@@ -79,11 +76,11 @@ WithResourceProvider {
         )
     )
     override val viewData: StateFlow<CreateCollageViewData>
-    get() = _viewData.asStateFlow()
+        get() = _viewData.asStateFlow()
 
     private val _viewEvent = viewEventFlow<CreateCollageViewEvent>()
     override val viewEvent: SharedFlow<ViewEvent<CreateCollageViewEvent>>
-    get() = _viewEvent
+        get() = _viewEvent
 
     fun onPrimaryToolButtonClicked(button: CollageToolButton) {
         _viewData.update { currentState ->

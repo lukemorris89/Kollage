@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 
 data class CollageToolButton(
     @DrawableRes val iconRes: Int,
-    val label: String? = null,
     val hasSecondaryButtons: Boolean = false,
     val onClick: () -> Unit,
 )

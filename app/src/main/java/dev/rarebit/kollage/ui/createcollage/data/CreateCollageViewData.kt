@@ -13,4 +13,4 @@ data class CreateCollageViewData(
     val isToolbarExpanded: Boolean,
     val showSecondaryToolOptions: Boolean,
     val selectedCropShape: CropShape,
-): BaseViewData()
+) : BaseViewData()
