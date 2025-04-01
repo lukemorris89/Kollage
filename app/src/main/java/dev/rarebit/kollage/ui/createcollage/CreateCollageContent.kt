@@ -23,6 +23,7 @@ import dev.rarebit.design.modifier.regularScreen
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingLarge
+import dev.rarebit.kollage.ui.createcollage.camera.CameraContent
 import dev.rarebit.kollage.ui.createcollage.component.CollageTool
 import dev.rarebit.kollage.ui.createcollage.component.CollageToolRow
 import dev.rarebit.kollage.ui.createcollage.component.SecondaryToolRow
@@ -62,7 +63,10 @@ fun CreateCollageContent(
             )
         }
     ) { contentPadding ->
-
+        CameraContent(
+            viewData = viewData,
+            onViewAction = onViewAction,
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()

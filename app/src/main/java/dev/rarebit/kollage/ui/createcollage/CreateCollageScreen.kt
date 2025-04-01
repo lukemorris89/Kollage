@@ -43,7 +43,11 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
         is CreateCollageViewAction.OnAlphaChanged -> onAlphaChanged(viewAction.alpha)
         is CreateCollageViewAction.OnColourClicked -> onColourSelected(viewAction.colour)
         CreateCollageViewAction.OnBackPressed -> onBackPressed()
-        is CreateCollageViewAction.OnCamerasLoaded -> updateHasCameras(viewAction.hasBackCamera, viewAction.hasFrontCamera)
+        is CreateCollageViewAction.OnCamerasLoaded -> updateHasCameras(
+            viewAction.hasBackCamera,
+            viewAction.hasFrontCamera
+        )
         CreateCollageViewAction.OnTorchClicked -> updateTorchOn()
+        is CreateCollageViewAction.OnTorchDetected -> updateHasTorch(viewAction.hasTorch)
     }
 }
