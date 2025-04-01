@@ -35,6 +35,7 @@ fun CreateCollageScreen(
 context(CreateCollageViewModel)
 private fun onViewAction(viewAction: CreateCollageViewAction) {
     when (viewAction) {
-        is CreateCollageViewAction.OnCollageToolButtonClicked -> onCollageToolButtonClicked(viewAction.button)
+        is CreateCollageViewAction.OnPrimaryToolButtonClicked -> onPrimaryToolButtonClicked(viewAction.button)
+        is CreateCollageViewAction.OnSecondaryToolButtonClicked -> onSecondaryToolButtonClicked(viewAction.button)
     }
 }

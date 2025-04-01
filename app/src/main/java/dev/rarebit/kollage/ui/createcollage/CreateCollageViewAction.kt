@@ -4,5 +4,6 @@ import dev.rarebit.core.viewmodel.BaseViewAction
 import dev.rarebit.kollage.ui.createcollage.component.CollageToolButton
 
 sealed class CreateCollageViewAction: BaseViewAction() {
-    data class OnCollageToolButtonClicked(val button: CollageToolButton): CreateCollageViewAction()
+    data class OnPrimaryToolButtonClicked(val button: CollageToolButton): CreateCollageViewAction()
+    data class OnSecondaryToolButtonClicked(val button: CollageToolButton): CreateCollageViewAction()
 }
