@@ -5,6 +5,7 @@ import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
 import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
+import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.kollage.data.repository.DataRepository
 import dev.rarebit.kollage.ui.createcollage.component.CollageTool
@@ -91,6 +92,10 @@ class CreateCollageViewModel(
     private val _viewEvent = viewEventFlow<CreateCollageViewEvent>()
     override val viewEvent: SharedFlow<ViewEvent<CreateCollageViewEvent>>
         get() = _viewEvent
+
+    fun onBackPressed() {
+        _viewEvent.tryEmit(CreateCollageViewEvent.NavigateBack)
+    }
 
     fun onPrimaryToolButtonClicked(button: CollageToolButton) {
         _viewData.update { currentState ->
