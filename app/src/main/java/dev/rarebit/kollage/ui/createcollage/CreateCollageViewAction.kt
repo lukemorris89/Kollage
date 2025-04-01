@@ -12,4 +12,6 @@ sealed class CreateCollageViewAction : BaseViewAction() {
     data class OnCropShapeClicked(val shape: CropShape) : CreateCollageViewAction()
     data class OnAlphaChanged(val alpha: Float) : CreateCollageViewAction()
     data class OnColourClicked(val colour: Color) : CreateCollageViewAction()
+    data class OnCamerasLoaded(val hasBackCamera: Boolean, val hasFrontCamera: Boolean) : CreateCollageViewAction()
+    data object OnTorchClicked: CreateCollageViewAction()
 }

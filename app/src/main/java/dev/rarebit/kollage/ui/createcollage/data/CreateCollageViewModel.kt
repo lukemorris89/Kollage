@@ -1,5 +1,6 @@
 package dev.rarebit.kollage.ui.createcollage.data
 
+import androidx.camera.core.CameraSelector
 import androidx.compose.ui.graphics.Color
 import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
@@ -30,29 +31,27 @@ class CreateCollageViewModel(
             iconRes = DR.drawable.ic_undo,
             hasSecondaryButtons = false,
             name = CollageTool.UNDO,
-            onClick = {
-            }
+            onClick = {}
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_camera_switch,
             hasSecondaryButtons = false,
             name = CollageTool.SWITCH_CAMERA,
             onClick = {
+                updateCameraLensFacing()
             }
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_edit,
             hasSecondaryButtons = true,
             name = CollageTool.EDIT,
-            onClick = {
-            }
+            onClick = {}
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_check,
             hasSecondaryButtons = false,
             name = CollageTool.DONE,
-            onClick = {
-            }
+            onClick = {}
         ),
     )
     private val editSecondaryButtons = persistentListOf(
@@ -84,6 +83,12 @@ class CreateCollageViewModel(
             showSecondaryToolOptions = false,
             selectedAlpha = 1f,
             selectedColor = Color.Transparent,
+            cameraLensFacing = CameraSelector.LENS_FACING_BACK,
+            hasBackCamera = true,
+            hasFrontCamera = false,
+            hasTorch = false,
+            isTorchOn = false,
+            undoEnabled = false,
         )
     )
     override val viewData: StateFlow<CreateCollageViewData>
@@ -95,6 +100,45 @@ class CreateCollageViewModel(
 
     fun onBackPressed() {
         _viewEvent.tryEmit(CreateCollageViewEvent.NavigateBack)
+    }
+
+    fun updateHasCameras(hasBackCamera: Boolean, hasFrontCamera: Boolean) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                hasBackCamera = hasBackCamera,
+                hasFrontCamera = hasFrontCamera,
+            )
+        }
+    }
+
+    fun updateCameraLensFacing() {
+        _viewData.update { currentState ->
+            currentState.copy(
+                cameraLensFacing = if (currentState.cameraLensFacing == CameraSelector.LENS_FACING_BACK && currentState.hasFrontCamera) {
+                    CameraSelector.LENS_FACING_FRONT
+                } else if (currentState.hasBackCamera) {
+                    CameraSelector.LENS_FACING_BACK
+                } else {
+                    currentState.cameraLensFacing
+                }
+            )
+        }
+    }
+
+    fun updateHasTorch(hasTorch: Boolean) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                hasTorch = hasTorch
+            )
+        }
+    }
+
+    fun updateTorchOn() {
+        _viewData.update { currentState ->
+            currentState.copy(
+                isTorchOn = !currentState.isTorchOn
+            )
+        }
     }
 
     fun onPrimaryToolButtonClicked(button: CollageToolButton) {

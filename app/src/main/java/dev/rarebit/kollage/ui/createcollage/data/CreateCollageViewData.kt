@@ -16,4 +16,10 @@ data class CreateCollageViewData(
     val selectedCropShape: CropShape,
     val selectedAlpha: Float,
     val selectedColor: Color,
+    val cameraLensFacing: Int,
+    val hasBackCamera: Boolean,
+    val hasFrontCamera: Boolean,
+    val hasTorch: Boolean,
+    val isTorchOn: Boolean,
+    val undoEnabled: Boolean,
 ) : BaseViewData()
