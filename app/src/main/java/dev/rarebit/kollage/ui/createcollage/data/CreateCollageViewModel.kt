@@ -1,12 +1,13 @@
 package dev.rarebit.kollage.ui.createcollage.data
 
+import androidx.compose.ui.graphics.Color
 import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
 import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.viewEventFlow
-import dev.rarebit.kollage.R
 import dev.rarebit.kollage.data.repository.DataRepository
+import dev.rarebit.kollage.ui.createcollage.component.CollageTool
 import dev.rarebit.kollage.ui.createcollage.component.CollageToolButton
 import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
 import kotlinx.collections.immutable.persistentListOf
@@ -27,24 +28,28 @@ class CreateCollageViewModel(
         CollageToolButton(
             iconRes = DR.drawable.ic_undo,
             hasSecondaryButtons = false,
+            name = CollageTool.UNDO,
             onClick = {
             }
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_camera_switch,
             hasSecondaryButtons = false,
+            name = CollageTool.SWITCH_CAMERA,
             onClick = {
             }
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_edit,
             hasSecondaryButtons = true,
+            name = CollageTool.EDIT,
             onClick = {
             }
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_check,
             hasSecondaryButtons = false,
+            name = CollageTool.DONE,
             onClick = {
             }
         ),
@@ -52,14 +57,17 @@ class CreateCollageViewModel(
     private val editSecondaryButtons = persistentListOf(
         CollageToolButton(
             iconRes = DR.drawable.ic_shape,
+            name = CollageTool.SHAPE,
             onClick = {}
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_alpha,
+            name = CollageTool.ALPHA,
             onClick = {}
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_filter,
+            name = CollageTool.COLOUR,
             onClick = {}
         ),
     )
@@ -73,6 +81,8 @@ class CreateCollageViewModel(
             isToolbarExpanded = false,
             selectedCropShape = CropShape.SQUARE,
             showSecondaryToolOptions = false,
+            selectedAlpha = 1f,
+            selectedColor = Color.Transparent,
         )
     )
     override val viewData: StateFlow<CreateCollageViewData>
@@ -105,7 +115,11 @@ class CreateCollageViewModel(
         _viewData.update { currentState ->
             currentState.copy(
                 selectedSecondaryTool = button,
-                showSecondaryToolOptions = !currentState.showSecondaryToolOptions,
+                showSecondaryToolOptions = if (currentState.selectedSecondaryTool == button) {
+                    !currentState.showSecondaryToolOptions
+                } else {
+                    true
+                },
             )
         }
     }
@@ -114,6 +128,22 @@ class CreateCollageViewModel(
         _viewData.update { currentState ->
             currentState.copy(
                 selectedCropShape = cropShape,
+            )
+        }
+    }
+
+    fun onAlphaChanged(alpha: Float) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                selectedAlpha = alpha,
+            )
+        }
+    }
+
+    fun onColourSelected(colour: Color) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                selectedColor = colour,
             )
         }
     }

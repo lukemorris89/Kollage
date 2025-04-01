@@ -38,5 +38,7 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
         is CreateCollageViewAction.OnPrimaryToolButtonClicked -> onPrimaryToolButtonClicked(viewAction.button)
         is CreateCollageViewAction.OnSecondaryToolButtonClicked -> onSecondaryToolButtonClicked(viewAction.button)
         is CreateCollageViewAction.OnCropShapeClicked -> onCropShapeSelected(viewAction.shape)
+        is CreateCollageViewAction.OnAlphaChanged -> onAlphaChanged(viewAction.alpha)
+        is CreateCollageViewAction.OnColourClicked -> onColourSelected(viewAction.colour)
     }
 }

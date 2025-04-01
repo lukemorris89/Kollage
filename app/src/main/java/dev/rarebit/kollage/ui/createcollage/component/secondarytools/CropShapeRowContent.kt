@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import dev.rarebit.design.component.HorizontalSpacer
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.DarkGrey
-import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.design.theme.paddingMedium
 import dev.rarebit.design.theme.paddingSmall
 import dev.rarebit.kollage.R
@@ -30,7 +29,9 @@ fun CropShapeRowContent(
     onViewAction: (CreateCollageViewAction) -> Unit,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(start = paddingLarge),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = paddingMedium),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -39,7 +40,7 @@ fun CropShapeRowContent(
                 color = Black,
             ),
         )
-        HorizontalSpacer(paddingMedium)
+        HorizontalSpacer(paddingSmall)
         Row(
             modifier = Modifier.horizontalScroll(rememberScrollState()),
             verticalAlignment = Alignment.CenterVertically,

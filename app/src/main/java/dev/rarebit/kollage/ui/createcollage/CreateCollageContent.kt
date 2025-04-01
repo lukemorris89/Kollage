@@ -15,8 +15,11 @@ import androidx.compose.ui.Modifier
 import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.modifier.regularScreen
 import dev.rarebit.design.theme.paddingLarge
+import dev.rarebit.kollage.ui.createcollage.component.CollageTool
 import dev.rarebit.kollage.ui.createcollage.component.CollageToolRow
 import dev.rarebit.kollage.ui.createcollage.component.SecondaryToolRow
+import dev.rarebit.kollage.ui.createcollage.component.secondarytools.AlphaRowContent
+import dev.rarebit.kollage.ui.createcollage.component.secondarytools.ColourRowContent
 import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShapeRowContent
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 
@@ -44,10 +47,29 @@ fun CreateCollageContent(
             ) {
                 SecondaryToolRow(
                     content = {
-                        CropShapeRowContent(
-                            viewData = viewData,
-                            onViewAction = onViewAction,
-                        )
+                        viewData.selectedSecondaryTool?.let {
+                            when (it.name) {
+                                CollageTool.SHAPE ->
+                                    CropShapeRowContent(
+                                        viewData = viewData,
+                                        onViewAction = onViewAction,
+                                    )
+
+                                CollageTool.ALPHA ->
+                                    AlphaRowContent(
+                                        viewData = viewData,
+                                        onViewAction = onViewAction,
+                                    )
+
+                                CollageTool.COLOUR ->
+                                    ColourRowContent(
+                                        viewData = viewData,
+                                        onViewAction = onViewAction,
+                                    )
+
+                                else -> {}
+                            }
+                        }
                     }
                 )
             }

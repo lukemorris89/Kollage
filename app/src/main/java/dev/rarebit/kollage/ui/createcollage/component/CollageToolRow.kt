@@ -16,25 +16,19 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.DarkGrey
-import dev.rarebit.design.theme.KollageTheme
 import dev.rarebit.design.theme.LightGrey
 import dev.rarebit.design.theme.White
 import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
-import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
-import kotlinx.collections.immutable.persistentListOf
-import dev.rarebit.design.R as DR
 
 @Suppress("CyclomaticComplexMethod")
 @Composable
@@ -209,78 +203,3 @@ fun CollageToolRow(
         }
     }
 }
-
-@Preview
-@Composable
-private fun CollageToolRowPreview() {
-    KollageTheme {
-        Surface {
-            CollageToolRow(
-                viewData = previewViewData,
-                onViewAction = {}
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun CollageToolRowPrimarySelectedPreview() {
-    KollageTheme {
-        Surface {
-            CollageToolRow(
-                viewData = previewViewData.copy(
-                    selectedPrimaryTool = previewViewData.primaryToolButtons[1],
-                    isToolbarExpanded = true,
-                ),
-                onViewAction = {}
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun CollageToolRowSecondarySelectedPreview() {
-    KollageTheme {
-        Surface {
-            CollageToolRow(
-                viewData = previewViewData.copy(
-                    selectedPrimaryTool = previewViewData.primaryToolButtons[1],
-                    selectedSecondaryTool = previewViewData.secondaryToolButtons[2],
-                    isToolbarExpanded = true,
-                ),
-                onViewAction = {}
-            )
-        }
-    }
-}
-
-private val previewButtons = persistentListOf(
-    CollageToolButton(
-        iconRes = DR.drawable.ic_add,
-        onClick = {}
-    ),
-    CollageToolButton(
-        iconRes = DR.drawable.ic_menu,
-        onClick = {}
-    ),
-    CollageToolButton(
-        iconRes = DR.drawable.ic_gallery,
-        onClick = {}
-    ),
-    CollageToolButton(
-        iconRes = DR.drawable.ic_back,
-        onClick = {}
-    ),
-)
-
-private val previewViewData = CreateCollageViewData(
-    primaryToolButtons = previewButtons,
-    secondaryToolButtons = previewButtons,
-    selectedPrimaryTool = null,
-    selectedSecondaryTool = null,
-    isToolbarExpanded = false,
-    selectedCropShape = CropShape.SQUARE,
-    showSecondaryToolOptions = false,
-)

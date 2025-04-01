@@ -1,5 +1,6 @@
 package dev.rarebit.kollage.ui.createcollage.data
 
+import androidx.compose.ui.graphics.Color
 import dev.rarebit.core.viewmodel.BaseViewData
 import dev.rarebit.kollage.ui.createcollage.component.CollageToolButton
 import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
@@ -13,4 +14,6 @@ data class CreateCollageViewData(
     val isToolbarExpanded: Boolean,
     val showSecondaryToolOptions: Boolean,
     val selectedCropShape: CropShape,
+    val selectedAlpha: Float,
+    val selectedColor: Color,
 ) : BaseViewData()
