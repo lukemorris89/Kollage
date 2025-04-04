@@ -114,8 +114,6 @@ fun CreateCollageContent(
             VerticalSpacer(paddingLarge)
             CollageToolRow(
                 viewData = viewData,
-                primaryToolButtons = primaryButtons,
-                secondaryToolButtons = secondaryButtons,
                 onViewAction = onViewAction,
             )
         }

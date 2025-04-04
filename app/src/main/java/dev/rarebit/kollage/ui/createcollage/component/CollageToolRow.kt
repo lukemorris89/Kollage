@@ -1,5 +1,6 @@
 package dev.rarebit.kollage.ui.createcollage.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -65,7 +66,6 @@ fun CollageToolRow(
     }
 }
 
-@Suppress("CyclomaticComplexMethod")
 @Composable
 private fun CollapsedToolRow(
     viewData: CreateCollageViewData,
@@ -116,68 +116,75 @@ private fun CollapsedToolRow(
     ) {
         primaryButtons.forEach {
             val isSelected = it.name == viewData.selectedPrimaryTool && it.name == CollageTool.EDIT
-            Box(
-                modifier = Modifier
-                    .width(54.dp)
-                    .padding(bottom = 8.dp)
-                    .clip(
-                        RoundedCornerShape(
+            CollapsedToolButton(
+                iconRes = it.iconRes,
+                selected = isSelected,
+                enabled = it.enabled,
+                onClick = it.onClick,
+            )
+        }
+    }
+}
+
+@Composable
+private fun CollapsedToolButton(
+    @DrawableRes iconRes: Int,
+    selected: Boolean,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .width(54.dp)
+            .padding(bottom = 8.dp)
+            .clip(
+                RoundedCornerShape(
+                    topStart = 0.dp,
+                    topEnd = 0.dp,
+                    bottomStart = 100.dp,
+                    bottomEnd = 100.dp
+                )
+            )
+            .background(
+                when {
+                    selected -> White
+                    else -> LightGrey
+                }
+            )
+            .then(
+                if (selected) {
+                    Modifier.border(
+                        width = 1.dp,
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                White,
+                                DarkGrey
+                            )
+                        ),
+                        shape = RoundedCornerShape(
                             topStart = 0.dp,
                             topEnd = 0.dp,
                             bottomStart = 100.dp,
                             bottomEnd = 100.dp
                         )
                     )
-                    .background(
-                        when {
-                            viewData.selectedPrimaryTool == null || viewData.selectedPrimaryTool != CollageTool.EDIT -> White
-                            isSelected -> White
-                            else -> LightGrey
-                        }
-                    )
-                    .then(
-                        if (isSelected) {
-                            Modifier.border(
-                                width = 1.dp,
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        White,
-                                        DarkGrey
-                                    )
-                                ),
-                                shape = RoundedCornerShape(
-                                    topStart = 0.dp,
-                                    topEnd = 0.dp,
-                                    bottomStart = 100.dp,
-                                    bottomEnd = 100.dp
-                                )
-                            )
-                        } else {
-                            Modifier
-                        }
-                    )
-                    .padding(top = 8.dp),
-
-                contentAlignment = Alignment.Center
-            ) {
-                IconButton(
-                    onClick = {
-                        when (it.name) {
-                            CollageTool.UNDO -> onViewAction(CreateCollageViewAction.OnUndoCollageLayer)
-                            CollageTool.SWITCH_CAMERA -> onViewAction(CreateCollageViewAction.OnSwitchCamera)
-                            CollageTool.EDIT -> onViewAction(CreateCollageViewAction.OnEditClicked)
-                            CollageTool.DONE -> onViewAction(CreateCollageViewAction.OnDoneClicked)
-                            else -> Unit
-                        }
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = it.iconRes),
-                        tint = Black,
-                        contentDescription = null,
-                    )
+                } else {
+                    Modifier
                 }
-            }
+            )
+            .padding(top = 8.dp),
+
+        contentAlignment = Alignment.Center
+    ) {
+        IconButton(
+            enabled = enabled,
+            onClick = onClick,
+        ) {
+            Icon(
+                painter = painterResource(id = iconRes),
+                tint = Black,
+                contentDescription = null,
+            )
         }
     }
 }
@@ -218,67 +225,76 @@ private fun ExpandedToolRow(
     ) {
         secondaryButtons.forEach {
             val isSelected = it.name == viewData.selectedSecondaryTool
-            Box(
-                modifier = Modifier
-                    .width(54.dp)
-                    .padding(bottom = 8.dp)
-                    .clip(
-                        RoundedCornerShape(
+            ExpandedToolButton(
+                iconRes = it.iconRes,
+                selected = isSelected,
+                enabled = it.enabled,
+                onClick = it.onClick,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ExpandedToolButton(
+    @DrawableRes iconRes: Int,
+    selected: Boolean,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .width(54.dp)
+            .padding(bottom = 8.dp)
+            .clip(
+                RoundedCornerShape(
+                    topStart = 0.dp,
+                    topEnd = 0.dp,
+                    bottomStart = 100.dp,
+                    bottomEnd = 100.dp
+                )
+            )
+            .background(
+                if (selected) {
+                    LightGrey
+                } else {
+                    White
+                }
+            )
+            .padding(top = 8.dp)
+            .then(
+                if (selected) {
+                    Modifier.border(
+                        width = 1.dp,
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                White,
+                                DarkGrey
+                            )
+                        ),
+                        shape = RoundedCornerShape(
                             topStart = 0.dp,
                             topEnd = 0.dp,
                             bottomStart = 100.dp,
                             bottomEnd = 100.dp
                         )
                     )
-                    .background(
-                        if (isSelected) {
-                            LightGrey
-                        } else {
-                            White
-                        }
-                    )
-                    .padding(top = 8.dp)
-                    .then(
-                        if (isSelected) {
-                            Modifier.border(
-                                width = 1.dp,
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        White,
-                                        DarkGrey
-                                    )
-                                ),
-                                shape = RoundedCornerShape(
-                                    topStart = 0.dp,
-                                    topEnd = 0.dp,
-                                    bottomStart = 100.dp,
-                                    bottomEnd = 100.dp
-                                )
-                            )
-                        } else {
-                            Modifier
-                        }
-                    ),
-
-                contentAlignment = Alignment.Center
-            ) {
-                IconButton(
-                    onClick = {
-                        when (it.name) {
-                            CollageTool.SHAPE -> onViewAction(CreateCollageViewAction.OnCropShapeClicked)
-                            CollageTool.ALPHA -> onViewAction(CreateCollageViewAction.OnAlphaClicked)
-                            CollageTool.COLOUR -> onViewAction(CreateCollageViewAction.OnColourClicked)
-                            else -> Unit
-                        }
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = it.iconRes),
-                        tint = Black,
-                        contentDescription = null,
-                    )
+                } else {
+                    Modifier
                 }
-            }
+            ),
+
+        contentAlignment = Alignment.Center
+    ) {
+        IconButton(
+            enabled = enabled,
+            onClick = onClick,
+        ) {
+            Icon(
+                painter = painterResource(id = iconRes),
+                tint = Black,
+                contentDescription = null,
+            )
         }
     }
 }
