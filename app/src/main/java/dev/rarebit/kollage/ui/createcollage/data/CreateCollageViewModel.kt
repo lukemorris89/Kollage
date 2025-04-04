@@ -9,6 +9,8 @@ import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.kollage.data.repository.DataRepository
+import dev.rarebit.kollage.data.repository.collage.CollageRepository
+import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.component.CollageTool
 import dev.rarebit.kollage.ui.createcollage.component.CollageToolButton
 import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
@@ -22,7 +24,7 @@ import dev.rarebit.design.R as DR
 
 class CreateCollageViewModel(
     override val resourceProvider: ResourceProvider,
-    private val dataRepository: DataRepository,
+    private val collageRepository: CollageRepository,
 ) : BaseViewModel<CreateCollageViewData, CreateCollageViewEvent>(),
     WithResourceProvider {
 
@@ -79,8 +81,9 @@ class CreateCollageViewModel(
             selectedPrimaryTool = null,
             selectedSecondaryTool = null,
             isToolbarExpanded = false,
-            selectedCropShape = CropShape.SQUARE,
+            selectedCropShape = CropShape.RECTANGLE,
             showSecondaryToolOptions = false,
+            defaultAlpha = 1f,
             selectedAlpha = 1f,
             selectedColor = Color.Transparent,
             cameraLensFacing = CameraSelector.LENS_FACING_BACK,
@@ -194,6 +197,22 @@ class CreateCollageViewModel(
             currentState.copy(
                 selectedColor = colour,
             )
+        }
+    }
+
+    fun updateCollageLayer(collageLayer: CollageLayer) {
+        with(collageRepository) {
+            if (previousCollage.value != collageLayer) {
+                updatePreviousCollageLayer(collage.value)
+            }
+            updateCollageLayer(collageLayer)
+            updateFinalCollage(null)
+            _viewData.update { currentState ->
+                currentState.copy(
+                    currentCollageLayer = collage.value,
+                    undoEnabled = true,
+                )
+            }
         }
     }
 }

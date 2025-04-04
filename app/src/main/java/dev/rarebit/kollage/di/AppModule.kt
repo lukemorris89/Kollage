@@ -5,6 +5,8 @@ import dev.rarebit.kollage.data.datasource.local.LocalDataSource
 import dev.rarebit.kollage.data.datasource.local.LocalDataSourceImpl
 import dev.rarebit.kollage.data.repository.DataRepository
 import dev.rarebit.kollage.data.repository.DataRepositoryImpl
+import dev.rarebit.kollage.data.repository.collage.CollageRepository
+import dev.rarebit.kollage.data.repository.collage.CollageRepositoryImpl
 import dev.rarebit.kollage.onboarding.di.onboardingModule
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewModel
 import dev.rarebit.kollage.ui.gallery.data.GalleryViewModel
@@ -23,6 +25,7 @@ val appModule = module {
 
     single<LocalDataSource> { LocalDataSourceImpl(get()) }
     single<DataRepository> { DataRepositoryImpl(get()) }
+    single<CollageRepository> { CollageRepositoryImpl() }
 
     viewModel { HomeViewModel(get()) }
     viewModel { GalleryViewModel(get(), get()) }
