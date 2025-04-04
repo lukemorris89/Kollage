@@ -2,6 +2,9 @@ package dev.rarebit.kollage.ui.createcollage.data
 
 import androidx.camera.core.CameraSelector
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.lifecycle.viewModelScope
+import dev.rarebit.core.application.ApplicationContextProvider
 import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
 import dev.rarebit.core.view.WithResourceProvider
@@ -12,14 +15,18 @@ import dev.rarebit.kollage.data.repository.collage.CollageRepository
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.component.CollageTool
 import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
+import dev.rarebit.kollage.ui.createcollage.util.imageutil.drawKollageBitmap
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class CreateCollageViewModel(
     override val resourceProvider: ResourceProvider,
+    private val applicationContextProvider: ApplicationContextProvider,
     private val collageRepository: CollageRepository,
 ) : BaseViewModel<CreateCollageViewData, CreateCollageViewEvent>(),
     WithResourceProvider {
@@ -39,7 +46,8 @@ class CreateCollageViewModel(
             hasFrontCamera = false,
             hasTorch = false,
             isTorchOn = false,
-            undoEnabled = false,
+            isUndoEnabled = false,
+            isSaveLoading = false,
         )
     )
     override val viewData: StateFlow<CreateCollageViewData>
@@ -185,7 +193,7 @@ class CreateCollageViewModel(
                     currentState.currentCollageLayer
                 },
                 currentCollageLayer = collageLayer,
-                undoEnabled = true,
+                isUndoEnabled = true,
             )
         }
         collageRepository.updateFinalCollage(null)
@@ -196,7 +204,7 @@ class CreateCollageViewModel(
             currentState.copy(
                 currentCollageLayer = currentState.previousCollageLayer,
                 previousCollageLayer = null,
-                undoEnabled = false,
+                isUndoEnabled = false,
                 selectedPrimaryTool = null,
                 isToolbarExpanded = false,
             )
@@ -205,5 +213,33 @@ class CreateCollageViewModel(
     }
 
     fun onDoneClicked() {
+    }
+
+    fun updateFinalCollage(finalCollage: ImageBitmap) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                isSaveLoading = true,
+            )
+        }
+        val currentCollageLayer = _viewData.value.currentCollageLayer
+        viewModelScope.launch(Dispatchers.IO) {
+            val newKollage = drawKollageBitmap(
+                applicationContextProvider(),
+                finalCollage,
+                currentCollageLayer,
+            )
+            with(collageRepository) {
+                updateCollageBackground(finalCollage)
+                updateFinalCollage(null)
+                updateFinalCollage(newKollage)
+            }
+        }.invokeOnCompletion {
+            _viewData.update { currentState ->
+                currentState.copy(
+                    isSaveLoading = false,
+                )
+            }
+            _viewEvent.tryEmit(CreateCollageViewEvent.NavigateToCollageResultScreen)
+        }
     }
 }

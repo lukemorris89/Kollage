@@ -36,6 +36,7 @@ import dev.rarebit.design.R as DR
 @Composable
 fun CollageToolRow(
     viewData: CreateCollageViewData,
+    onCaptureCollage: () -> Unit,
     modifier: Modifier = Modifier,
     onViewAction: (CreateCollageViewAction) -> Unit,
 ) {
@@ -62,6 +63,7 @@ fun CollageToolRow(
         CollapsedToolRow(
             viewData = viewData,
             onViewAction = onViewAction,
+            onCaptureCollage = onCaptureCollage,
         )
     }
 }
@@ -70,12 +72,13 @@ fun CollageToolRow(
 private fun CollapsedToolRow(
     viewData: CreateCollageViewData,
     onViewAction: (CreateCollageViewAction) -> Unit,
+    onCaptureCollage: () -> Unit,
 ) {
     val primaryButtons = persistentListOf(
         CollageToolButton(
             iconRes = DR.drawable.ic_undo,
             name = CollageTool.UNDO,
-            enabled = viewData.undoEnabled,
+            enabled = viewData.isUndoEnabled,
             onClick = {
                 onViewAction(CreateCollageViewAction.OnUndoCollageLayer)
             }
@@ -98,8 +101,9 @@ private fun CollapsedToolRow(
             iconRes = DR.drawable.ic_check,
             name = CollageTool.DONE,
             onClick = {
-                onViewAction(CreateCollageViewAction.OnDoneClicked)
-            }
+                onCaptureCollage()
+            },
+
         ),
     )
     Row(

@@ -31,5 +31,5 @@ val appModule = module {
     viewModel { GalleryViewModel(get(), get()) }
     viewModel { MoreViewModel(get()) }
     viewModel { TutorialViewModel(get(), get()) }
-    viewModel { CreateCollageViewModel(get(), get()) }
+    viewModel { CreateCollageViewModel(get(), get(), get()) }
 }

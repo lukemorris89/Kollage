@@ -22,5 +22,6 @@ data class CreateCollageViewData(
     val hasFrontCamera: Boolean,
     val hasTorch: Boolean,
     val isTorchOn: Boolean,
-    val undoEnabled: Boolean,
+    val isUndoEnabled: Boolean,
+    val isSaveLoading: Boolean,
 ) : BaseViewData()

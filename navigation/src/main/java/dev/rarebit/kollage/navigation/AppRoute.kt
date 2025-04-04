@@ -17,4 +17,7 @@ sealed interface AppRoute {
 
     @Serializable
     data object CreateCollage : AppRoute
+
+    @Serializable
+    data object CollageResult : AppRoute
 }
