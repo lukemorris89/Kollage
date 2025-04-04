@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
+import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewEvent
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -26,6 +27,7 @@ fun CreateCollageScreen(
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect { event ->
             when (event.consume()) {
+                CreateCollageViewEvent.NavigateBack -> navHostController.popBackStack()
                 null -> Unit
             }
         }
@@ -40,5 +42,13 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
         is CreateCollageViewAction.OnCropShapeClicked -> onCropShapeSelected(viewAction.shape)
         is CreateCollageViewAction.OnAlphaChanged -> onAlphaChanged(viewAction.alpha)
         is CreateCollageViewAction.OnColourClicked -> onColourSelected(viewAction.colour)
+        CreateCollageViewAction.OnBackPressed -> onBackPressed()
+        is CreateCollageViewAction.OnCamerasLoaded -> updateHasCameras(
+            viewAction.hasBackCamera,
+            viewAction.hasFrontCamera
+        )
+        CreateCollageViewAction.OnTorchClicked -> updateTorchOn()
+        is CreateCollageViewAction.OnTorchDetected -> updateHasTorch(viewAction.hasTorch)
+        is CreateCollageViewAction.OnCreateCollageLayer -> updateCollageLayer(viewAction.collageLayer)
     }
 }

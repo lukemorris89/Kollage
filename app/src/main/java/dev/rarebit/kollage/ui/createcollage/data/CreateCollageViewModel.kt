@@ -1,12 +1,16 @@
 package dev.rarebit.kollage.ui.createcollage.data
 
+import androidx.camera.core.CameraSelector
 import androidx.compose.ui.graphics.Color
 import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
 import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
+import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.kollage.data.repository.DataRepository
+import dev.rarebit.kollage.data.repository.collage.CollageRepository
+import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.component.CollageTool
 import dev.rarebit.kollage.ui.createcollage.component.CollageToolButton
 import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
@@ -20,7 +24,7 @@ import dev.rarebit.design.R as DR
 
 class CreateCollageViewModel(
     override val resourceProvider: ResourceProvider,
-    private val dataRepository: DataRepository,
+    private val collageRepository: CollageRepository,
 ) : BaseViewModel<CreateCollageViewData, CreateCollageViewEvent>(),
     WithResourceProvider {
 
@@ -29,29 +33,27 @@ class CreateCollageViewModel(
             iconRes = DR.drawable.ic_undo,
             hasSecondaryButtons = false,
             name = CollageTool.UNDO,
-            onClick = {
-            }
+            onClick = {}
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_camera_switch,
             hasSecondaryButtons = false,
             name = CollageTool.SWITCH_CAMERA,
             onClick = {
+                updateCameraLensFacing()
             }
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_edit,
             hasSecondaryButtons = true,
             name = CollageTool.EDIT,
-            onClick = {
-            }
+            onClick = {}
         ),
         CollageToolButton(
             iconRes = DR.drawable.ic_check,
             hasSecondaryButtons = false,
             name = CollageTool.DONE,
-            onClick = {
-            }
+            onClick = {}
         ),
     )
     private val editSecondaryButtons = persistentListOf(
@@ -79,10 +81,17 @@ class CreateCollageViewModel(
             selectedPrimaryTool = null,
             selectedSecondaryTool = null,
             isToolbarExpanded = false,
-            selectedCropShape = CropShape.SQUARE,
+            selectedCropShape = CropShape.RECTANGLE,
             showSecondaryToolOptions = false,
+            defaultAlpha = 1f,
             selectedAlpha = 1f,
             selectedColor = Color.Transparent,
+            cameraLensFacing = CameraSelector.LENS_FACING_BACK,
+            hasBackCamera = true,
+            hasFrontCamera = false,
+            hasTorch = false,
+            isTorchOn = false,
+            undoEnabled = false,
         )
     )
     override val viewData: StateFlow<CreateCollageViewData>
@@ -91,6 +100,49 @@ class CreateCollageViewModel(
     private val _viewEvent = viewEventFlow<CreateCollageViewEvent>()
     override val viewEvent: SharedFlow<ViewEvent<CreateCollageViewEvent>>
         get() = _viewEvent
+
+    fun onBackPressed() {
+        _viewEvent.tryEmit(CreateCollageViewEvent.NavigateBack)
+    }
+
+    fun updateHasCameras(hasBackCamera: Boolean, hasFrontCamera: Boolean) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                hasBackCamera = hasBackCamera,
+                hasFrontCamera = hasFrontCamera,
+            )
+        }
+    }
+
+    fun updateCameraLensFacing() {
+        _viewData.update { currentState ->
+            currentState.copy(
+                cameraLensFacing = if (currentState.cameraLensFacing == CameraSelector.LENS_FACING_BACK && currentState.hasFrontCamera) {
+                    CameraSelector.LENS_FACING_FRONT
+                } else if (currentState.hasBackCamera) {
+                    CameraSelector.LENS_FACING_BACK
+                } else {
+                    currentState.cameraLensFacing
+                }
+            )
+        }
+    }
+
+    fun updateHasTorch(hasTorch: Boolean) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                hasTorch = hasTorch
+            )
+        }
+    }
+
+    fun updateTorchOn() {
+        _viewData.update { currentState ->
+            currentState.copy(
+                isTorchOn = !currentState.isTorchOn
+            )
+        }
+    }
 
     fun onPrimaryToolButtonClicked(button: CollageToolButton) {
         _viewData.update { currentState ->
@@ -145,6 +197,22 @@ class CreateCollageViewModel(
             currentState.copy(
                 selectedColor = colour,
             )
+        }
+    }
+
+    fun updateCollageLayer(collageLayer: CollageLayer) {
+        with(collageRepository) {
+            if (previousCollage.value != collageLayer) {
+                updatePreviousCollageLayer(collage.value)
+            }
+            updateCollageLayer(collageLayer)
+            updateFinalCollage(null)
+            _viewData.update { currentState ->
+                currentState.copy(
+                    currentCollageLayer = collage.value,
+                    undoEnabled = true,
+                )
+            }
         }
     }
 }
