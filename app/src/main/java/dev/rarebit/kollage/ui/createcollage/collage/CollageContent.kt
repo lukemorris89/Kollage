@@ -6,7 +6,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -49,9 +48,9 @@ fun CollageContent(
                     }
                     .align(Alignment.Center),
                 bitmap = (
-                        viewData.currentCollageLayer
-                            ?: viewData.previousCollageLayer
-                        )!!.image,
+                    viewData.currentCollageLayer
+                        ?: viewData.previousCollageLayer
+                    )!!.image,
                 contentDescription = null,
             )
         }

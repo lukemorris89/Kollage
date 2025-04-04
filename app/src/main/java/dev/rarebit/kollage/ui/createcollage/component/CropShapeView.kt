@@ -12,7 +12,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.PointerInputChange
-import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import dev.rarebit.kollage.ui.createcollage.util.crop.drawCropShape
 import dev.rarebit.kollage.ui.createcollage.util.motion.MotionEvent

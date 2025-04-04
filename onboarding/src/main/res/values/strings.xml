@@ -2,7 +2,7 @@
 <resources>
     <string name="welcome_app_name">Kollage</string>
     <string name="welcome_begin">Begin</string>
-    <string name="welcome_terms">By pressing “Begin”, you agree to our Terms \nand Privacy Policy</string>
+    <string name="welcome_terms">By pressing “Begin”, you agree to our Terms and Privacy Policy</string>
     <string name="permissions_title">Allow camera access</string>
     <string name="permissions_description">To enable the app to function properly, camera access is required. Tap the button below to continue.</string>
     <string name="permissions_cta_label">Grant permissions</string>

@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.ImageBitmapConfig
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.unit.dp
 import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import dev.rarebit.kollage.ui.createcollage.util.crop.cropImage
