@@ -49,5 +49,6 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
         )
         CreateCollageViewAction.OnTorchClicked -> updateTorchOn()
         is CreateCollageViewAction.OnTorchDetected -> updateHasTorch(viewAction.hasTorch)
+        is CreateCollageViewAction.OnCreateCollageLayer -> updateCollageLayer(viewAction.collageLayer)
     }
 }
