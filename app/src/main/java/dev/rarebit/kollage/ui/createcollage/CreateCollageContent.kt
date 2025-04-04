@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -87,7 +86,7 @@ fun CreateCollageContent(
                 SecondaryToolRow(
                     content = {
                         viewData.selectedSecondaryTool?.let {
-                            when (it.name) {
+                            when (it) {
                                 CollageTool.SHAPE ->
                                     CropShapeRowContent(
                                         viewData = viewData,
@@ -115,6 +114,8 @@ fun CreateCollageContent(
             VerticalSpacer(paddingLarge)
             CollageToolRow(
                 viewData = viewData,
+                primaryToolButtons = primaryButtons,
+                secondaryToolButtons = secondaryButtons,
                 onViewAction = onViewAction,
             )
         }

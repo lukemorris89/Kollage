@@ -48,7 +48,7 @@ fun CropShapeRowContent(
             CropShape.entries.forEach {
                 IconButton(
                     onClick = {
-                        onViewAction(CreateCollageViewAction.OnCropShapeClicked(it))
+                        onViewAction(CreateCollageViewAction.OnCropShapeChanged(it))
                     }
                 ) {
                     Icon(

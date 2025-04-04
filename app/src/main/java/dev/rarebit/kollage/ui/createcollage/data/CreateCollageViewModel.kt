@@ -8,19 +8,15 @@ import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
-import dev.rarebit.kollage.data.repository.DataRepository
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.component.CollageTool
-import dev.rarebit.kollage.ui.createcollage.component.CollageToolButton
 import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import dev.rarebit.design.R as DR
 
 class CreateCollageViewModel(
     override val resourceProvider: ResourceProvider,
@@ -28,56 +24,8 @@ class CreateCollageViewModel(
 ) : BaseViewModel<CreateCollageViewData, CreateCollageViewEvent>(),
     WithResourceProvider {
 
-    private val primaryButtons = persistentListOf(
-        CollageToolButton(
-            iconRes = DR.drawable.ic_undo,
-            hasSecondaryButtons = false,
-            name = CollageTool.UNDO,
-            onClick = {}
-        ),
-        CollageToolButton(
-            iconRes = DR.drawable.ic_camera_switch,
-            hasSecondaryButtons = false,
-            name = CollageTool.SWITCH_CAMERA,
-            onClick = {
-                updateCameraLensFacing()
-            }
-        ),
-        CollageToolButton(
-            iconRes = DR.drawable.ic_edit,
-            hasSecondaryButtons = true,
-            name = CollageTool.EDIT,
-            onClick = {}
-        ),
-        CollageToolButton(
-            iconRes = DR.drawable.ic_check,
-            hasSecondaryButtons = false,
-            name = CollageTool.DONE,
-            onClick = {}
-        ),
-    )
-    private val editSecondaryButtons = persistentListOf(
-        CollageToolButton(
-            iconRes = DR.drawable.ic_shape,
-            name = CollageTool.SHAPE,
-            onClick = {}
-        ),
-        CollageToolButton(
-            iconRes = DR.drawable.ic_alpha,
-            name = CollageTool.ALPHA,
-            onClick = {}
-        ),
-        CollageToolButton(
-            iconRes = DR.drawable.ic_filter,
-            name = CollageTool.COLOUR,
-            onClick = {}
-        ),
-    )
-
     private val _viewData = MutableStateFlow(
         CreateCollageViewData(
-            primaryToolButtons = primaryButtons,
-            secondaryToolButtons = editSecondaryButtons,
             selectedPrimaryTool = null,
             selectedSecondaryTool = null,
             isToolbarExpanded = false,
@@ -123,7 +71,13 @@ class CreateCollageViewModel(
                     CameraSelector.LENS_FACING_BACK
                 } else {
                     currentState.cameraLensFacing
-                }
+                },
+                selectedPrimaryTool = if (currentState.selectedPrimaryTool == CollageTool.SWITCH_CAMERA) {
+                    null
+                } else {
+                    CollageTool.SWITCH_CAMERA
+                },
+                isToolbarExpanded = false,
             )
         }
     }
@@ -144,41 +98,63 @@ class CreateCollageViewModel(
         }
     }
 
-    fun onPrimaryToolButtonClicked(button: CollageToolButton) {
+    fun toggleEdit() {
         _viewData.update { currentState ->
             currentState.copy(
-                selectedPrimaryTool = button,
-                isToolbarExpanded = if (button == currentState.selectedPrimaryTool) {
-                    !currentState.isToolbarExpanded && button.hasSecondaryButtons
-                } else {
-                    button.hasSecondaryButtons
-                },
-                selectedSecondaryTool = if (button != currentState.selectedPrimaryTool) {
+                selectedPrimaryTool = if (currentState.selectedPrimaryTool == CollageTool.EDIT) {
                     null
                 } else {
-                    currentState.selectedSecondaryTool
+                    CollageTool.EDIT
                 },
-                showSecondaryToolOptions = false
+                isToolbarExpanded = !currentState.isToolbarExpanded,
+                showSecondaryToolOptions = false,
             )
         }
     }
 
-    fun onSecondaryToolButtonClicked(button: CollageToolButton) {
+    fun toggleCropShape() {
         _viewData.update { currentState ->
             currentState.copy(
-                selectedSecondaryTool = button,
-                showSecondaryToolOptions = if (currentState.selectedSecondaryTool == button) {
-                    !currentState.showSecondaryToolOptions
+                selectedSecondaryTool = if (currentState.selectedSecondaryTool == CollageTool.SHAPE) {
+                    null
                 } else {
-                    true
+                    CollageTool.SHAPE
                 },
+                showSecondaryToolOptions = !(currentState.selectedSecondaryTool == CollageTool.SHAPE && currentState.showSecondaryToolOptions)
             )
         }
     }
 
-    fun onCropShapeSelected(cropShape: CropShape) {
+    fun toggleAlpha() {
         _viewData.update { currentState ->
             currentState.copy(
+                selectedSecondaryTool = if (currentState.selectedSecondaryTool == CollageTool.ALPHA) {
+                    null
+                } else {
+                    CollageTool.ALPHA
+                },
+                showSecondaryToolOptions = !(currentState.selectedSecondaryTool == CollageTool.ALPHA && currentState.showSecondaryToolOptions)
+            )
+        }
+    }
+
+    fun toggleColour() {
+        _viewData.update { currentState ->
+            currentState.copy(
+                selectedSecondaryTool = if (currentState.selectedSecondaryTool == CollageTool.COLOUR) {
+                    null
+                } else {
+                    CollageTool.COLOUR
+                },
+                showSecondaryToolOptions = !(currentState.selectedSecondaryTool == CollageTool.COLOUR && currentState.showSecondaryToolOptions),
+            )
+        }
+    }
+
+    fun onCropShapeChanged(cropShape: CropShape) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                selectedSecondaryTool = CollageTool.SHAPE,
                 selectedCropShape = cropShape,
             )
         }
@@ -192,7 +168,7 @@ class CreateCollageViewModel(
         }
     }
 
-    fun onColourSelected(colour: Color) {
+    fun onColourChanged(colour: Color) {
         _viewData.update { currentState ->
             currentState.copy(
                 selectedColor = colour,
@@ -201,18 +177,33 @@ class CreateCollageViewModel(
     }
 
     fun updateCollageLayer(collageLayer: CollageLayer) {
-        with(collageRepository) {
-            if (previousCollage.value != collageLayer) {
-                updatePreviousCollageLayer(collage.value)
-            }
-            updateCollageLayer(collageLayer)
-            updateFinalCollage(null)
-            _viewData.update { currentState ->
-                currentState.copy(
-                    currentCollageLayer = collage.value,
-                    undoEnabled = true,
-                )
-            }
+        _viewData.update { currentState ->
+            currentState.copy(
+                previousCollageLayer = if (currentState.previousCollageLayer == null) {
+                    collageLayer
+                } else {
+                    currentState.currentCollageLayer
+                },
+                currentCollageLayer = collageLayer,
+                undoEnabled = true,
+            )
         }
+        collageRepository.updateFinalCollage(null)
+    }
+
+    fun undoCollageLayer() {
+        _viewData.update { currentState ->
+            currentState.copy(
+                currentCollageLayer = currentState.previousCollageLayer,
+                previousCollageLayer = null,
+                undoEnabled = false,
+                selectedPrimaryTool = null,
+                isToolbarExpanded = false,
+            )
+        }
+        collageRepository.updateFinalCollage(null)
+    }
+
+    fun onDoneClicked() {
     }
 }

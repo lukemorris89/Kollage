@@ -5,4 +5,3 @@ enum class BackgroundSelection(val value: String) {
     COLOR("Color"),
     GALLERY("Gallery")
 }
-

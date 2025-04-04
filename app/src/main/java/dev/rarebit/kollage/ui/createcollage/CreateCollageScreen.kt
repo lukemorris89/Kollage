@@ -35,18 +35,27 @@ fun CreateCollageScreen(
 }
 
 context(CreateCollageViewModel)
+@Suppress("CyclomaticComplexMethod")
 private fun onViewAction(viewAction: CreateCollageViewAction) {
     when (viewAction) {
-        is CreateCollageViewAction.OnPrimaryToolButtonClicked -> onPrimaryToolButtonClicked(viewAction.button)
-        is CreateCollageViewAction.OnSecondaryToolButtonClicked -> onSecondaryToolButtonClicked(viewAction.button)
-        is CreateCollageViewAction.OnCropShapeClicked -> onCropShapeSelected(viewAction.shape)
+        CreateCollageViewAction.OnUndoCollageLayer -> undoCollageLayer()
+        CreateCollageViewAction.OnSwitchCamera -> updateCameraLensFacing()
+        CreateCollageViewAction.OnEditClicked -> toggleEdit()
+        CreateCollageViewAction.OnDoneClicked -> onDoneClicked()
+
+        CreateCollageViewAction.OnCropShapeClicked -> toggleCropShape()
+        CreateCollageViewAction.OnAlphaClicked -> toggleAlpha()
+        CreateCollageViewAction.OnColourClicked -> toggleColour()
+
+        is CreateCollageViewAction.OnCropShapeChanged -> onCropShapeChanged(viewAction.shape)
         is CreateCollageViewAction.OnAlphaChanged -> onAlphaChanged(viewAction.alpha)
-        is CreateCollageViewAction.OnColourClicked -> onColourSelected(viewAction.colour)
+        is CreateCollageViewAction.OnColourChanged -> onColourChanged(viewAction.colour)
         CreateCollageViewAction.OnBackPressed -> onBackPressed()
         is CreateCollageViewAction.OnCamerasLoaded -> updateHasCameras(
             viewAction.hasBackCamera,
             viewAction.hasFrontCamera
         )
+
         CreateCollageViewAction.OnTorchClicked -> updateTorchOn()
         is CreateCollageViewAction.OnTorchDetected -> updateHasTorch(viewAction.hasTorch)
         is CreateCollageViewAction.OnCreateCollageLayer -> updateCollageLayer(viewAction.collageLayer)

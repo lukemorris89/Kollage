@@ -58,7 +58,7 @@ fun ColourRowContent(
                 colour = Color.Transparent,
                 selected = viewData.selectedColor == Color.Transparent,
                 onClick = {
-                    onViewAction(CreateCollageViewAction.OnColourClicked(Color.Transparent))
+                    onViewAction(CreateCollageViewAction.OnColourChanged(Color.Transparent))
                 }
             )
             Colour.entries.forEach {
@@ -66,7 +66,7 @@ fun ColourRowContent(
                     colour = it.colour,
                     selected = viewData.selectedColor == it.colour,
                     onClick = {
-                        onViewAction(CreateCollageViewAction.OnColourClicked(it))
+                        onViewAction(CreateCollageViewAction.OnColourChanged(it))
                     }
                 )
             }
