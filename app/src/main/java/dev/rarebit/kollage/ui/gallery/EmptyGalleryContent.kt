@@ -30,7 +30,7 @@ fun EmptyGalleryContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            modifier = Modifier.padding(horizontal = paddingLarge),
+            modifier = Modifier.padding(horizontal = 48.dp),
             text = viewData.emptyDescription,
             style = MaterialTheme.typography.titleLarge.copy(
                 color = White,

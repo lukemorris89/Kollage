@@ -7,12 +7,15 @@ import androidx.camera.core.ImageProxy
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Canvas
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.ImageBitmapConfig
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.LayerColour
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import dev.rarebit.kollage.ui.createcollage.util.crop.cropImage
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.flipHorizontally
@@ -22,12 +25,16 @@ import kotlin.math.max
 import kotlin.math.min
 
 @OptIn(ExperimentalGetImage::class)
-fun createCollageLayer(
+suspend fun createCollageLayer(
     context: Context,
     imageProxy: ImageProxy,
     rect: Rect,
-    viewData: CreateCollageViewData,
-    onViewAction: (CreateCollageViewAction) -> Unit,
+    cameraLensFacing: Int,
+    currentCollageLayer: CollageLayer?,
+    cropShape: CropShape,
+    layerColour: Color,
+    alpha: Float,
+    onComplete: (CollageLayer) -> Unit,
 ) {
     if (imageProxy.image == null) return
 
@@ -35,7 +42,7 @@ fun createCollageLayer(
 
     val bitmap = imageProxy.image!!.toBitmap()
         .rotate(rotationDegrees.toFloat())
-        .flipHorizontally(viewData.cameraLensFacing)
+        .flipHorizontally(cameraLensFacing)
         .asImageBitmap()
 
     val finalBitmap = ImageBitmap(
@@ -45,9 +52,9 @@ fun createCollageLayer(
     )
     val canvas = Canvas(finalBitmap)
 
-    if (viewData.currentCollageLayer != null) {
+    currentCollageLayer?.let {
         canvas.drawImage(
-            viewData.currentCollageLayer.image,
+            it.image,
             Offset.Zero,
             Paint()
         )
@@ -57,28 +64,28 @@ fun createCollageLayer(
         context = context,
         bitmap = bitmap,
         canvas = canvas,
-        viewData = viewData,
         rect = rect,
+        cropShape = cropShape,
+        layerColour = layerColour,
+        alpha = alpha,
     )
 
-    val kollageRect = if (viewData.currentCollageLayer != null) {
-        val previousRect = viewData.currentCollageLayer.rect
+    val kollageRect = currentCollageLayer?.let {
+        val previousRect = it.rect
         Rect(
             left = min(previousRect.left, rect.left),
             top = min(previousRect.top, rect.top),
             right = max(previousRect.right, rect.right),
             bottom = max(previousRect.bottom, rect.bottom)
         )
-    } else {
-        rect
-    }
+    } ?: rect
 
     val collageLayer = CollageLayer(
         finalBitmap,
         kollageRect,
     )
 
-    onViewAction(CreateCollageViewAction.OnCreateCollageLayer(collageLayer))
+    onComplete(collageLayer)
     bitmap.asAndroidBitmap().recycle()
     imageProxy.close()
 }

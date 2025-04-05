@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
+import dev.rarebit.design.component.tools.CollageTool
 import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.ui.collageresult.data.CollageResultViewEvent
 import dev.rarebit.kollage.ui.collageresult.data.CollageResultViewModel
@@ -47,5 +48,12 @@ context(CollageResultViewModel)
 private fun onViewAction(viewAction: CollageResultViewAction) {
     when (viewAction) {
         CollageResultViewAction.OnBackPressed -> onBackPressed()
+        is CollageResultViewAction.OnToolClicked -> updateSelectedTool(viewAction.tool)
+        is CollageResultViewAction.OnUpdateBackground -> updateBackgroundSelection(viewAction.backgroundSelection)
+        is CollageResultViewAction.OnUpdateImageFormat -> updateImageFormat(viewAction.imageFormat)
+        CollageResultViewAction.OnSaveClicked -> {
+            updateSelectedTool(CollageTool.SAVE)
+            saveFinalBitmap()
+        }
     }
 }

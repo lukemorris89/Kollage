@@ -65,11 +65,11 @@ fun GalleryContent(
                 )
             )
             VerticalSpacer(paddingSmall)
-            HorizontalDivider(
-                modifier = Modifier.padding(end = 64.dp),
-                color = LightGrey,
-                thickness = 1.dp
-            )
+//            HorizontalDivider(
+//                modifier = Modifier.padding(end = 64.dp),
+//                color = LightGrey,
+//                thickness = 1.dp
+//            )
             VerticalSpacer(paddingMedium)
             if (viewData.isEmptyGallery) {
                 EmptyGalleryContent(

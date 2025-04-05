@@ -16,12 +16,11 @@ fun PrimaryToolRow(
     isExpanded: Boolean,
     selectedTool: CollageTool?,
 ) {
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                if (!isExpanded && (selectedTool == null || selectedTool != CollageTool.EDIT)) {
+                if (!isExpanded && selectedTool == null) {
                     White
                 } else {
                     LightGrey
@@ -30,11 +29,15 @@ fun PrimaryToolRow(
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         buttons.forEach {
-            val isSelected = it.name == selectedTool && it.name == CollageTool.EDIT
+            val isSelected = it.name == selectedTool
             ToolButton(
                 tool = it,
                 selected = isSelected,
-                colours = ToolButtonColours.primaryButtonColours(),
+                colours = if (!isExpanded && selectedTool == null) {
+                    ToolButtonColours.secondaryButtonColours()
+                } else {
+                    ToolButtonColours.primaryButtonColours()
+                },
             )
         }
     }

@@ -139,13 +139,7 @@ fun CameraContent(
                     }
 
                     override fun onCaptureSuccess(imageProxy: ImageProxy) {
-                        createCollageLayer(
-                            context = context,
-                            imageProxy = imageProxy,
-                            rect = cropRect,
-                            viewData = viewData,
-                            onViewAction = onViewAction,
-                        )
+                        onViewAction(CreateCollageViewAction.OnCreateCollageLayer(imageProxy, cropRect))
                     }
                 }
             )

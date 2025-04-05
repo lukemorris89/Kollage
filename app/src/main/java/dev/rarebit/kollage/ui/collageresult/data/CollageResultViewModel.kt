@@ -9,6 +9,7 @@ import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
+import dev.rarebit.design.component.tools.CollageTool
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.LayerColour
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.BackgroundSelection
@@ -36,6 +37,8 @@ class CollageResultViewModel(
             collage = collageRepository.finalCollage,
             backgroundBitmap = requireNotNull(collageRepository.collageBackground), // Camera capture always required
             backgroundColor = LayerColour.BLACK,
+            selectedTool = null,
+            showFloatingToolRow = false,
             isSaveLoading = false,
         )
     )
@@ -48,6 +51,19 @@ class CollageResultViewModel(
 
     fun onBackPressed() {
         _viewEvent.tryEmit(CollageResultViewEvent.NavigateBack)
+    }
+
+    fun updateSelectedTool(tool: CollageTool) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                selectedTool = tool,
+                showFloatingToolRow = if (tool == currentState.selectedTool) {
+                    false
+                } else {
+                    tool != CollageTool.SAVE
+                }
+            )
+        }
     }
 
     // Sets the background of the collage to either the camera capture or a flat colour
@@ -78,11 +94,9 @@ class CollageResultViewModel(
     }
 
     // Flattens all layers and background for saving to local storage
-    private fun saveFinalBitmap() {
+    fun saveFinalBitmap() {
         val viewData = _viewData.value
         with(viewData) {
-            if (backgroundBitmap == null) return
-
             _viewData.update { currentState ->
                 currentState.copy(
                     isSaveLoading = true

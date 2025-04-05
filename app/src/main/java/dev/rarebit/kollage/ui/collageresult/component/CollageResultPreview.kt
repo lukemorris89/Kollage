@@ -20,11 +20,10 @@ import dev.rarebit.kollage.ui.createcollage.util.imageutil.BackgroundSelection
 fun CollageResultPreview(
     viewData: CollageResultViewData,
 ) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top,
+        contentAlignment = Alignment.Center
     ) {
         // Set background
         when (viewData.backgroundSelection) {

@@ -58,6 +58,7 @@ fun Bitmap.flipHorizontally(lensFacing: Int): Bitmap {
 }
 
 suspend fun flattenCollageToBitmap(
+    context: Context,
     background: ImageBitmap,
     collageLayer: CollageLayer?
 ): ImageBitmap = withContext(Dispatchers.Default) {
@@ -65,9 +66,12 @@ suspend fun flattenCollageToBitmap(
 
     collageLayer?.let {
         canvas.drawImage(
-            it.image,
-            Offset(it.rect.left.toFloat(), it.rect.top.toFloat()),
-            Paint()
+            collageLayer.image,
+            topLeftOffset = Offset(
+                convertPixelsToDp(collageLayer.rect.left, context),
+                convertPixelsToDp(collageLayer.rect.top, context),
+            ),
+            Paint(),
         )
     }
     background

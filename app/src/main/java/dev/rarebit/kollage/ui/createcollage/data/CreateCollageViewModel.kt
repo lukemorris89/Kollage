@@ -1,6 +1,8 @@
 package dev.rarebit.kollage.ui.createcollage.data
 
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageProxy
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.viewModelScope
@@ -14,9 +16,7 @@ import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.design.component.tools.CollageTool
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
-import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
-import dev.rarebit.kollage.ui.createcollage.util.imageutil.flattenCollageToBitmap
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -122,7 +122,11 @@ class CreateCollageViewModel(
                     CollageTool.EDIT
                 },
                 isToolbarExpanded = !currentState.isToolbarExpanded,
-                showFloatingToolRow = false,
+                showFloatingToolRow = if (!currentState.isToolbarExpanded) {
+                    currentState.selectedSecondaryTool != null
+                } else {
+                    false
+                },
             )
         }
     }
@@ -198,17 +202,33 @@ class CreateCollageViewModel(
     }
 
     // Adds new collage layer on top of current collage and sets previous layer (used to undo)
-    fun createNewCollageLayer(collageLayer: CollageLayer) {
-        _viewData.update { currentState ->
-            currentState.copy(
-                previousCollageLayer = if (currentState.previousCollageLayer == null) {
-                    collageLayer
-                } else {
-                    currentState.currentCollageLayer
-                },
-                currentCollageLayer = collageLayer,
-                isUndoEnabled = true,
-            )
+    fun createNewCollageLayer(imageProxy: ImageProxy, rect: Rect) {
+        val viewData = _viewData.value
+        viewModelScope.launch {
+            with(viewData) {
+                collageRepository.updateCollage(
+                    imageProxy = imageProxy,
+                    rect = rect,
+                    cameraLensFacing = cameraLensFacing,
+                    currentCollageLayer = currentCollageLayer,
+                    cropShape = selectedCropShape,
+                    layerColour = selectedColor,
+                    alpha = selectedAlpha,
+                    onComplete = { collageLayer ->
+                        _viewData.update { currentState ->
+                            currentState.copy(
+                                previousCollageLayer = if (currentState.previousCollageLayer == null) {
+                                    collageLayer
+                                } else {
+                                    currentState.currentCollageLayer
+                                },
+                                currentCollageLayer = collageLayer,
+                                isUndoEnabled = true,
+                            )
+                        }
+                    }
+                )
+            }
         }
     }
 
@@ -231,14 +251,8 @@ class CreateCollageViewModel(
 
         viewModelScope.launch {
             try {
-                val finalCollage = flattenCollageToBitmap(
-                    background = cameraCapture,
-                    collageLayer = _viewData.value.currentCollageLayer
-                )
-
                 with(collageRepository) {
-                    updateCollageBackground(cameraCapture)
-                    updateFinalCollage(finalCollage)
+                    updateFinalCollage(cameraCapture, _viewData.value.currentCollageLayer?.image)
                 }
                 _viewEvent.tryEmit(CreateCollageViewEvent.NavigateToCollageResultScreen)
             } catch (e: Exception) {

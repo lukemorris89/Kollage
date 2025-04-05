@@ -16,6 +16,8 @@ enum class CollageTool {
     DONE,
     SHAPE,
     ALPHA,
-    FILTER,
     COLOUR,
+    BACKGROUND,
+    IMAGE_FORMAT,
+    SAVE,
 }

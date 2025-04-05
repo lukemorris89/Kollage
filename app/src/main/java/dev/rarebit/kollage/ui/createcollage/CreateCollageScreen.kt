@@ -16,7 +16,6 @@ fun CreateCollageScreen(
     navHostController: NavHostController,
     viewModel: CreateCollageViewModel = koinViewModel()
 ) {
-    val context = LocalContext.current
     val viewData by viewModel.viewData.collectAsState()
     CreateCollageContent(
         viewData = viewData,
@@ -67,6 +66,6 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
 
         CreateCollageViewAction.OnTorchClicked -> toggleTorch()
         is CreateCollageViewAction.OnTorchDetected -> updateHasTorch(viewAction.hasTorch)
-        is CreateCollageViewAction.OnCreateCollageLayer -> createNewCollageLayer(viewAction.collageLayer)
+        is CreateCollageViewAction.OnCreateCollageLayer -> createNewCollageLayer(viewAction.imageProxy, viewAction.cropRect)
     }
 }

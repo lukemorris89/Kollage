@@ -107,7 +107,11 @@ fun CollageToolRow(
         PrimaryToolRow(
             buttons = primaryButtons,
             isExpanded = viewData.isToolbarExpanded,
-            selectedTool = viewData.selectedPrimaryTool,
+            selectedTool = if (viewData.selectedPrimaryTool == CollageTool.EDIT) {
+                viewData.selectedPrimaryTool
+            } else {
+                null
+            },
         )
     }
 }

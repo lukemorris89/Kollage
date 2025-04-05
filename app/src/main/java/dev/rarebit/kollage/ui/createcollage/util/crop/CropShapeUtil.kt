@@ -13,7 +13,10 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.LayerColour
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlin.math.max
 import kotlin.math.min
 
@@ -29,63 +32,67 @@ fun calculateImageWidthRatio(context: Context, bitmapWidth: Int): Float {
     return bitmapWidth / screenWidth.toFloat()
 }
 
-fun cropImage(
+suspend fun cropImage(
     context: Context,
     canvas: Canvas,
     bitmap: ImageBitmap,
-    viewData: CreateCollageViewData,
+    cropShape: CropShape,
+    layerColour: Color,
+    alpha: Float,
     rect: Rect,
 ) {
-    val imageWidthRatio = calculateImageWidthRatio(context, bitmap.width)
-    val imageHeightRatio = calculateImageHeightRatio(context, bitmap.height)
+    withContext(Dispatchers.Default) {
+        val imageWidthRatio = calculateImageWidthRatio(context, bitmap.width)
+        val imageHeightRatio = calculateImageHeightRatio(context, bitmap.height)
 
-    val dstRect = Rect(
-        Offset(
-            (rect.left * imageWidthRatio),
-            (rect.top * imageHeightRatio),
-        ),
-        Size(
-            ((rect.width) * imageWidthRatio),
-            ((rect.height) * imageHeightRatio),
-        ),
-    )
+        val dstRect = Rect(
+            Offset(
+                (rect.left * imageWidthRatio),
+                (rect.top * imageHeightRatio),
+            ),
+            Size(
+                ((rect.width) * imageWidthRatio),
+                ((rect.height) * imageHeightRatio),
+            ),
+        )
 
-    val tempBitmap = ImageBitmap(bitmap.width, bitmap.height, bitmap.config)
-    val tempCanvas = Canvas(tempBitmap)
+        val tempBitmap = ImageBitmap(bitmap.width, bitmap.height, bitmap.config)
+        val tempCanvas = Canvas(tempBitmap)
 
-    val paint = Paint().apply {
-        color = Color.Transparent
-    }
-
-    tempCanvas.drawRect(dstRect, paint)
-
-    val path = Path()
-    when (viewData.selectedCropShape) {
-        CropShape.RECTANGLE -> path.addRect(dstRect)
-        CropShape.CIRCLE -> path.addOval(dstRect)
-    }
-
-    tempCanvas.clipPath(path)
-
-    tempCanvas.drawImage(
-        bitmap,
-        Offset.Zero,
-        Paint()
-    )
-
-    tempCanvas.drawRect(
-        dstRect,
-        Paint().apply {
-            color = if (viewData.selectedColor == Color.Transparent) {
-                viewData.selectedColor
-            } else {
-                viewData.selectedColor.copy(alpha = viewData.selectedAlpha)
-            }
-            style = PaintingStyle.Fill
+        val paint = Paint().apply {
+            color = Color.Transparent
         }
-    )
 
-    canvas.drawImage(tempBitmap, Offset.Zero, Paint())
+        tempCanvas.drawRect(dstRect, paint)
+
+        val path = Path()
+        when (cropShape) {
+            CropShape.RECTANGLE -> path.addRect(dstRect)
+            CropShape.CIRCLE -> path.addOval(dstRect)
+        }
+
+        tempCanvas.clipPath(path)
+
+        tempCanvas.drawImage(
+            bitmap,
+            Offset.Zero,
+            Paint()
+        )
+
+        tempCanvas.drawRect(
+            dstRect,
+            Paint().apply {
+                color = if (layerColour == Color.Transparent) {
+                    layerColour
+                } else {
+                    layerColour.copy(alpha = alpha)
+                }
+                style = PaintingStyle.Fill
+            }
+        )
+
+        canvas.drawImage(tempBitmap, Offset.Zero, Paint())
+    }
 }
 
 fun DrawScope.drawCropShape(startPosition: Offset, currentPosition: Offset, cropShape: CropShape) {
