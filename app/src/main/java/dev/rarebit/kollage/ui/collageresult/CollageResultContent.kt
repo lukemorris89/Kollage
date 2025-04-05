@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import dev.rarebit.design.component.VerticalSpacer
-import dev.rarebit.design.component.tools.CollageTool
 import dev.rarebit.design.component.tools.FloatingToolRow
 import dev.rarebit.design.modifier.regularScreen
 import dev.rarebit.design.theme.Black
@@ -25,12 +24,8 @@ import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.kollage.ui.collageresult.component.CollageResultPreview
 import dev.rarebit.kollage.ui.collageresult.component.CollageResultToolRow
 import dev.rarebit.kollage.ui.collageresult.component.secondarytools.BackgroundColourRowContent
-import dev.rarebit.kollage.ui.collageresult.component.secondarytools.BackgroundSelectionRowContent
-import dev.rarebit.kollage.ui.collageresult.component.secondarytools.ImageFormatRowContent
 import dev.rarebit.kollage.ui.collageresult.data.CollageResultViewData
-import dev.rarebit.kollage.ui.createcollage.util.imageutil.BackgroundSelection
 import dev.rarebit.design.R as DR
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +44,8 @@ fun CollageResultContent(
                     IconButton(
                         onClick = {
                             onViewAction(
-                                CollageResultViewAction.OnBackPressed)
+                                CollageResultViewAction.OnBackPressed
+                            )
                         }
                     ) {
                         Icon(

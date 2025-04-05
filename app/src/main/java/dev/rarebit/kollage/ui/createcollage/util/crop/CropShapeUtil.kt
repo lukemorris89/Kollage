@@ -13,8 +13,6 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
-import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.LayerColour
-import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.max

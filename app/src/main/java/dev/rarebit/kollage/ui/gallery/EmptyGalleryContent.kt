@@ -15,7 +15,6 @@ import dev.rarebit.design.component.ButtonColours
 import dev.rarebit.design.component.PrimaryButton
 import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.theme.White
-import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.kollage.ui.gallery.data.GalleryViewData
 import dev.rarebit.design.R as DR
 

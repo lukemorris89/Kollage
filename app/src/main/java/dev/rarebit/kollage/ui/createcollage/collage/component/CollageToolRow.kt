@@ -59,7 +59,7 @@ fun CollageToolRow(
                 onCaptureCollage()
             },
 
-            ),
+        ),
     )
     val secondaryButtons = persistentListOf(
         Tool(
