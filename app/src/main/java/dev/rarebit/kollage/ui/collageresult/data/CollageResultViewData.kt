@@ -17,4 +17,4 @@ data class CollageResultViewData(
     val showFloatingToolRow: Boolean,
     val backgroundColor: LayerColour,
     val isSaveLoading: Boolean,
-): BaseViewData()
+) : BaseViewData()

@@ -3,7 +3,6 @@ package dev.rarebit.kollage.ui.createcollage.data
 import androidx.compose.ui.graphics.Color
 import dev.rarebit.core.viewmodel.BaseViewData
 import dev.rarebit.design.component.tools.CollageTool
-import dev.rarebit.design.component.tools.Tool
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
 

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewEvent
@@ -66,6 +65,9 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
 
         CreateCollageViewAction.OnTorchClicked -> toggleTorch()
         is CreateCollageViewAction.OnTorchDetected -> updateHasTorch(viewAction.hasTorch)
-        is CreateCollageViewAction.OnCreateCollageLayer -> createNewCollageLayer(viewAction.imageProxy, viewAction.cropRect)
+        is CreateCollageViewAction.OnCreateCollageLayer -> createNewCollageLayer(
+            viewAction.imageProxy,
+            viewAction.cropRect
+        )
     }
 }
