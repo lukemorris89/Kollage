@@ -1,7 +1,8 @@
 package dev.rarebit.kollage.ui.collageresult.data
 
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.viewModelScope
+import dev.rarebit.core.logger.Logger
+import dev.rarebit.core.logger.WithLogger
 import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
 import dev.rarebit.core.view.WithResourceProvider
@@ -13,7 +14,6 @@ import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.Lay
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.BackgroundSelection
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.ImageFormat
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.generateImage
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,21 +23,20 @@ import kotlinx.coroutines.launch
 
 class CollageResultViewModel(
     override val resourceProvider: ResourceProvider,
+    override val logger: Logger,
     private val collageRepository: CollageRepository,
 ) : BaseViewModel<CollageResultViewData, CollageResultViewEvent>(),
-    WithResourceProvider {
+    WithResourceProvider,
+    WithLogger {
 
     private val _viewData = MutableStateFlow(
         CollageResultViewData(
             imageFormat = ImageFormat.PNG,
             backgroundSelection = BackgroundSelection.CAMERA,
-            collage = null,
-            backgroundBitmap = collageRepository.collageBackground,
+            collage = collageRepository.finalCollage,
+            backgroundBitmap = requireNotNull(collageRepository.collageBackground), // Camera capture always required
             backgroundColor = LayerColour.BLACK,
-            displayBitmap = null,
             isSaveLoading = false,
-            isCollageSaved = false,
-            finalBitmap = null,
         )
     )
     override val viewData: StateFlow<CollageResultViewData>
@@ -51,74 +50,74 @@ class CollageResultViewModel(
         _viewEvent.tryEmit(CollageResultViewEvent.NavigateBack)
     }
 
+    // Sets the background of the collage to either the camera capture or a flat colour
     fun updateBackgroundSelection(backgroundSelection: BackgroundSelection) {
         _viewData.update { currentState ->
             currentState.copy(
                 backgroundSelection = backgroundSelection,
-                isCollageSaved = false,
             )
         }
     }
 
+    // Updates the background colour of the collage, visible if BackgroundSelection == COLOUR
     fun updateBackgroundColor(color: LayerColour) {
         _viewData.update { currentState ->
             currentState.copy(
                 backgroundColor = color,
-                isCollageSaved = false,
             )
         }
     }
 
+    // Updates the output format of the image on saving
     fun updateImageFormat(imageFormat: ImageFormat) {
         _viewData.update { currentState ->
             currentState.copy(
                 imageFormat = imageFormat,
-                isCollageSaved = false,
             )
         }
     }
 
-    private fun generateFinalBitmap(): ImageBitmap? {
+    // Flattens all layers and background for saving to local storage
+    private fun saveFinalBitmap() {
         val viewData = _viewData.value
         with(viewData) {
-            if (backgroundBitmap == null) return null
-
-            val image = generateImage(
-                context = applicationContextProvider(),
-                backgroundBitmap = backgroundBitmap,
-                backgroundColor = backgroundColor.colour,
-                backgroundSelection = backgroundSelection,
-                collage = collage,
-            )
+            if (backgroundBitmap == null) return
 
             _viewData.update { currentState ->
                 currentState.copy(
-                    finalBitmap = image
+                    isSaveLoading = true
                 )
             }
-            return image
+            viewModelScope.launch {
+                try {
+                    val image = generateImage(
+                        backgroundBitmap = backgroundBitmap,
+                        backgroundColor = backgroundColor.colour,
+                        backgroundSelection = backgroundSelection,
+                        collage = collage,
+                    )
+
+                    collageRepository.saveCollageToLocalStorage(
+                        bitmap = image,
+                        imageFormat = _viewData.value.imageFormat,
+                    )
+
+                    _viewEvent.tryEmit(CollageResultViewEvent.NavigateToHomeScreen)
+                } catch (e: Exception) {
+                    logger.logError(
+                        e,
+                        tag = "CollageResultViewModel"
+                    ) { "Error saving final collage" }
+                    // TODO show error snackbar
+                } finally {
+                    _viewData.update { currentState ->
+                        currentState.copy(
+                            isSaveLoading = false
+                        )
+                    }
+                }
+            }
         }
     }
 
-    suspend fun saveImage() {
-        _viewData.update { currentState ->
-            currentState.copy(
-                isSaveLoading = true
-            )
-        }
-        viewModelScope.launch(Dispatchers.IO) {
-
-        }
-        val image = generateFinalBitmap()
-        if (image != null) {
-            val uri = saveImageToLocalStorage(
-                context = applicationContextProvider(),
-                bitmap = image,
-                imageFormat = _uiState.value.imageFormat,
-            )
-            saveKollage(uri.toString())
-        } else {
-            //TODO Handle generate image failure
-        }
-    }
 }

@@ -1,22 +1,24 @@
 package dev.rarebit.kollage.data.repository.collage
 
+import android.content.ContentValues
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.compose.ui.graphics.ImageBitmap
-import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
+import androidx.compose.ui.graphics.asAndroidBitmap
+import dev.rarebit.core.application.ApplicationContextProvider
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.ImageFormat
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.withContext
+import java.io.IOException
 
-class CollageRepositoryImpl : CollageRepository {
-    private val _collage = MutableStateFlow<CollageLayer?>(null)
-    override val collage = _collage.asStateFlow()
-
-    private val _previousCollage = MutableStateFlow<CollageLayer?>(null)
-    override val previousCollage = _previousCollage.asStateFlow()
-
+class CollageRepositoryImpl(
+    private val applicationContextProvider: ApplicationContextProvider,
+) : CollageRepository {
     override var collageBackground: ImageBitmap? = null
-
-    private val _finalCollage = MutableStateFlow<ImageBitmap?>(null)
-    override val finalCollage = _finalCollage.asStateFlow()
+    override var finalCollage: ImageBitmap? = null
 
     private val _imageFormat = MutableStateFlow(ImageFormat.PNG)
     override val imageFormat = _imageFormat.asStateFlow()
@@ -25,25 +27,48 @@ class CollageRepositoryImpl : CollageRepository {
         _imageFormat.value = imageFormat
     }
 
-    override fun updatePreviousCollageLayer(collage: CollageLayer?) {
-        _previousCollage.value = collage
-    }
-
-    override fun updateCollageLayer(collage: CollageLayer?) {
-        _collage.value = collage
-    }
-
     override fun updateCollageBackground(background: ImageBitmap) {
         collageBackground = background
     }
 
-    override fun updateFinalCollage(finalCollage: ImageBitmap?) {
-        _finalCollage.value = finalCollage
+    override fun updateFinalCollage(collage: ImageBitmap?) {
+        finalCollage = collage
     }
 
     override fun clearImage() {
-        _previousCollage.value = null
-        _collage.value = null
         collageBackground = null
     }
+
+    override suspend fun saveCollageToLocalStorage(
+        bitmap: ImageBitmap,
+        imageFormat: ImageFormat
+    ): Uri = withContext(Dispatchers.IO) {
+        val androidBitmap = bitmap.asAndroidBitmap()
+
+        val filename = "Kollage_${System.currentTimeMillis()}${imageFormat.value}"
+
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+            put(MediaStore.MediaColumns.MIME_TYPE, imageFormat.mimeType)
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/Kollage")
+            put(MediaStore.MediaColumns.IS_PENDING, 1)
+        }
+
+        val contentResolver = applicationContextProvider().contentResolver
+        val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            ?: throw IOException("Failed to create new MediaStore record.")
+
+        contentResolver.openOutputStream(uri)?.use { out ->
+            if (!androidBitmap.compress(imageFormat.compressionFormat, 100, out)) {
+                throw IOException("Failed to save bitmap.")
+            }
+        } ?: throw IOException("Unable to open output stream for URI: $uri")
+
+        contentValues.clear()
+        contentValues.put(MediaStore.MediaColumns.IS_PENDING, 0)
+        contentResolver.update(uri, contentValues, null, null)
+
+        uri
+    }
+
 }

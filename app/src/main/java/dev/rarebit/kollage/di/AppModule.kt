@@ -26,12 +26,12 @@ val appModule = module {
 
     single<LocalDataSource> { LocalDataSourceImpl(get()) }
     single<DataRepository> { DataRepositoryImpl(get()) }
-    single<CollageRepository> { CollageRepositoryImpl() }
+    single<CollageRepository> { CollageRepositoryImpl(get()) }
 
     viewModel { HomeViewModel(get()) }
     viewModel { GalleryViewModel(get(), get()) }
     viewModel { MoreViewModel(get()) }
     viewModel { TutorialViewModel(get(), get()) }
     viewModel { CreateCollageViewModel(get(), get(), get()) }
-    viewModel { CollageResultViewModel(get(), get()) }
+    viewModel { CollageResultViewModel(get(), get(), get()) }
 }

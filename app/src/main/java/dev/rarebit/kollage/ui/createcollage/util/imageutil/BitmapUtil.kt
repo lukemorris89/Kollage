@@ -73,34 +73,50 @@ suspend fun flattenCollageToBitmap(
     background
 }
 
-fun generateImage(
-    context: Context,
+suspend fun flattenImageOntoBackground(
+    background: ImageBitmap,
+    collage: ImageBitmap?
+): ImageBitmap = withContext(Dispatchers.Default) {
+    val canvas = Canvas(background)
+
+    collage?.let {
+        canvas.drawImage(
+            image = it,
+            topLeftOffset = Offset.Zero,
+            paint = Paint()
+        )
+    }
+
+    background
+}
+
+suspend fun generateImage(
     backgroundBitmap: ImageBitmap,
-    collage: CollageLayer?,
+    collage: ImageBitmap?,
     backgroundSelection: BackgroundSelection,
     backgroundColor: Color,
-): ImageBitmap? {
-    return if (backgroundSelection == BackgroundSelection.COLOR) {
-        val paint = Paint().apply {
-            color = backgroundColor
-        }
-
+): ImageBitmap {
+    return if (backgroundSelection == BackgroundSelection.COLOUR) {
         val colorBitmap = ImageBitmap(
             backgroundBitmap.width,
             backgroundBitmap.height,
             backgroundBitmap.config
         )
-        val canvas = Canvas(image = colorBitmap)
-        canvas.drawRect(
-            0f,
-            0f,
+
+        val paint = Paint().apply {
+            color = backgroundColor
+        }
+
+        Canvas(colorBitmap).drawRect(
+            0f, 0f,
             backgroundBitmap.width.toFloat(),
             backgroundBitmap.height.toFloat(),
             paint
         )
-        flattenCollageToBitmap(context, colorBitmap, collage)
+
+        flattenImageOntoBackground(colorBitmap, collage)
     } else {
-        flattenCollageToBitmap(context, backgroundBitmap, collage)
+        flattenImageOntoBackground(backgroundBitmap, collage)
     }
 }
 
