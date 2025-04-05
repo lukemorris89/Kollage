@@ -14,14 +14,14 @@ import kotlinx.collections.immutable.PersistentList
 fun PrimaryToolRow(
     buttons: PersistentList<Tool>,
     isExpanded: Boolean,
-    selectedTool: Tool?,
+    selectedTool: CollageTool?,
 ) {
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                if (!isExpanded && (selectedTool == null || selectedTool.name != CollageTool.EDIT)) {
+                if (!isExpanded && (selectedTool == null || selectedTool != CollageTool.EDIT)) {
                     White
                 } else {
                     LightGrey
@@ -30,7 +30,7 @@ fun PrimaryToolRow(
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         buttons.forEach {
-            val isSelected = it == selectedTool && it.name == CollageTool.EDIT
+            val isSelected = it.name == selectedTool && it.name == CollageTool.EDIT
             ToolButton(
                 tool = it,
                 selected = isSelected,
@@ -43,7 +43,7 @@ fun PrimaryToolRow(
 @Composable
 fun SecondaryToolRow(
     buttons: PersistentList<Tool>,
-    selectedTool: Tool?,
+    selectedTool: CollageTool?,
 ) {
     Row(
         modifier = Modifier
@@ -52,7 +52,7 @@ fun SecondaryToolRow(
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         buttons.forEach {
-            val isSelected = it == selectedTool
+            val isSelected = it.name == selectedTool
             ToolButton(
                 tool = it,
                 selected = isSelected,

@@ -46,7 +46,7 @@ fun CollageResultPreview(
             viewData.collage?.image?.let {
                 Box(modifier = Modifier
                     .padding(horizontal = 24.dp, vertical = 24.dp)
-                    .background(viewData.backgroundColor),
+                    .background(viewData.backgroundColor.colour),
                 ) {
                     Image(
                         modifier = Modifier

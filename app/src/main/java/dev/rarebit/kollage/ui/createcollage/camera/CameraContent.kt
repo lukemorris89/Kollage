@@ -165,7 +165,7 @@ fun CameraContent(
             isVisible = viewData.showFloatingToolRow,
             content = {
                 viewData.selectedSecondaryTool?.let {
-                    when (it.name) {
+                    when (it) {
                         CollageTool.SHAPE ->
                             CropShapeRowContent(
                                 viewData = viewData,

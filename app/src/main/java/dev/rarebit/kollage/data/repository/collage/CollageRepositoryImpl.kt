@@ -13,8 +13,7 @@ class CollageRepositoryImpl : CollageRepository {
     private val _previousCollage = MutableStateFlow<CollageLayer?>(null)
     override val previousCollage = _previousCollage.asStateFlow()
 
-    private val _collageBackground = MutableStateFlow<ImageBitmap?>(null)
-    override val collageBackground = _collageBackground.asStateFlow()
+    override var collageBackground: ImageBitmap? = null
 
     private val _finalCollage = MutableStateFlow<ImageBitmap?>(null)
     override val finalCollage = _finalCollage.asStateFlow()
@@ -34,8 +33,8 @@ class CollageRepositoryImpl : CollageRepository {
         _collage.value = collage
     }
 
-    override fun updateCollageBackground(collageBackground: ImageBitmap?) {
-        _collageBackground.value = collageBackground
+    override fun updateCollageBackground(background: ImageBitmap?) {
+        collageBackground = background
     }
 
     override fun updateFinalCollage(finalCollage: ImageBitmap?) {
@@ -45,6 +44,6 @@ class CollageRepositoryImpl : CollageRepository {
     override fun clearImage() {
         _previousCollage.value = null
         _collage.value = null
-        _collageBackground.value = null
+        collageBackground = null
     }
 }

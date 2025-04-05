@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface CollageRepository {
     val collage: StateFlow<CollageLayer?>
     val previousCollage: StateFlow<CollageLayer?>
-    val collageBackground: StateFlow<ImageBitmap?>
+    val collageBackground: ImageBitmap?
     val finalCollage: StateFlow<ImageBitmap?>
     val imageFormat: StateFlow<ImageFormat>
 

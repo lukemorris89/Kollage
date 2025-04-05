@@ -12,6 +12,7 @@ import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.design.component.tools.CollageTool
+import dev.rarebit.design.component.tools.Tool
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
@@ -210,9 +211,6 @@ class CreateCollageViewModel(
             )
         }
         collageRepository.updateFinalCollage(null)
-    }
-
-    fun onDoneClicked() {
     }
 
     fun updateFinalCollage(finalCollage: ImageBitmap) {

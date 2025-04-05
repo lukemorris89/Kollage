@@ -8,7 +8,9 @@ import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
-import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewEvent
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.LayerColour
+import dev.rarebit.kollage.ui.createcollage.util.imageutil.BackgroundSelection
+import dev.rarebit.kollage.ui.createcollage.util.imageutil.ImageFormat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,6 +25,14 @@ class CollageResultViewModel(
 
     private val _viewData = MutableStateFlow(
         CollageResultViewData(
+            imageFormat = ImageFormat.PNG,
+            backgroundSelection = BackgroundSelection.CAMERA,
+            collage = null,
+            backgroundBitmap = collageRepository.collageBackground,
+            backgroundColor = LayerColour.BLACK,
+            displayBitmap = null,
+            isSaveLoading = false,
+            finalBitmap = null,
         )
     )
     override val viewData: StateFlow<CollageResultViewData>
