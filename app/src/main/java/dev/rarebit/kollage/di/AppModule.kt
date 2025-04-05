@@ -38,12 +38,12 @@ val appModule = module {
         val database = get<KollageDatabase>()
         database.collageDao()
     }
-    single<LocalDataSource> { LocalDataSourceImpl(get()) }
+    single<LocalDataSource> { LocalDataSourceImpl(get(), get()) }
     single<DataRepository> { DataRepositoryImpl(get()) }
-    single<CollageRepository> { CollageRepositoryImpl(get()) }
+    single<CollageRepository> { CollageRepositoryImpl(get(), get()) }
 
     viewModel { HomeViewModel(get()) }
-    viewModel { GalleryViewModel(get(), get()) }
+    viewModel { GalleryViewModel(get(), get(), get()) }
     viewModel { MoreViewModel(get()) }
     viewModel { TutorialViewModel(get(), get()) }
     viewModel { CreateCollageViewModel(get(), get(), get()) }
