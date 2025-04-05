@@ -24,9 +24,11 @@ import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.kollage.ui.collageresult.component.CollageResultPreview
 import dev.rarebit.kollage.ui.collageresult.component.CollageResultToolRow
+import dev.rarebit.kollage.ui.collageresult.component.secondarytools.BackgroundColourRowContent
 import dev.rarebit.kollage.ui.collageresult.component.secondarytools.BackgroundSelectionRowContent
 import dev.rarebit.kollage.ui.collageresult.component.secondarytools.ImageFormatRowContent
 import dev.rarebit.kollage.ui.collageresult.data.CollageResultViewData
+import dev.rarebit.kollage.ui.createcollage.util.imageutil.BackgroundSelection
 import dev.rarebit.design.R as DR
 
 
@@ -78,23 +80,10 @@ fun CollageResultContent(
             FloatingToolRow(
                 isVisible = viewData.showFloatingToolRow,
                 content = {
-                    viewData.selectedTool?.let {
-                        when (it) {
-                            CollageTool.IMAGE_FORMAT ->
-                                ImageFormatRowContent(
-                                    viewData = viewData,
-                                    onViewAction = onViewAction,
-                                )
-
-                            CollageTool.BACKGROUND ->
-                                BackgroundSelectionRowContent(
-                                    viewData = viewData,
-                                    onViewAction = onViewAction,
-                                )
-
-                            else -> Unit
-                        }
-                    }
+                    BackgroundColourRowContent(
+                        viewData = viewData,
+                        onViewAction = onViewAction,
+                    )
                 }
             )
             VerticalSpacer(paddingLarge)

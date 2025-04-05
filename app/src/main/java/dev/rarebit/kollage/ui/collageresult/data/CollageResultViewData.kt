@@ -13,6 +13,7 @@ data class CollageResultViewData(
     val collage: ImageBitmap?,
     val backgroundBitmap: ImageBitmap,
     val selectedTool: CollageTool?,
+    val isToolbarExpanded: Boolean,
     val showFloatingToolRow: Boolean,
     val backgroundColor: LayerColour,
     val isSaveLoading: Boolean,

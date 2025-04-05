@@ -37,6 +37,7 @@ class CollageResultViewModel(
             collage = collageRepository.finalCollage,
             backgroundBitmap = requireNotNull(collageRepository.collageBackground), // Camera capture always required
             backgroundColor = LayerColour.BLACK,
+            isToolbarExpanded = false,
             selectedTool = null,
             showFloatingToolRow = false,
             isSaveLoading = false,
@@ -56,12 +57,21 @@ class CollageResultViewModel(
     fun updateSelectedTool(tool: CollageTool) {
         _viewData.update { currentState ->
             currentState.copy(
-                selectedTool = tool,
+                selectedTool = if (currentState.selectedTool == tool) {
+                    null
+                } else {
+                    tool
+                },
+                isToolbarExpanded = if (tool == CollageTool.SAVE) {
+                    false
+                } else {
+                    tool != currentState.selectedTool
+                },
                 showFloatingToolRow = if (tool == currentState.selectedTool) {
                     false
                 } else {
-                    tool != CollageTool.SAVE
-                }
+                    tool == CollageTool.BACKGROUND && currentState.backgroundSelection == BackgroundSelection.COLOUR
+                },
             )
         }
     }
@@ -71,6 +81,7 @@ class CollageResultViewModel(
         _viewData.update { currentState ->
             currentState.copy(
                 backgroundSelection = backgroundSelection,
+                showFloatingToolRow = currentState.selectedTool == CollageTool.BACKGROUND && backgroundSelection == BackgroundSelection.COLOUR,
             )
         }
     }

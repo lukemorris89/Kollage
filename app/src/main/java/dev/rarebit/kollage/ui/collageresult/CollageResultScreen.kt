@@ -50,6 +50,7 @@ private fun onViewAction(viewAction: CollageResultViewAction) {
         CollageResultViewAction.OnBackPressed -> onBackPressed()
         is CollageResultViewAction.OnToolClicked -> updateSelectedTool(viewAction.tool)
         is CollageResultViewAction.OnUpdateBackground -> updateBackgroundSelection(viewAction.backgroundSelection)
+        is CollageResultViewAction.OnUpdateBackgroundColour -> updateBackgroundColor(viewAction.colour)
         is CollageResultViewAction.OnUpdateImageFormat -> updateImageFormat(viewAction.imageFormat)
         CollageResultViewAction.OnSaveClicked -> {
             updateSelectedTool(CollageTool.SAVE)
