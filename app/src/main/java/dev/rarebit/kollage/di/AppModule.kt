@@ -8,6 +8,7 @@ import dev.rarebit.kollage.data.repository.DataRepositoryImpl
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
 import dev.rarebit.kollage.data.repository.collage.CollageRepositoryImpl
 import dev.rarebit.kollage.onboarding.di.onboardingModule
+import dev.rarebit.kollage.ui.collageresult.data.CollageResultViewModel
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewModel
 import dev.rarebit.kollage.ui.gallery.data.GalleryViewModel
 import dev.rarebit.kollage.ui.home.data.HomeViewModel
@@ -32,4 +33,5 @@ val appModule = module {
     viewModel { MoreViewModel(get()) }
     viewModel { TutorialViewModel(get(), get()) }
     viewModel { CreateCollageViewModel(get(), get(), get()) }
+    viewModel { CollageResultViewModel(get(), get()) }
 }

@@ -1,6 +1,5 @@
 package dev.rarebit.kollage.ui.collageresult.data
 
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import dev.rarebit.core.viewmodel.BaseViewData
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
@@ -16,5 +15,6 @@ data class CollageResultViewData(
     val backgroundColor: LayerColour,
     val displayBitmap: ImageBitmap?,
     val isSaveLoading: Boolean,
+    val isCollageSaved: Boolean,
     val finalBitmap: ImageBitmap? = null,
 ): BaseViewData()

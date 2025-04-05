@@ -33,7 +33,7 @@ class CollageRepositoryImpl : CollageRepository {
         _collage.value = collage
     }
 
-    override fun updateCollageBackground(background: ImageBitmap?) {
+    override fun updateCollageBackground(background: ImageBitmap) {
         collageBackground = background
     }
 

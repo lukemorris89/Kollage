@@ -13,6 +13,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.asAndroidBitmap
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -55,34 +57,26 @@ fun Bitmap.flipHorizontally(lensFacing: Int): Bitmap {
     }
 }
 
-fun drawKollageBitmap(
-    context: Context,
-    background: ImageBitmap?,
+suspend fun flattenCollageToBitmap(
+    background: ImageBitmap,
     collageLayer: CollageLayer?
-): ImageBitmap? {
-    return if (background != null) {
-        val canvas = Canvas(background)
+): ImageBitmap = withContext(Dispatchers.Default) {
+    val canvas = Canvas(background)
 
-        if (collageLayer != null) {
-            canvas.drawImage(
-                collageLayer.image,
-                topLeftOffset = Offset(
-                    convertPixelsToDp(collageLayer.rect.left, context),
-                    convertPixelsToDp(collageLayer.rect.top, context),
-                ),
-                Paint(),
-            )
-        }
-        background
-    } else {
-        null
+    collageLayer?.let {
+        canvas.drawImage(
+            it.image,
+            Offset(it.rect.left.toFloat(), it.rect.top.toFloat()),
+            Paint()
+        )
     }
+    background
 }
 
 fun generateImage(
     context: Context,
     backgroundBitmap: ImageBitmap,
-    kollage: CollageLayer?,
+    collage: CollageLayer?,
     backgroundSelection: BackgroundSelection,
     backgroundColor: Color,
 ): ImageBitmap? {
@@ -104,9 +98,9 @@ fun generateImage(
             backgroundBitmap.height.toFloat(),
             paint
         )
-        drawKollageBitmap(context, colorBitmap, kollage)
+        flattenCollageToBitmap(context, colorBitmap, collage)
     } else {
-        drawKollageBitmap(context, backgroundBitmap, kollage)
+        flattenCollageToBitmap(context, backgroundBitmap, collage)
     }
 }
 

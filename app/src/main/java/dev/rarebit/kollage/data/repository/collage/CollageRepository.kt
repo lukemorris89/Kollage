@@ -15,7 +15,7 @@ interface CollageRepository {
     fun updateImageFormat(imageFormat: ImageFormat)
     fun updatePreviousCollageLayer(collage: CollageLayer?)
     fun updateCollageLayer(collage: CollageLayer?)
-    fun updateCollageBackground(collageBackground: ImageBitmap?)
+    fun updateCollageBackground(collageBackground: ImageBitmap)
     fun updateFinalCollage(finalCollage: ImageBitmap?)
     fun clearImage()
 }

@@ -18,7 +18,7 @@ sealed class CreateCollageViewAction : BaseViewAction() {
     data object OnUndoCollageLayer : CreateCollageViewAction()
     data object OnSwitchCamera : CreateCollageViewAction()
     data object OnEditClicked : CreateCollageViewAction()
-    data class OnDoneClicked(val finalCollage: ImageBitmap) : CreateCollageViewAction()
+    data class OnDoneClicked(val cameraCapture: ImageBitmap) : CreateCollageViewAction()
     data object OnCropShapeClicked : CreateCollageViewAction()
     data object OnAlphaClicked : CreateCollageViewAction()
     data object OnColourClicked : CreateCollageViewAction()

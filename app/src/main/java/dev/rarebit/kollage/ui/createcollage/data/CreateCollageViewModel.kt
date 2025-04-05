@@ -4,7 +4,8 @@ import androidx.camera.core.CameraSelector
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.viewModelScope
-import dev.rarebit.core.application.ApplicationContextProvider
+import dev.rarebit.core.logger.Logger
+import dev.rarebit.core.logger.WithLogger
 import dev.rarebit.core.view.ResourceProvider
 import dev.rarebit.core.view.ViewEvent
 import dev.rarebit.core.view.WithResourceProvider
@@ -12,12 +13,10 @@ import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.design.component.tools.CollageTool
-import dev.rarebit.design.component.tools.Tool
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
-import dev.rarebit.kollage.ui.createcollage.util.imageutil.drawKollageBitmap
-import kotlinx.coroutines.Dispatchers
+import dev.rarebit.kollage.ui.createcollage.util.imageutil.flattenCollageToBitmap
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,10 +26,11 @@ import kotlinx.coroutines.launch
 
 class CreateCollageViewModel(
     override val resourceProvider: ResourceProvider,
-    private val applicationContextProvider: ApplicationContextProvider,
+    override val logger: Logger,
     private val collageRepository: CollageRepository,
 ) : BaseViewModel<CreateCollageViewData, CreateCollageViewEvent>(),
-    WithResourceProvider {
+    WithResourceProvider,
+    WithLogger {
 
     private val _viewData = MutableStateFlow(
         CreateCollageViewData(
@@ -62,6 +62,8 @@ class CreateCollageViewModel(
         _viewEvent.tryEmit(CreateCollageViewEvent.NavigateBack)
     }
 
+    // Sets whether device has both cameras on camera init
+    // Used to allow toggling cameras and setting initial camera for capture
     fun updateHasCameras(hasBackCamera: Boolean, hasFrontCamera: Boolean) {
         _viewData.update { currentState ->
             currentState.copy(
@@ -71,6 +73,8 @@ class CreateCollageViewModel(
         }
     }
 
+    // Updates which camera (front or back) is currently active
+    // Collapses expanded toolbar
     fun updateCameraLensFacing() {
         _viewData.update { currentState ->
             currentState.copy(
@@ -91,6 +95,7 @@ class CreateCollageViewModel(
         }
     }
 
+    // Sets whether device has torch/flash on camera init
     fun updateHasTorch(hasTorch: Boolean) {
         _viewData.update { currentState ->
             currentState.copy(
@@ -99,7 +104,7 @@ class CreateCollageViewModel(
         }
     }
 
-    fun updateTorchOn() {
+    fun toggleTorch() {
         _viewData.update { currentState ->
             currentState.copy(
                 isTorchOn = !currentState.isTorchOn
@@ -107,6 +112,7 @@ class CreateCollageViewModel(
         }
     }
 
+    // Toggles whether edit tools are visible
     fun toggleEdit() {
         _viewData.update { currentState ->
             currentState.copy(
@@ -121,6 +127,7 @@ class CreateCollageViewModel(
         }
     }
 
+    // Toggles whether crop shape selection floating toolbar is visible
     fun toggleCropShape() {
         _viewData.update { currentState ->
             currentState.copy(
@@ -134,6 +141,7 @@ class CreateCollageViewModel(
         }
     }
 
+    // Toggles whether alpha selection floating toolbar is visible
     fun toggleAlpha() {
         _viewData.update { currentState ->
             currentState.copy(
@@ -147,6 +155,7 @@ class CreateCollageViewModel(
         }
     }
 
+    // Toggles whether layer colour filter selection floating toolbar is visible
     fun toggleColour() {
         _viewData.update { currentState ->
             currentState.copy(
@@ -160,6 +169,7 @@ class CreateCollageViewModel(
         }
     }
 
+    // Changes shape of collage layer crop selection
     fun onCropShapeChanged(cropShape: CropShape) {
         _viewData.update { currentState ->
             currentState.copy(
@@ -169,6 +179,7 @@ class CreateCollageViewModel(
         }
     }
 
+    // Changes alpha of next collage layer
     fun onAlphaChanged(alpha: Float) {
         _viewData.update { currentState ->
             currentState.copy(
@@ -177,6 +188,7 @@ class CreateCollageViewModel(
         }
     }
 
+    // Changes colour filter of next collage layer (combined with colour filter)
     fun onColourChanged(colour: Color) {
         _viewData.update { currentState ->
             currentState.copy(
@@ -185,7 +197,8 @@ class CreateCollageViewModel(
         }
     }
 
-    fun updateCollageLayer(collageLayer: CollageLayer) {
+    // Adds new collage layer on top of current collage and sets previous layer (used to undo)
+    fun createNewCollageLayer(collageLayer: CollageLayer) {
         _viewData.update { currentState ->
             currentState.copy(
                 previousCollageLayer = if (currentState.previousCollageLayer == null) {
@@ -197,9 +210,9 @@ class CreateCollageViewModel(
                 isUndoEnabled = true,
             )
         }
-        collageRepository.updateFinalCollage(null)
     }
 
+    // Replaces current collage layer with previous layer (only possible once as only 2 layers are stored in memory)
     fun undoCollageLayer() {
         _viewData.update { currentState ->
             currentState.copy(
@@ -210,34 +223,30 @@ class CreateCollageViewModel(
                 isToolbarExpanded = false,
             )
         }
-        collageRepository.updateFinalCollage(null)
     }
 
-    fun updateFinalCollage(finalCollage: ImageBitmap) {
-        _viewData.update { currentState ->
-            currentState.copy(
-                isSaveLoading = true,
-            )
-        }
-        val currentCollageLayer = _viewData.value.currentCollageLayer
-        viewModelScope.launch(Dispatchers.IO) {
-            val newKollage = drawKollageBitmap(
-                applicationContextProvider(),
-                finalCollage,
-                currentCollageLayer,
-            )
-            with(collageRepository) {
-                updateCollageBackground(finalCollage)
-                updateFinalCollage(null)
-                updateFinalCollage(newKollage)
-            }
-        }.invokeOnCompletion {
-            _viewData.update { currentState ->
-                currentState.copy(
-                    isSaveLoading = false,
+    // Flattens collage layers to one bitmap and adds the camera capture as a second layer underneath, then navigates
+    fun saveFinalCollage(cameraCapture: ImageBitmap) {
+        _viewData.update { it.copy(isSaveLoading = true) }
+
+        viewModelScope.launch {
+            try {
+                val finalCollage = flattenCollageToBitmap(
+                    background = cameraCapture,
+                    collageLayer = _viewData.value.currentCollageLayer
                 )
+
+                with(collageRepository) {
+                    updateCollageBackground(cameraCapture)
+                    updateFinalCollage(finalCollage)
+                }
+                _viewEvent.tryEmit(CreateCollageViewEvent.NavigateToCollageResultScreen)
+            } catch (e: Exception) {
+                logger.logError(e, tag = "CreateCollageViewModel") { "Error saving collage" }
+                // TODO show error snackbar
+            } finally {
+                _viewData.update { it.copy(isSaveLoading = false) }
             }
-            _viewEvent.tryEmit(CreateCollageViewEvent.NavigateToCollageResultScreen)
         }
     }
 }
