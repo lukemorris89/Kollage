@@ -2,9 +2,9 @@ package dev.rarebit.kollage.ui.gallery
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import dev.rarebit.core.permission.hasCameraPermission
 import dev.rarebit.kollage.navigation.AppRoute
@@ -18,7 +18,7 @@ fun GalleryScreen(
     viewModel: GalleryViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-    val viewData by viewModel.viewData.collectAsState()
+    val viewData by viewModel.viewData.collectAsStateWithLifecycle()
     GalleryContent(
         viewData = viewData,
         onViewAction = {

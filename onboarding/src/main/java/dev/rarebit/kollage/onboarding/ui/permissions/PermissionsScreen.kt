@@ -7,11 +7,11 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import dev.rarebit.core.permission.hasCameraPermission
@@ -28,7 +28,7 @@ fun PermissionsScreen(
     viewModel: PermissionsViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-    val viewData by viewModel.viewData.collectAsState()
+    val viewData by viewModel.viewData.collectAsStateWithLifecycle()
     PermissionsContent(
         viewData = viewData,
         onViewAction = {

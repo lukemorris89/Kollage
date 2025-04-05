@@ -2,8 +2,8 @@ package dev.rarebit.kollage.ui.collageresult
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import dev.rarebit.design.component.tools.CollageTool
@@ -17,7 +17,7 @@ fun CollageResultScreen(
     navHostController: NavHostController,
     viewModel: CollageResultViewModel = koinViewModel()
 ) {
-    val viewData by viewModel.viewData.collectAsState()
+    val viewData by viewModel.viewData.collectAsStateWithLifecycle()
     CollageResultContent(
         viewData = viewData,
         onViewAction = {

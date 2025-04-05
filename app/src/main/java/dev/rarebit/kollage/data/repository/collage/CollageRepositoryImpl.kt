@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import dev.rarebit.core.application.ApplicationContextProvider
+import dev.rarebit.kollage.data.database.model.CollageData
+import dev.rarebit.kollage.data.datasource.local.LocalDataSource
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
 import dev.rarebit.kollage.ui.createcollage.collage.createCollageLayer
@@ -22,6 +24,7 @@ import java.io.IOException
 
 class CollageRepositoryImpl(
     private val applicationContextProvider: ApplicationContextProvider,
+    private val localDataSource: LocalDataSource,
 ) : CollageRepository {
     override var collageBackground: ImageBitmap? = null
     override var finalCollage: ImageBitmap? = null
@@ -100,6 +103,18 @@ class CollageRepositoryImpl(
         contentValues.put(MediaStore.MediaColumns.IS_PENDING, 0)
         contentResolver.update(uri, contentValues, null, null)
 
+        localDataSource.saveCollage(uri.toString())
         uri
     }
+
+    override suspend fun saveCollage(imagePath: String) =
+        localDataSource.saveCollage(imagePath)
+
+    override fun getAllCollages() = localDataSource.getAllCollages()
+
+    override suspend fun getCollage(id: Int) = localDataSource.getCollage(id)
+
+    override suspend fun updateCollage(collage: CollageData) = localDataSource.updateCollage(collage)
+
+    override suspend fun deleteCollage(collage: CollageData) = localDataSource.deleteCollage(collage)
 }

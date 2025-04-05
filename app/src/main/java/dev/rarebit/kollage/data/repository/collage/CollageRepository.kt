@@ -5,9 +5,11 @@ import androidx.camera.core.ImageProxy
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import dev.rarebit.kollage.data.database.model.CollageData
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.ImageFormat
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface CollageRepository {
@@ -36,4 +38,9 @@ interface CollageRepository {
         bitmap: ImageBitmap,
         imageFormat: ImageFormat
     ): Uri
+    fun getAllCollages(): Flow<List<CollageData>>
+    suspend fun getCollage(id: Int): CollageData
+    suspend fun saveCollage(imagePath: String)
+    suspend fun updateCollage(collage: CollageData)
+    suspend fun deleteCollage(collage: CollageData)
 }

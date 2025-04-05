@@ -1,6 +1,11 @@
 package dev.rarebit.kollage.di
 
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import dev.rarebit.core.di.coreModule
+import dev.rarebit.kollage.data.database.KollageDatabase
+import dev.rarebit.kollage.data.database.dao.CollageDao
 import dev.rarebit.kollage.data.datasource.local.LocalDataSource
 import dev.rarebit.kollage.data.datasource.local.LocalDataSourceImpl
 import dev.rarebit.kollage.data.repository.DataRepository
@@ -24,6 +29,15 @@ val appModule = module {
         onboardingModule,
     ).let(::loadKoinModules)
 
+    single {
+        Room.databaseBuilder((get()), KollageDatabase::class.java, "kollage_database")
+            .build()
+    }
+
+    single<CollageDao> {
+        val database = get<KollageDatabase>()
+        database.collageDao()
+    }
     single<LocalDataSource> { LocalDataSourceImpl(get()) }
     single<DataRepository> { DataRepositoryImpl(get()) }
     single<CollageRepository> { CollageRepositoryImpl(get()) }
