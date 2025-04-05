@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.ui.createcollage.component.secondarytools
+package dev.rarebit.kollage.ui.collageresult.component.secondarytools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -21,21 +21,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.rarebit.design.R
 import dev.rarebit.design.component.HorizontalSpacer
 import dev.rarebit.design.theme.Black
-import dev.rarebit.design.theme.DarkGrey
-import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingMedium
 import dev.rarebit.design.theme.paddingSmall
-import dev.rarebit.kollage.R
+import dev.rarebit.kollage.ui.collageresult.CollageResultViewAction
+import dev.rarebit.kollage.ui.collageresult.data.CollageResultViewData
 import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
-import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.LayerColour
 import dev.rarebit.design.R as DR
 
 @Composable
-fun ColourRowContent(
-    viewData: CreateCollageViewData,
-    onViewAction: (CreateCollageViewAction) -> Unit,
+fun BackgroundColourRowContent(
+    viewData: CollageResultViewData,
+    onViewAction: (CollageResultViewAction) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -43,30 +43,16 @@ fun ColourRowContent(
             .padding(start = paddingMedium),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            text = stringResource(R.string.colour),
-            style = MaterialTheme.typography.titleMedium.copy(
-                color = Black,
-            ),
-        )
-        HorizontalSpacer(paddingSmall)
         Row(
             modifier = Modifier.horizontalScroll(rememberScrollState()),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            ColourButton(
-                colour = Color.Transparent,
-                selected = viewData.selectedColor == Color.Transparent,
-                onClick = {
-                    onViewAction(CreateCollageViewAction.OnColourChanged(Color.Transparent))
-                }
-            )
-            Colour.entries.forEach {
+            LayerColour.entries.forEach {
                 ColourButton(
-                    colour = it.colour,
-                    selected = viewData.selectedColor == it.colour,
+                    colour = it,
+                    selected = viewData.backgroundColor == it,
                     onClick = {
-                        onViewAction(CreateCollageViewAction.OnColourChanged(it))
+                        onViewAction(CollageResultViewAction.OnUpdateBackgroundColour(it))
                     }
                 )
             }
@@ -76,9 +62,9 @@ fun ColourRowContent(
 
 @Composable
 private fun ColourButton(
-    colour: Color,
+    colour: LayerColour,
     selected: Boolean,
-    onClick: (Color) -> Unit,
+    onClick: (LayerColour) -> Unit,
 ) {
     IconButton(
         onClick = {
@@ -91,8 +77,6 @@ private fun ColourButton(
                 .clip(CircleShape)
                 .background(
                     when {
-                        colour == Color.Transparent && selected -> Black
-                        colour == Color.Transparent -> DarkGrey
                         selected -> Black
                         else -> Color.Transparent
                     }
@@ -103,11 +87,7 @@ private fun ColourButton(
                 painter = painterResource(
                     id = DR.drawable.ic_circle_filled
                 ),
-                tint = if (colour == Color.Transparent) {
-                    White
-                } else {
-                    colour
-                },
+                tint = colour.colour,
                 contentDescription = null,
             )
         }

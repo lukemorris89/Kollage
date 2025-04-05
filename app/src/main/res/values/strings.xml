@@ -4,7 +4,7 @@
     <string name="more">More</string>
     <string name="you_haven_t_created_anything_yet">You haven\'t created anything yet</string>
     <string name="create_new">Create new</string>
-    <string name="gallery_empty_description">Looks like you haven\'t created\nany kollages yet</string>
+    <string name="gallery_empty_description">Looks like you haven\'t created any kollages yet</string>
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="created_by_rarebit">Created by Rarebit.dev</string>
@@ -16,4 +16,7 @@
     <string name="alpha">Alpha</string>
     <string name="filter">Filter</string>
     <string name="colour">Colour</string>
+    <string name="background">Background</string>
+    <string name="save_as">Save as</string>
+    <string name="creating_kollage">Creating kollage…</string>
 </resources>

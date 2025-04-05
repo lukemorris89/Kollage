@@ -44,11 +44,11 @@ fun MoreContent(
                 )
             )
             VerticalSpacer(paddingSmall)
-            HorizontalDivider(
-                modifier = Modifier.padding(end = 64.dp),
-                color = LightGrey,
-                thickness = 1.dp
-            )
+//            HorizontalDivider(
+//                modifier = Modifier.padding(end = 64.dp),
+//                color = LightGrey,
+//                thickness = 1.dp
+//            )
             VerticalSpacer(paddingMedium)
             Text(
                 text = viewData.legalTitle,
@@ -58,7 +58,7 @@ fun MoreContent(
             )
             VerticalSpacer(paddingMedium)
             MoreButton(
-                text = viewData.termsAndConditionsText
+                text = viewData.termsAndConditionsText,
             ) {
                 // TODO add click to t&cs
             }

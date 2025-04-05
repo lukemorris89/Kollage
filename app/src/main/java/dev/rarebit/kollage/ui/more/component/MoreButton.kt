@@ -41,7 +41,7 @@ fun MoreButton(
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.titleMedium.copy(
+            style = MaterialTheme.typography.labelLarge.copy(
                 color = Black
             ),
             maxLines = 1,

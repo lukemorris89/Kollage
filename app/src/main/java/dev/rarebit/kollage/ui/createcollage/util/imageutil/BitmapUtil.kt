@@ -13,6 +13,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.asAndroidBitmap
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -55,58 +57,70 @@ fun Bitmap.flipHorizontally(lensFacing: Int): Bitmap {
     }
 }
 
-fun drawKollageBitmap(
+suspend fun flattenCollageToBitmap(
     context: Context,
-    background: ImageBitmap?,
+    background: ImageBitmap,
     collageLayer: CollageLayer?
-): ImageBitmap? {
-    return if (background != null) {
-        val canvas = Canvas(background)
+): ImageBitmap = withContext(Dispatchers.Default) {
+    val canvas = Canvas(background)
 
-        if (collageLayer != null) {
-            canvas.drawImage(
-                collageLayer.image,
-                topLeftOffset = Offset(
-                    convertPixelsToDp(collageLayer.rect.left, context),
-                    convertPixelsToDp(collageLayer.rect.top, context),
-                ),
-                Paint(),
-            )
-        }
-        background
-    } else {
-        null
+    collageLayer?.let {
+        canvas.drawImage(
+            collageLayer.image,
+            topLeftOffset = Offset(
+                convertPixelsToDp(collageLayer.rect.left, context),
+                convertPixelsToDp(collageLayer.rect.top, context),
+            ),
+            Paint(),
+        )
     }
+    background
 }
 
-fun generateImage(
-    context: Context,
+suspend fun flattenImageOntoBackground(
+    background: ImageBitmap,
+    collage: ImageBitmap?
+): ImageBitmap = withContext(Dispatchers.Default) {
+    val canvas = Canvas(background)
+
+    collage?.let {
+        canvas.drawImage(
+            image = it,
+            topLeftOffset = Offset.Zero,
+            paint = Paint()
+        )
+    }
+
+    background
+}
+
+suspend fun generateImage(
     backgroundBitmap: ImageBitmap,
-    kollage: CollageLayer?,
+    collage: ImageBitmap?,
     backgroundSelection: BackgroundSelection,
     backgroundColor: Color,
-): ImageBitmap? {
-    return if (backgroundSelection == BackgroundSelection.COLOR) {
-        val paint = Paint().apply {
-            color = backgroundColor
-        }
-
+): ImageBitmap {
+    return if (backgroundSelection == BackgroundSelection.COLOUR) {
         val colorBitmap = ImageBitmap(
             backgroundBitmap.width,
             backgroundBitmap.height,
             backgroundBitmap.config
         )
-        val canvas = Canvas(image = colorBitmap)
-        canvas.drawRect(
-            0f,
-            0f,
+
+        val paint = Paint().apply {
+            color = backgroundColor
+        }
+
+        Canvas(colorBitmap).drawRect(
+            0f, 0f,
             backgroundBitmap.width.toFloat(),
             backgroundBitmap.height.toFloat(),
             paint
         )
-        drawKollageBitmap(context, colorBitmap, kollage)
+
+        flattenImageOntoBackground(colorBitmap, collage)
     } else {
-        drawKollageBitmap(context, backgroundBitmap, kollage)
+        flattenImageOntoBackground(backgroundBitmap, collage)
     }
 }
 

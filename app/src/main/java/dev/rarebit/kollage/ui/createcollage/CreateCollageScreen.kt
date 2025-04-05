@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewEvent
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -25,10 +27,16 @@ fun CreateCollageScreen(
     )
 
     LaunchedEffect(Unit) {
-        viewModel.viewEvent.collect { event ->
-            when (event.consume()) {
-                CreateCollageViewEvent.NavigateBack -> navHostController.popBackStack()
-                null -> Unit
+        with(viewModel) {
+            viewEvent.collect { event ->
+                when (event.consume()) {
+                    CreateCollageViewEvent.NavigateBack -> navHostController.popBackStack()
+                    CreateCollageViewEvent.NavigateToCollageResultScreen -> navHostController.navigate(
+                        AppRoute.CollageResult,
+                    )
+
+                    null -> Unit
+                }
             }
         }
     }
@@ -41,7 +49,7 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
         CreateCollageViewAction.OnUndoCollageLayer -> undoCollageLayer()
         CreateCollageViewAction.OnSwitchCamera -> updateCameraLensFacing()
         CreateCollageViewAction.OnEditClicked -> toggleEdit()
-        CreateCollageViewAction.OnDoneClicked -> onDoneClicked()
+        is CreateCollageViewAction.OnDoneClicked -> saveFinalCollage(viewAction.cameraCapture)
 
         CreateCollageViewAction.OnCropShapeClicked -> toggleCropShape()
         CreateCollageViewAction.OnAlphaClicked -> toggleAlpha()
@@ -56,8 +64,8 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
             viewAction.hasFrontCamera
         )
 
-        CreateCollageViewAction.OnTorchClicked -> updateTorchOn()
+        CreateCollageViewAction.OnTorchClicked -> toggleTorch()
         is CreateCollageViewAction.OnTorchDetected -> updateHasTorch(viewAction.hasTorch)
-        is CreateCollageViewAction.OnCreateCollageLayer -> updateCollageLayer(viewAction.collageLayer)
+        is CreateCollageViewAction.OnCreateCollageLayer -> createNewCollageLayer(viewAction.imageProxy, viewAction.cropRect)
     }
 }

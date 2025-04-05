@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.ui.createcollage.component.secondarytools
+package dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools
 
 import androidx.compose.ui.graphics.Color
 import dev.rarebit.design.theme.Aqua
@@ -18,7 +18,7 @@ import dev.rarebit.design.theme.SkyBlue
 import dev.rarebit.design.theme.SoftRed
 import dev.rarebit.design.theme.WarmYellow
 
-enum class Colour(
+enum class LayerColour(
     val colour: Color
 ) {
     BLACK(colour = Black),
