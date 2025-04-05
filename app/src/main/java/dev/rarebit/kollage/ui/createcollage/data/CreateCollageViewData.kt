@@ -2,17 +2,17 @@ package dev.rarebit.kollage.ui.createcollage.data
 
 import androidx.compose.ui.graphics.Color
 import dev.rarebit.core.viewmodel.BaseViewData
+import dev.rarebit.design.component.tools.Tool
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
-import dev.rarebit.kollage.ui.createcollage.component.CollageTool
-import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
 
 data class CreateCollageViewData(
     val currentCollageLayer: CollageLayer? = null,
     val previousCollageLayer: CollageLayer? = null,
-    val selectedPrimaryTool: CollageTool?,
-    val selectedSecondaryTool: CollageTool?,
+    val selectedPrimaryTool: Tool?,
+    val selectedSecondaryTool: Tool?,
     val isToolbarExpanded: Boolean,
-    val showSecondaryToolOptions: Boolean,
+    val showFloatingToolRow: Boolean,
     val selectedCropShape: CropShape,
     val defaultAlpha: Float,
     val selectedAlpha: Float,

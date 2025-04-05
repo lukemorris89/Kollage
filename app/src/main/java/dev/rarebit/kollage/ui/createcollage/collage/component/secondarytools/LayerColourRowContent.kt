@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.ui.createcollage.component.secondarytools
+package dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -61,7 +61,7 @@ fun ColourRowContent(
                     onViewAction(CreateCollageViewAction.OnColourChanged(Color.Transparent))
                 }
             )
-            Colour.entries.forEach {
+            LayerColour.entries.forEach {
                 ColourButton(
                     colour = it.colour,
                     selected = viewData.selectedColor == it.colour,

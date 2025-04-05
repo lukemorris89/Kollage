@@ -11,10 +11,10 @@ import dev.rarebit.core.view.WithResourceProvider
 import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
+import dev.rarebit.design.component.tools.CollageTool
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
-import dev.rarebit.kollage.ui.createcollage.component.CollageTool
-import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShape
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.drawKollageBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,7 +37,7 @@ class CreateCollageViewModel(
             selectedSecondaryTool = null,
             isToolbarExpanded = false,
             selectedCropShape = CropShape.RECTANGLE,
-            showSecondaryToolOptions = false,
+            showFloatingToolRow = false,
             defaultAlpha = 1f,
             selectedAlpha = 1f,
             selectedColor = Color.Transparent,
@@ -115,7 +115,7 @@ class CreateCollageViewModel(
                     CollageTool.EDIT
                 },
                 isToolbarExpanded = !currentState.isToolbarExpanded,
-                showSecondaryToolOptions = false,
+                showFloatingToolRow = false,
             )
         }
     }
@@ -128,7 +128,7 @@ class CreateCollageViewModel(
                 } else {
                     CollageTool.SHAPE
                 },
-                showSecondaryToolOptions = !(currentState.selectedSecondaryTool == CollageTool.SHAPE && currentState.showSecondaryToolOptions)
+                showFloatingToolRow = !(currentState.selectedSecondaryTool == CollageTool.SHAPE && currentState.showFloatingToolRow)
             )
         }
     }
@@ -141,7 +141,7 @@ class CreateCollageViewModel(
                 } else {
                     CollageTool.ALPHA
                 },
-                showSecondaryToolOptions = !(currentState.selectedSecondaryTool == CollageTool.ALPHA && currentState.showSecondaryToolOptions)
+                showFloatingToolRow = !(currentState.selectedSecondaryTool == CollageTool.ALPHA && currentState.showFloatingToolRow)
             )
         }
     }
@@ -154,7 +154,7 @@ class CreateCollageViewModel(
                 } else {
                     CollageTool.COLOUR
                 },
-                showSecondaryToolOptions = !(currentState.selectedSecondaryTool == CollageTool.COLOUR && currentState.showSecondaryToolOptions),
+                showFloatingToolRow = !(currentState.selectedSecondaryTool == CollageTool.COLOUR && currentState.showFloatingToolRow),
             )
         }
     }

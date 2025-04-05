@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.ui.createcollage.component.secondarytools
+package dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row

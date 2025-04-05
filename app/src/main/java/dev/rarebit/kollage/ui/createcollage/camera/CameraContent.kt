@@ -14,9 +14,6 @@ import androidx.camera.core.UseCaseGroup
 import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.view.PreviewView
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,18 +31,18 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import dev.rarebit.core.logger.Logger
+import dev.rarebit.design.component.tools.FloatingToolRow
 import dev.rarebit.design.component.VerticalSpacer
+import dev.rarebit.design.component.tools.CollageTool
 import dev.rarebit.design.modifier.regularScreen
 import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
 import dev.rarebit.kollage.ui.createcollage.collage.CollageContent
 import dev.rarebit.kollage.ui.createcollage.collage.createCollageLayer
-import dev.rarebit.kollage.ui.createcollage.component.CollageTool
-import dev.rarebit.kollage.ui.createcollage.component.CollageToolRow
-import dev.rarebit.kollage.ui.createcollage.component.SecondaryToolRow
-import dev.rarebit.kollage.ui.createcollage.component.secondarytools.AlphaRowContent
-import dev.rarebit.kollage.ui.createcollage.component.secondarytools.ColourRowContent
-import dev.rarebit.kollage.ui.createcollage.component.secondarytools.CropShapeRowContent
+import dev.rarebit.kollage.ui.createcollage.collage.component.CollageToolRow
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.AlphaRowContent
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.ColourRowContent
+import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShapeRowContent
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import dev.rarebit.kollage.ui.createcollage.util.camerautil.getCameraProvider
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.flipHorizontally
@@ -164,39 +161,34 @@ fun CameraContent(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AnimatedVisibility(
-            visible = viewData.showSecondaryToolOptions,
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
-            SecondaryToolRow(
-                content = {
-                    viewData.selectedSecondaryTool?.let {
-                        when (it) {
-                            CollageTool.SHAPE ->
-                                CropShapeRowContent(
-                                    viewData = viewData,
-                                    onViewAction = onViewAction,
-                                )
+        FloatingToolRow(
+            isVisible = viewData.showFloatingToolRow,
+            content = {
+                viewData.selectedSecondaryTool?.let {
+                    when (it.name) {
+                        CollageTool.SHAPE ->
+                            CropShapeRowContent(
+                                viewData = viewData,
+                                onViewAction = onViewAction,
+                            )
 
-                            CollageTool.ALPHA ->
-                                AlphaRowContent(
-                                    viewData = viewData,
-                                    onViewAction = onViewAction,
-                                )
+                        CollageTool.ALPHA ->
+                            AlphaRowContent(
+                                viewData = viewData,
+                                onViewAction = onViewAction,
+                            )
 
-                            CollageTool.COLOUR ->
-                                ColourRowContent(
-                                    viewData = viewData,
-                                    onViewAction = onViewAction,
-                                )
+                        CollageTool.COLOUR ->
+                            ColourRowContent(
+                                viewData = viewData,
+                                onViewAction = onViewAction,
+                            )
 
-                            else -> Unit
-                        }
+                        else -> Unit
                     }
                 }
-            )
-        }
+            }
+        )
         VerticalSpacer(paddingLarge)
         CollageToolRow(
             viewData = viewData,

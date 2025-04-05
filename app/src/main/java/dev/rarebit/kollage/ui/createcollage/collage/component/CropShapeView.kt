@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.ui.createcollage.component
+package dev.rarebit.kollage.ui.createcollage.collage.component
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
