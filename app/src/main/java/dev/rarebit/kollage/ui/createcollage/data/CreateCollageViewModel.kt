@@ -15,6 +15,7 @@ import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.design.component.tools.CollageTool
+import dev.rarebit.kollage.R
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,6 +50,9 @@ class CreateCollageViewModel(
             isTorchOn = false,
             isUndoEnabled = false,
             isSaveLoading = false,
+            showConfirmExitDialog = false,
+            exitDialogTitle = R.string.confirm_exit.asString,
+            exitDialogDescription = R.string.are_you_sure_you_want_to_exit_all_changes_will_be_lost.asString,
         )
     )
     override val viewData: StateFlow<CreateCollageViewData>
@@ -59,7 +63,32 @@ class CreateCollageViewModel(
         get() = _viewEvent
 
     fun onBackPressed() {
+        if (_viewData.value.currentCollageLayer != null) {
+            _viewData.update { currentState ->
+                currentState.copy(
+                    showConfirmExitDialog = true,
+                )
+            }
+        } else {
+            _viewEvent.tryEmit(CreateCollageViewEvent.NavigateBack)
+        }
+    }
+
+    fun onConfirmExit() {
+        _viewData.update { currentState ->
+            currentState.copy(
+                showConfirmExitDialog = false,
+            )
+        }
         _viewEvent.tryEmit(CreateCollageViewEvent.NavigateBack)
+    }
+
+    fun onDismissConfirmExitDialog() {
+        _viewData.update { currentState ->
+            currentState.copy(
+                showConfirmExitDialog = false,
+            )
+        }
     }
 
     // Sets whether device has both cameras on camera init
@@ -217,11 +246,7 @@ class CreateCollageViewModel(
                     onComplete = { collageLayer ->
                         _viewData.update { currentState ->
                             currentState.copy(
-                                previousCollageLayer = if (currentState.previousCollageLayer == null) {
-                                    collageLayer
-                                } else {
-                                    currentState.currentCollageLayer
-                                },
+                                previousCollageLayer = currentState.currentCollageLayer,
                                 currentCollageLayer = collageLayer,
                                 isUndoEnabled = true,
                             )

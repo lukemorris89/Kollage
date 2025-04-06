@@ -69,5 +69,8 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
             viewAction.imageProxy,
             viewAction.cropRect
         )
+
+        CreateCollageViewAction.OnConfirmExit -> onConfirmExit()
+        CreateCollageViewAction.OnDismissConfirmExitDialog -> onDismissConfirmExitDialog()
     }
 }

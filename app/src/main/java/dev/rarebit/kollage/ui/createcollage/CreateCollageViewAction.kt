@@ -23,4 +23,6 @@ sealed class CreateCollageViewAction : BaseViewAction() {
     data object OnCropShapeClicked : CreateCollageViewAction()
     data object OnAlphaClicked : CreateCollageViewAction()
     data object OnColourClicked : CreateCollageViewAction()
+    data object OnConfirmExit : CreateCollageViewAction()
+    data object OnDismissConfirmExitDialog : CreateCollageViewAction()
 }
