@@ -1,8 +1,6 @@
 package dev.rarebit.kollage.di
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import dev.rarebit.core.di.coreModule
 import dev.rarebit.kollage.data.database.KollageDatabase
 import dev.rarebit.kollage.data.database.dao.CollageDao

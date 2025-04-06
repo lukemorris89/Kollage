@@ -1,7 +1,7 @@
 package dev.rarebit.kollage.ui.gallery.data
 
 import dev.rarebit.core.viewmodel.BaseViewData
-import dev.rarebit.kollage.data.database.model.CollageData
+import dev.rarebit.kollage.data.model.Collage
 import kotlinx.collections.immutable.PersistentList
 
 data class GalleryViewData(
@@ -9,5 +9,5 @@ data class GalleryViewData(
     val isEmptyGallery: Boolean,
     val primaryCtaLabel: String,
     val emptyDescription: String,
-    val collageList: PersistentList<CollageData>,
+    val collageList: PersistentList<Collage>,
 ) : BaseViewData()
