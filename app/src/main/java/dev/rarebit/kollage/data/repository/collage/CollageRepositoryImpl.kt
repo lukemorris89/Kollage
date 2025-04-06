@@ -138,4 +138,7 @@ class CollageRepositoryImpl(
 
     override suspend fun deleteCollage(collage: Collage) =
         localDataSource.deleteCollage(collage.toCollageData())
+
+    override suspend fun deleteCollages(collages: List<Collage>) =
+        localDataSource.deleteCollages(collages.map { it.toCollageData() })
 }

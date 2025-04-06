@@ -10,6 +10,8 @@ data class GalleryViewData(
     val primaryCtaLabel: String,
     val emptyDescription: String,
     val collageList: PersistentList<CollageDayGroup>,
+    val isSelectMode: Boolean,
+    val selectedCollages: PersistentList<Collage>,
 ) : BaseViewData() {
     data class CollageDayGroup(
         val date: String,

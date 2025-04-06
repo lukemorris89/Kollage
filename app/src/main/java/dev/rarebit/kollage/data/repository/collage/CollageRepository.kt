@@ -43,4 +43,5 @@ interface CollageRepository {
     suspend fun saveCollage(imagePath: String)
     suspend fun updateCollage(collage: Collage)
     suspend fun deleteCollage(collage: Collage)
+    suspend fun deleteCollages(collages: List<Collage>)
 }

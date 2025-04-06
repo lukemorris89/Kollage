@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class GalleryViewModel(
@@ -35,7 +36,9 @@ class GalleryViewModel(
             isEmptyGallery = true,
             primaryCtaLabel = R.string.create_new.asString,
             emptyDescription = R.string.gallery_empty_description.asString,
-            collageList = persistentListOf()
+            collageList = persistentListOf(),
+            isSelectMode = false,
+            selectedCollages = persistentListOf()
         )
     )
     override val viewData: StateFlow<GalleryViewData>
@@ -62,6 +65,34 @@ class GalleryViewModel(
         } else {
             _viewEvent.tryEmit(GalleryViewEvent.NavigateToTutorial)
         }
+    }
+
+    fun toggleSelectMode() {
+        _viewData.update { currentState ->
+            currentState.copy(
+                isSelectMode = !currentState.isSelectMode,
+                selectedCollages = persistentListOf(),
+            )
+        }
+    }
+
+    fun addSelectedCollage(collage: Collage) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                selectedCollages = if (currentState.selectedCollages.contains(collage)) {
+                    currentState.selectedCollages.remove(collage)
+                } else {
+                    currentState.selectedCollages.add(collage)
+                }
+            )
+        }
+    }
+
+    fun deleteSelectedCollages() {
+        viewModelScope.launch {
+            collageRepository.deleteCollages(_viewData.value.selectedCollages)
+        }
+        toggleSelectMode()
     }
 
     private fun groupCollagesByDate(collages: List<Collage>): PersistentList<CollageDayGroup> {
