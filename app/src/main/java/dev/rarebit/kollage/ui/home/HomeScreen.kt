@@ -3,8 +3,8 @@ package dev.rarebit.kollage.ui.home
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import dev.rarebit.kollage.ui.home.data.HomeViewEvent
 import dev.rarebit.kollage.ui.home.data.HomeViewModel
@@ -19,7 +19,7 @@ fun HomeScreen(
         viewModel.onBackPressed()
     }
 
-    val viewData by viewModel.viewData.collectAsState()
+    val viewData by viewModel.viewData.collectAsStateWithLifecycle()
     HomeContent(
         viewData = viewData,
         onViewAction = {

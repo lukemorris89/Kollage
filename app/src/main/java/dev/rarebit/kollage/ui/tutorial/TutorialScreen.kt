@@ -2,8 +2,8 @@ package dev.rarebit.kollage.ui.tutorial
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import dev.rarebit.core.permission.hasCameraPermission
@@ -18,7 +18,7 @@ fun TutorialScreen(
     viewModel: TutorialViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-    val viewData = viewModel.viewData.collectAsState()
+    val viewData = viewModel.viewData.collectAsStateWithLifecycle()
     TutorialContent(
         viewData = viewData.value,
         onViewAction = {

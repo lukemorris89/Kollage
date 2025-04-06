@@ -9,19 +9,27 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.core.net.toUri
 import dev.rarebit.core.application.ApplicationContextProvider
+import dev.rarebit.kollage.data.datasource.local.LocalDataSource
+import dev.rarebit.kollage.data.model.Collage
+import dev.rarebit.kollage.data.util.toCollage
+import dev.rarebit.kollage.data.util.toCollageData
 import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
 import dev.rarebit.kollage.ui.createcollage.collage.createCollageLayer
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.ImageFormat
+import dev.rarebit.kollage.util.fileutil.isUriValid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class CollageRepositoryImpl(
     private val applicationContextProvider: ApplicationContextProvider,
+    private val localDataSource: LocalDataSource,
 ) : CollageRepository {
     override var collageBackground: ImageBitmap? = null
     override var finalCollage: ImageBitmap? = null
@@ -87,8 +95,9 @@ class CollageRepositoryImpl(
         }
 
         val contentResolver = applicationContextProvider().contentResolver
-        val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-            ?: throw IOException("Failed to create new MediaStore record.")
+        val uri =
+            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                ?: throw IOException("Failed to create new MediaStore record.")
 
         contentResolver.openOutputStream(uri)?.use { out ->
             if (!androidBitmap.compress(imageFormat.compressionFormat, 100, out)) {
@@ -100,7 +109,33 @@ class CollageRepositoryImpl(
         contentValues.put(MediaStore.MediaColumns.IS_PENDING, 0)
         contentResolver.update(uri, contentValues, null, null)
 
+        localDataSource.saveCollage(uri.toString())
         uri
     }
 
+    override suspend fun saveCollage(imagePath: String) =
+        localDataSource.saveCollage(imagePath)
+
+    override suspend fun getAllCollages() = localDataSource.getAllCollages()
+        .map { collageList ->
+            collageList.filter { collage ->
+                isUriValid(
+                    applicationContextProvider(),
+                    collage.imagePath.toUri()
+                ).also { exists ->
+                    if (!exists) {
+                        // Optional: clean up database
+                        localDataSource.deleteCollage(collage)
+                    }
+                }
+            }.map { it.toCollage() }
+        }
+
+    override suspend fun getCollage(id: Int) = localDataSource.getCollage(id).toCollage()
+
+    override suspend fun updateCollage(collage: Collage) =
+        localDataSource.updateCollage(collage.toCollageData())
+
+    override suspend fun deleteCollage(collage: Collage) =
+        localDataSource.deleteCollage(collage.toCollageData())
 }

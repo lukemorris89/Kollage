@@ -5,7 +5,6 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import dev.rarebit.core.viewmodel.BaseViewAction
-import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
 
 sealed class CreateCollageViewAction : BaseViewAction() {

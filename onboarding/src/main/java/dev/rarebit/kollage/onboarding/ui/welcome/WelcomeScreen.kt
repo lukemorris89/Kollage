@@ -2,7 +2,7 @@ package dev.rarebit.kollage.onboarding.ui.welcome
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.onboarding.ui.welcome.data.WelcomeViewEvent
@@ -14,7 +14,7 @@ fun WelcomeScreen(
     navHostController: NavHostController,
     viewModel: WelcomeViewModel = koinViewModel(),
 ) {
-    val viewData = viewModel.viewData.collectAsState()
+    val viewData = viewModel.viewData.collectAsStateWithLifecycle()
     WelcomeContent(
         viewData = viewData.value,
         onViewAction = {

@@ -13,10 +13,7 @@ import androidx.compose.ui.graphics.ImageBitmapConfig
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
-import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.LayerColour
-import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import dev.rarebit.kollage.ui.createcollage.util.crop.cropImage
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.flipHorizontally
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.rotate

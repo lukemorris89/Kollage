@@ -31,14 +31,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import dev.rarebit.core.logger.Logger
-import dev.rarebit.design.component.tools.FloatingToolRow
 import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.component.tools.CollageTool
+import dev.rarebit.design.component.tools.FloatingToolRow
 import dev.rarebit.design.modifier.regularScreen
 import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
 import dev.rarebit.kollage.ui.createcollage.collage.CollageContent
-import dev.rarebit.kollage.ui.createcollage.collage.createCollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.CollageToolRow
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.AlphaRowContent
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.ColourRowContent

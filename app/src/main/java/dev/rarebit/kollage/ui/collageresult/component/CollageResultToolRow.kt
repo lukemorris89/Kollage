@@ -5,7 +5,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +15,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import dev.rarebit.design.component.tools.CollageTool
 import dev.rarebit.design.component.tools.PrimaryToolRow
-import dev.rarebit.design.component.tools.SecondaryToolRow
 import dev.rarebit.design.component.tools.Tool
 import dev.rarebit.kollage.ui.collageresult.CollageResultViewAction
 import dev.rarebit.kollage.ui.collageresult.component.secondarytools.BackgroundSelectionRowContent
@@ -86,7 +84,6 @@ fun CollageResultToolRow(
 
                 else -> Unit
             }
-
         }
         PrimaryToolRow(
             buttons = buttons,

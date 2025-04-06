@@ -112,7 +112,8 @@ suspend fun generateImage(
         }
 
         Canvas(colorBitmap).drawRect(
-            0f, 0f,
+            0f,
+            0f,
             backgroundBitmap.width.toFloat(),
             backgroundBitmap.height.toFloat(),
             paint
