@@ -1,74 +1,54 @@
 name: PROD Deployment workflow
 
 on:
-  workflow_dispatch: # Allows manually triggering a Release build from any branch
-    inputs:
-      # Should always be provided to have total control on the values and ensure all is aligned with PlayStore
-      version_name:
-        description: 'Version name in the semantic versioning format (e.g. 1.0.0)'
-        required: true
-        default: ''
-      version_code:
-        description: 'Version code as integer (e.g. 1)'
-        required: true
-        default: '1'
   push:
-    branches: [ 'main' ]
+    branches: [ main ]
 
 jobs:
   deployment-prod:
     name: PROD Deployment
     runs-on: ubuntu-latest
+    environment: prod
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Fetch Sources
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
 
-      - name: Decode Keystore
-        env:
-          ENCODED_KEYSTORE_STRING: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
-          SIGNING_KEY_STORE_PATH: './app/keystore.jks'
+      - name: Decode base64 Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'keystore.jks'
+          fileDir: './app/'
+          encodedString: ${{ secrets.KEYSTORE }}
 
+      - name: Declare VersionCode variable
+        shell: bash
         run: |
-          echo $ENCODED_KEYSTORE_STRING > keystore-b64.txt
-          base64 -d keystore-b64.txt > $SIGNING_KEY_STORE_PATH
+          echo "appVersionCode=${{github.run_number}}" >> "$GITHUB_ENV"
 
-      - name: Updates App Version property file
-        env:
-          APP_VERSION_NAME: ${{ inputs.version_name }}
-          APP_VERSION_CODE: ${{ inputs.version_code }}
-        run: |
-          source scripts/properties-writer.sh app_version.properties APP_VERSION_NAME $APP_VERSION_NAME
-          source scripts/properties-writer.sh app_version.properties APP_VERSION_CODE $APP_VERSION_CODE
+      - name: Bump version
+        uses: chkfung/android-version-actions@v1.2.1
+        with:
+          gradlePath: app/build.gradle.kts
+          versionCode: ${{ env.appVersionCode }}
 
-      - name: Bundle App
+      - name: Build Release bundle
         env:
-          KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-          STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          KEY_STORE_PATH: ${{ secrets.KEY_STORE_PATH }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         run: ./gradlew assembleProdRelease bundleProdRelease
 
-      - name: Upload
+      - name: Upload to GitHub
         uses: actions/upload-artifact@v4
         with:
-          name: app-prod-release.aab
-          path: app/build/outputs/bundle/prodRelease/app-prod-release.aab
-
-      - name: Decode Google Application Credentials
-        env:
-          ENCODED_GOOGLE_APPLICATION_CREDENTIALS_STRING: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_BASE64 }}
-          GOOGLE_APPLICATION_CREDENTIALS_PATH: './app/google-application-credentials.json'
-
-        run: |
-          echo $ENCODED_GOOGLE_APPLICATION_CREDENTIALS_STRING > google-application-credentials-b64.txt
-          base64 -d google-application-credentials-b64.txt > $GOOGLE_APPLICATION_CREDENTIALS_PATH
-
-      - name: Upload APK to Firebase Distribution via Gradle plugin
-        env:
-          APP_DISTRIBUTION_APP_ID: ${{ secrets.PROD_APP_DISTRIBUTION_APP_ID }}
-        run: ./gradlew appDistributionUploadProdRelease
+          name: Build Artifacts
+          path: app/build/outputs/
