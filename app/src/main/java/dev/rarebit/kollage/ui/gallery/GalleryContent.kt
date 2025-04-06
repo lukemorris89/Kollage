@@ -29,7 +29,6 @@ import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingLarge
-import dev.rarebit.design.theme.paddingMedium
 import dev.rarebit.design.theme.paddingSmall
 import dev.rarebit.kollage.R
 import dev.rarebit.kollage.ui.gallery.component.CollageThumbnail
@@ -126,13 +125,7 @@ fun GalleryContent(
                     }
                 }
             }
-            VerticalSpacer(paddingSmall)
-//            HorizontalDivider(
-//                modifier = Modifier.padding(end = 64.dp),
-//                color = LightGrey,
-//                thickness = 1.dp
-//            )
-            VerticalSpacer(paddingMedium)
+            VerticalSpacer(paddingLarge)
             if (!viewData.isEmptyGallery) {
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(minSize = 100.dp),
