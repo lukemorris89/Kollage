@@ -169,8 +169,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
 
-    // Android Navigation Library
+    // Navigation
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.url.encoder)
 
     // Room
     implementation(libs.androidx.room.runtime)

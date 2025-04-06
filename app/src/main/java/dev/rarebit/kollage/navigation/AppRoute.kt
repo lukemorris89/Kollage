@@ -1,5 +1,6 @@
 package dev.rarebit.kollage.navigation
 
+import dev.rarebit.kollage.data.model.Collage
 import kotlinx.serialization.Serializable
 
 sealed interface AppRoute {
@@ -22,5 +23,5 @@ sealed interface AppRoute {
     data object CollageResult : AppRoute
 
     @Serializable
-    data class ViewCollage(val collage: String) : AppRoute
+    data class ViewCollage(val collage: Collage) : AppRoute
 }

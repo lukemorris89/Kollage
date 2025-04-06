@@ -107,6 +107,10 @@ class GalleryViewModel(
         toggleSelectMode()
     }
 
+    fun onClickThumbnail(collage: Collage) {
+        _viewEvent.tryEmit(GalleryViewEvent.NavigateToViewCollage(collage))
+    }
+
     private fun groupCollagesByDate(collages: List<Collage>): PersistentList<CollageDayGroup> {
         return collages
             .groupBy { it.dateCreated.toLocalDate() } // or format however you like
