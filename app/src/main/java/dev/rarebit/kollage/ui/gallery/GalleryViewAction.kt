@@ -8,8 +8,8 @@ sealed class GalleryViewAction : BaseViewAction() {
     data class OnClickThumbnail(val collage: Collage) : GalleryViewAction()
     data class OnClickThumbnailSelectMode(val collage: Collage) : GalleryViewAction()
     data object OnLongClickThumbnail : GalleryViewAction()
-    data object OnClickSelect: GalleryViewAction()
-    data object OnClickDelete: GalleryViewAction()
-    data object OnDismissConfirmDeleteDialog: GalleryViewAction()
-    data object OnConfirmDelete: GalleryViewAction()
+    data object OnClickSelect : GalleryViewAction()
+    data object OnClickDelete : GalleryViewAction()
+    data object OnDismissConfirmDeleteDialog : GalleryViewAction()
+    data object OnConfirmDelete : GalleryViewAction()
 }
