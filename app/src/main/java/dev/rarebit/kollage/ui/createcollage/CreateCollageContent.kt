@@ -18,6 +18,7 @@ import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.White
 import dev.rarebit.kollage.R
 import dev.rarebit.kollage.ui.createcollage.camera.CameraContent
+import dev.rarebit.kollage.ui.createcollage.collage.component.ConfirmExitDialog
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import dev.rarebit.design.R as DR
 
@@ -61,6 +62,12 @@ fun CreateCollageContent(
         AnimatedVisibility(visible = viewData.isSaveLoading) {
             LoadingIndicator(
                 text = stringResource(R.string.creating_kollage)
+            )
+        }
+        if (viewData.showConfirmExitDialog) {
+            ConfirmExitDialog(
+                viewData = viewData,
+                onViewAction = onViewAction
             )
         }
     }

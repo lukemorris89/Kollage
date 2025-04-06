@@ -74,7 +74,11 @@ fun ToolButton(
         ) {
             Icon(
                 painter = painterResource(id = tool.iconRes),
-                tint = Black,
+                tint = if (tool.enabled) {
+                    Black
+                } else {
+                    DarkGrey
+                },
                 contentDescription = null,
             )
         }

@@ -24,4 +24,7 @@ data class CreateCollageViewData(
     val isTorchOn: Boolean,
     val isUndoEnabled: Boolean,
     val isSaveLoading: Boolean,
+    val showConfirmExitDialog: Boolean,
+    val exitDialogTitle: String,
+    val exitDialogDescription: String,
 ) : BaseViewData()
