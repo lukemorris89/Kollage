@@ -7,6 +7,7 @@ import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.kollage.R
+import dev.rarebit.kollage.util.webview.constants.PRIVACY_POLICY_URL
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,5 +38,9 @@ class MoreViewModel(
 
     fun onClickReviewPermissions() {
         _viewEvent.tryEmit(MoreViewEvent.OpenAppSettings)
+    }
+
+    fun onClickPrivacyPolicy() {
+        _viewEvent.tryEmit(MoreViewEvent.OpenWebView(PRIVACY_POLICY_URL))
     }
 }

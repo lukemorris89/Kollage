@@ -24,4 +24,7 @@ sealed interface AppRoute {
 
     @Serializable
     data class ViewCollage(val collage: Collage) : AppRoute
+
+    @Serializable
+    data class WebView(val url: String) : AppRoute
 }

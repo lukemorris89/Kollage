@@ -12,6 +12,7 @@ import dev.rarebit.kollage.ui.home.HomeScreen
 import dev.rarebit.kollage.ui.permissions.PermissionsScreen
 import dev.rarebit.kollage.ui.tutorial.TutorialScreen
 import dev.rarebit.kollage.ui.viewcollage.ViewCollageScreen
+import dev.rarebit.kollage.ui.webview.WebViewScreen
 import dev.rarebit.kollage.ui.welcome.WelcomeScreen
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -73,6 +74,14 @@ fun AppNavHost(
                 viewModel = koinViewModel {
                     parametersOf(args.collage)
                 }
+            )
+        }
+
+        composable<AppRoute.WebView> {
+            val args = it.toRoute<AppRoute.WebView>()
+            WebViewScreen(
+                navHostController = navHostController,
+                url = args.url,
             )
         }
     }

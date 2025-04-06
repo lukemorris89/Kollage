@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import dev.rarebit.core.permission.openAppSettings
 import dev.rarebit.kollage.ui.more.data.MoreViewEvent
 import dev.rarebit.kollage.ui.more.data.MoreViewModel
+import dev.rarebit.kollage.util.webview.navigateWebView
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -29,8 +30,12 @@ fun MoreScreen(
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect { event ->
-            when (event.consume()) {
+            when (val consumedEvent = event.consume()) {
                 MoreViewEvent.OpenAppSettings -> context.openAppSettings()
+                is MoreViewEvent.OpenWebView -> {
+                    navigateWebView(navHostController, consumedEvent.url)
+                }
+
                 null -> Unit
             }
         }
@@ -41,5 +46,6 @@ context(MoreViewModel)
 private fun onViewAction(viewAction: MoreViewAction) {
     when (viewAction) {
         MoreViewAction.OnClickReviewPermissions -> onClickReviewPermissions()
+        MoreViewAction.OnClickPrivacyPolicy -> onClickPrivacyPolicy()
     }
 }
