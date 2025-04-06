@@ -19,16 +19,16 @@ dependencies {
     api(libs.koin.android.compose)
     androidTestImplementation(libs.koin.test)
 
+    // AndroidX lifecycle
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     // Kotlin immutable collections
     api(libs.kotlinx.collections.immutable)
 
     // Kotlin coroutines
     api(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.coroutines.android)
-
-    // Android Navigation Library
-    api(libs.androidx.navigation.compose)
-    api(libs.androidx.navigation.ui.ktx)
 
     // Logging
     api(libs.timber)
@@ -38,7 +38,4 @@ dependencies {
 
     // Linting
     api(libs.detekt.gradle.plugin)
-
-    // Testing
-
 }

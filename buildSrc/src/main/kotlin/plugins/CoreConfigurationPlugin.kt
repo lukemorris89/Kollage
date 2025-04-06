@@ -30,6 +30,8 @@ class CoreConfigurationPlugin : Plugin<Project> {
             }
         }
         target.plugins.apply("detekt-plugin")
+        target.plugins.apply("test-plugin")
+        target.plugins.apply("kover-plugin")
     }
 
     private val configureLibrary: (LibraryExtension) -> Unit = { library ->
@@ -54,8 +56,8 @@ class CoreConfigurationPlugin : Plugin<Project> {
     }
 
     private fun CompileOptions.java() = apply {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     private fun LibraryDefaultConfig.configure() = apply {

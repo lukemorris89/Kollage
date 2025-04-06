@@ -17,6 +17,18 @@ gradlePlugin {
             id = "detekt-plugin"
             implementationClass = "plugins.DetektConfigurationPlugin"
         }
+        create("test-plugin") {
+            id = "test-plugin"
+            implementationClass = "plugins.TestConfigurationPlugin"
+        }
+        create("kover-plugin") {
+            id = "kover-plugin"
+            implementationClass = "plugins.KoverConfigurationPlugin"
+        }
+        register("design-plugin") {
+            id = "design-plugin"
+            implementationClass = "plugins.DesignConfigurationPlugin"
+        }
     }
 }
 
