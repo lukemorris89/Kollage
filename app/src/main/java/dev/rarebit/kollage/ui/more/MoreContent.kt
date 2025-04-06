@@ -16,7 +16,6 @@ import dev.rarebit.design.theme.LightGrey
 import dev.rarebit.design.theme.White
 import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.design.theme.paddingMedium
-import dev.rarebit.design.theme.paddingSmall
 import dev.rarebit.kollage.ui.more.component.MoreButton
 import dev.rarebit.kollage.ui.more.data.MoreViewData
 
@@ -41,25 +40,13 @@ fun MoreContent(
                     color = White
                 )
             )
-            VerticalSpacer(paddingSmall)
-//            HorizontalDivider(
-//                modifier = Modifier.padding(end = 64.dp),
-//                color = LightGrey,
-//                thickness = 1.dp
-//            )
-            VerticalSpacer(paddingMedium)
+            VerticalSpacer(paddingLarge)
             Text(
                 text = viewData.legalTitle,
                 style = MaterialTheme.typography.titleLarge.copy(
                     color = White
                 )
             )
-            VerticalSpacer(paddingMedium)
-            MoreButton(
-                text = viewData.termsAndConditionsText,
-            ) {
-                // TODO add click to t&cs
-            }
             VerticalSpacer(paddingMedium)
             MoreButton(
                 text = viewData.privacyPolicyText
