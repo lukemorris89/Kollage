@@ -51,7 +51,7 @@ fun MoreContent(
             MoreButton(
                 text = viewData.privacyPolicyText
             ) {
-                // TODO add click to privacy policy
+                onViewAction(MoreViewAction.OnClickPrivacyPolicy)
             }
             VerticalSpacer(paddingLarge)
             Text(
