@@ -51,6 +51,6 @@ val appModule = module {
     viewModel { WelcomeViewModel(get()) }
     viewModel { PermissionsViewModel(get()) }
     viewModel { (collage: Collage) ->
-        ViewCollageViewModel(collage = collage, get())
+        ViewCollageViewModel(collage = collage, get(), get())
     }
 }
