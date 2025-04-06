@@ -19,7 +19,7 @@ import dev.rarebit.kollage.ui.createcollage.collage.CollageLayer
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShape
 import dev.rarebit.kollage.ui.createcollage.collage.createCollageLayer
 import dev.rarebit.kollage.ui.createcollage.util.imageutil.ImageFormat
-import dev.rarebit.kollage.util.fileutil.isUriValid
+import dev.rarebit.kollage.util.file.isUriValid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

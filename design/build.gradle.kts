@@ -35,4 +35,8 @@ dependencies {
 
     // BottomSheet
     api(libs.bottomSheetDialog)
+
+    // Image loading
+    api(libs.coil.compose)
+    api(libs.coil.network.okhttp)
 }

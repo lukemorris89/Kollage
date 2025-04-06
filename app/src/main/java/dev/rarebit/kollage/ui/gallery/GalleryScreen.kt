@@ -19,14 +19,25 @@ fun GalleryScreen(
 ) {
     val context = LocalContext.current
     val viewData by viewModel.viewData.collectAsStateWithLifecycle()
-    GalleryContent(
-        viewData = viewData,
-        onViewAction = {
-            with(viewModel) {
-                onViewAction(it)
-            }
-        },
-    )
+    if (viewData.isEmptyGallery) {
+        EmptyGalleryContent(
+            viewData = viewData,
+            onViewAction = {
+                with(viewModel) {
+                    onViewAction(it)
+                }
+            },
+        )
+    } else {
+        GalleryContent(
+            viewData = viewData,
+            onViewAction = {
+                with(viewModel) {
+                    onViewAction(it)
+                }
+            },
+        )
+    }
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect { event ->
@@ -34,6 +45,7 @@ fun GalleryScreen(
                 GalleryViewEvent.NavigateToTutorial -> {
                     navHostController.navigate(AppRoute.Tutorial)
                 }
+
                 GalleryViewEvent.NavigateToNewCollage -> {
                     if (context.hasCameraPermission()) {
                         navHostController.navigate(AppRoute.CreateCollage)

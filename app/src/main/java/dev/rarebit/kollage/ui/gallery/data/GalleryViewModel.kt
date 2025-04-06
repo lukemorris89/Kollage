@@ -8,8 +8,12 @@ import dev.rarebit.core.viewmodel.BaseViewModel
 import dev.rarebit.core.viewmodel.tryEmit
 import dev.rarebit.core.viewmodel.viewEventFlow
 import dev.rarebit.kollage.R
+import dev.rarebit.kollage.data.model.Collage
 import dev.rarebit.kollage.data.repository.DataRepository
 import dev.rarebit.kollage.data.repository.collage.CollageRepository
+import dev.rarebit.kollage.ui.gallery.data.GalleryViewData.CollageDayGroup
+import dev.rarebit.kollage.util.datetime.DateTimeUtil
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,7 +49,7 @@ class GalleryViewModel(
         viewModelScope.launch {
             collageRepository.getAllCollages().collect {
                 _viewData.value = _viewData.value.copy(
-                    collageList = it.toPersistentList(),
+                    collageList = groupCollagesByDate(it),
                     isEmptyGallery = it.isEmpty()
                 )
             }
@@ -58,5 +62,18 @@ class GalleryViewModel(
         } else {
             _viewEvent.tryEmit(GalleryViewEvent.NavigateToTutorial)
         }
+    }
+
+    private fun groupCollagesByDate(collages: List<Collage>): PersistentList<CollageDayGroup> {
+        return collages
+            .groupBy { it.dateCreated.toLocalDate() } // or format however you like
+            .map { (date, group) ->
+                CollageDayGroup(
+                    date = DateTimeUtil.toDayMonthYearString(date), // "April 6, 2025"
+                    collages = group.sortedByDescending { it.dateCreated }
+                )
+            }
+            .sortedByDescending { it.collages.first().dateCreated }
+            .toPersistentList()
     }
 }

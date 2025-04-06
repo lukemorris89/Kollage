@@ -9,5 +9,10 @@ data class GalleryViewData(
     val isEmptyGallery: Boolean,
     val primaryCtaLabel: String,
     val emptyDescription: String,
-    val collageList: PersistentList<Collage>,
-) : BaseViewData()
+    val collageList: PersistentList<CollageDayGroup>,
+) : BaseViewData() {
+    data class CollageDayGroup(
+        val date: String,
+        val collages: List<Collage>
+    )
+}
