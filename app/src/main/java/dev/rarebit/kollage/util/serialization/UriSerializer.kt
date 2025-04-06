@@ -1,13 +1,13 @@
 package dev.rarebit.kollage.util.serialization
 
 import android.net.Uri
+import androidx.core.net.toUri
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import androidx.core.net.toUri
 
 object UriSerializer : KSerializer<Uri> {
     override val descriptor: SerialDescriptor =

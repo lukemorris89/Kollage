@@ -10,7 +10,6 @@ import androidx.compose.ui.res.stringResource
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.White
 import dev.rarebit.kollage.R
-import dev.rarebit.kollage.ui.gallery.GalleryViewAction
 import dev.rarebit.kollage.ui.viewcollage.ViewCollageViewAction
 import dev.rarebit.kollage.ui.viewcollage.data.ViewCollageViewData
 
@@ -32,7 +31,6 @@ fun ConfirmDeleteDialog(
                 text = viewData.deleteDialogTitle,
                 style = MaterialTheme.typography.titleLarge,
             )
-
         },
         text = {
             Text(text = viewData.deleteDialogDescription)

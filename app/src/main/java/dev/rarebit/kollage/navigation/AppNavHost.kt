@@ -6,13 +6,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import dev.rarebit.kollage.data.model.Collage
-import dev.rarebit.kollage.ui.permissions.PermissionsScreen
-import dev.rarebit.kollage.ui.welcome.WelcomeScreen
 import dev.rarebit.kollage.ui.collageresult.CollageResultScreen
 import dev.rarebit.kollage.ui.createcollage.CreateCollageScreen
 import dev.rarebit.kollage.ui.home.HomeScreen
+import dev.rarebit.kollage.ui.permissions.PermissionsScreen
 import dev.rarebit.kollage.ui.tutorial.TutorialScreen
 import dev.rarebit.kollage.ui.viewcollage.ViewCollageScreen
+import dev.rarebit.kollage.ui.welcome.WelcomeScreen
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import kotlin.reflect.typeOf

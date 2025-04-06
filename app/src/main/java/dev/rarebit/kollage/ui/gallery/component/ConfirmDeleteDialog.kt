@@ -1,7 +1,6 @@
 package dev.rarebit.kollage.ui.gallery.component
 
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,7 +31,6 @@ fun ConfirmDeleteDialog(
                 text = viewData.deleteDialogTitle,
                 style = MaterialTheme.typography.titleLarge,
             )
-
         },
         text = {
             Text(text = viewData.deleteDialogDescription)
