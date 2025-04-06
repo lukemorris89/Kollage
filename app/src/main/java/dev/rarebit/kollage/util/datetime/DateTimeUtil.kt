@@ -24,7 +24,9 @@ object DateTimeUtil {
         return this.format(dayOfMonth, ord)
     }
 
-    fun toDayMonthYearString(date: LocalDate) = date.format(dayMonthYearWithOrdinalSuffixFormat).applyOrdinalDaySuffix(date.dayOfMonth)
+    fun toDayMonthYearString(date: LocalDate) = date.format(
+        dayMonthYearWithOrdinalSuffixFormat
+    ).applyOrdinalDaySuffix(date.dayOfMonth)
     fun LocalDate.toDayMonthString() = format(dayMonthWithOrdinalSuffixFormat).applyOrdinalDaySuffix(dayOfMonth)
     fun LocalDate.toMonthYearString() = format(monthYearFormat)
 

@@ -104,7 +104,6 @@ fun GalleryContent(
                                 IconButton(
                                     onClick = {
                                         onViewAction(GalleryViewAction.OnClickDelete)
-
                                     }
                                 ) {
                                     Icon(
@@ -116,7 +115,6 @@ fun GalleryContent(
                             IconButton(
                                 onClick = {
                                     onViewAction(GalleryViewAction.OnClickSelect)
-
                                 }
                             ) {
                                 Icon(

@@ -31,7 +31,7 @@ fun GalleryScreen(
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect { event ->
-            when (event.consume()) {
+            when (val consumedEvent = event.consume()) {
                 GalleryViewEvent.NavigateToTutorial -> {
                     navHostController.navigate(AppRoute.Tutorial)
                 }
@@ -44,6 +44,9 @@ fun GalleryScreen(
                     }
                 }
 
+                is GalleryViewEvent.NavigateToViewCollage -> {
+                    navHostController.navigate(AppRoute.ViewCollage(consumedEvent.collage))
+                }
                 null -> Unit
             }
         }
@@ -54,7 +57,7 @@ context(GalleryViewModel)
 private fun onViewAction(viewAction: GalleryViewAction) {
     when (viewAction) {
         is GalleryViewAction.OnClickCreateNew -> onClickAddNewCollage()
-        is GalleryViewAction.OnClickThumbnail -> TODO()
+        is GalleryViewAction.OnClickThumbnail -> onClickThumbnail(viewAction.collage)
         is GalleryViewAction.OnClickThumbnailSelectMode -> toggleSelectedCollageForDeletion(
             viewAction.collage
         )

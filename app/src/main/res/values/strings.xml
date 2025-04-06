@@ -24,4 +24,26 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="delete_collages">Delete collages</string>
+    <string name="welcome_app_name">Kollage</string>
+    <string name="welcome_begin">Begin</string>
+    <string name="welcome_terms">By pressing “Begin”, you agree to our Terms and Privacy Policy</string>
+    <string name="permissions_title">Allow camera access</string>
+    <string name="permissions_description">To enable the app to function properly, camera access is required. Tap the button below to continue.</string>
+    <string name="permissions_cta_label">Grant permissions</string>
+    <string name="permissions_denied">Permissions denied</string>
+    <string name="permissions_dismiss">Dismiss</string>
+    <string name="permissions_open_settings">Open Settings</string>
+    <string name="permissions_rationale_description">Camera access is required to capture photos directly within the app. Please grant these permissions to enable app features.</string>
+    <string name="permissions_denied_description">Camera permissions have been denied, and are required for this app to function. You can grant access to the camera from the app settings.</string>
+    <string name="next">Next</string>
+    <string name="start">Start</string>
+    <string name="skip">Skip</string>
+    <string name="tutorial_step_1_description">To create a kollage layer, drag your finger across the area of the screen you\'d like to capture.</string>
+    <string name="tutorial_step_2_description">To see camera options, tap the Settings button.</string>
+    <string name="tutorial_step_3_description">The bottom buttons help you modify and capture your kollage.</string>
+    <string name="tutorial_step_4_description">Once you\'ve captured your kollage, you can edit, save or share it.</string>
+    <string name="delete_collage">Delete collage?</string>
+    <string name="are_you_sure_you_want_to_delete_this_collage">Are you sure you want to delete this collage?</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.ui.gallery.component
+package dev.rarebit.kollage.ui.viewcollage.component
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,21 +10,21 @@ import androidx.compose.ui.res.stringResource
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.White
 import dev.rarebit.kollage.R
-import dev.rarebit.kollage.ui.gallery.GalleryViewAction
-import dev.rarebit.kollage.ui.gallery.data.GalleryViewData
+import dev.rarebit.kollage.ui.viewcollage.ViewCollageViewAction
+import dev.rarebit.kollage.ui.viewcollage.data.ViewCollageViewData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConfirmDeleteDialog(
-    viewData: GalleryViewData,
-    onViewAction: (GalleryViewAction) -> Unit
+    viewData: ViewCollageViewData,
+    onViewAction: (ViewCollageViewAction) -> Unit
 ) {
     AlertDialog(
         containerColor = White,
         titleContentColor = Black,
         textContentColor = Black,
         onDismissRequest = {
-            onViewAction(GalleryViewAction.OnDismissConfirmDeleteDialog)
+            onViewAction(ViewCollageViewAction.OnDismissDeleteDialog)
         },
         title = {
             Text(
@@ -38,7 +38,7 @@ fun ConfirmDeleteDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    onViewAction(GalleryViewAction.OnConfirmDelete)
+                    onViewAction(ViewCollageViewAction.OnConfirmDelete)
                 }
             ) {
                 Text(
@@ -52,7 +52,7 @@ fun ConfirmDeleteDialog(
         dismissButton = {
             TextButton(
                 onClick = {
-                    onViewAction(GalleryViewAction.OnDismissConfirmDeleteDialog)
+                    onViewAction(ViewCollageViewAction.OnDismissDeleteDialog)
                 }
             ) {
                 Text(
