@@ -195,6 +195,9 @@ dependencies {
     // Webview
     implementation(libs.compose.webview)
 
+    // Splash screen
+    implementation(libs.androidx.core.splashscreen)
+
     // Testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
