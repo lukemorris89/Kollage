@@ -2,9 +2,9 @@ package dev.rarebit.kollage.ui.more
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import dev.rarebit.core.permission.openAppSettings
 import dev.rarebit.kollage.ui.more.data.MoreViewEvent
@@ -17,7 +17,7 @@ fun MoreScreen(
     viewModel: MoreViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-    val viewData by viewModel.viewData.collectAsState()
+    val viewData by viewModel.viewData.collectAsStateWithLifecycle()
     MoreContent(
         viewData = viewData,
         onViewAction = {
