@@ -163,8 +163,6 @@ dependencies {
     // Modules
     implementation(project(":core"))
     implementation(project(":design"))
-    implementation(project(":navigation"))
-    implementation(project(":onboarding"))
     testImplementation(project(":test-utils"))
 
     implementation(libs.androidx.core.ktx)
@@ -179,14 +177,21 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    // Navigation
+    api(libs.androidx.navigation.compose)
+    api(libs.androidx.navigation.ui.ktx)
+
+    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
 
+    // Camera
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
 
+    // Testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
@@ -196,6 +201,8 @@ dependencies {
     androidTestImplementation(libs.test.rules)
     androidTestUtil(libs.test.orchestrator)
 
+    // Leak detection
     debugImplementation(libs.leakcanary.android)
+
     debugImplementation(libs.compose.ui.test.manifest)
 }

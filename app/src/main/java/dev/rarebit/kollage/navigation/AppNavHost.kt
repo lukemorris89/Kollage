@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.rarebit.kollage.onboarding.ui.permissions.PermissionsScreen
-import dev.rarebit.kollage.onboarding.ui.welcome.WelcomeScreen
+import dev.rarebit.kollage.ui.permissions.PermissionsScreen
+import dev.rarebit.kollage.ui.welcome.WelcomeScreen
 import dev.rarebit.kollage.ui.collageresult.CollageResultScreen
 import dev.rarebit.kollage.ui.createcollage.CreateCollageScreen
 import dev.rarebit.kollage.ui.home.HomeScreen

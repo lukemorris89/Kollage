@@ -16,7 +16,9 @@ import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewModel
 import dev.rarebit.kollage.ui.gallery.data.GalleryViewModel
 import dev.rarebit.kollage.ui.home.data.HomeViewModel
 import dev.rarebit.kollage.ui.more.data.MoreViewModel
+import dev.rarebit.kollage.ui.permissions.data.PermissionsViewModel
 import dev.rarebit.kollage.ui.tutorial.data.TutorialViewModel
+import dev.rarebit.kollage.ui.welcome.data.WelcomeViewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -46,4 +48,6 @@ val appModule = module {
     viewModel { TutorialViewModel(get(), get()) }
     viewModel { CreateCollageViewModel(get(), get(), get()) }
     viewModel { CollageResultViewModel(get(), get(), get()) }
+    viewModel { WelcomeViewModel(get()) }
+    viewModel { PermissionsViewModel(get()) }
 }
