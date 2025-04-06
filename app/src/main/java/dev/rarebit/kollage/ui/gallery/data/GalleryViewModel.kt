@@ -38,7 +38,10 @@ class GalleryViewModel(
             emptyDescription = R.string.gallery_empty_description.asString,
             collageList = persistentListOf(),
             isSelectMode = false,
-            selectedCollages = persistentListOf()
+            selectedCollages = persistentListOf(),
+            showDeleteDialog = false,
+            deleteDialogTitle = R.string.delete_collages.asString,
+            deleteDialogDescription = R.string.are_you_sure_you_want_to_delete_selected_collages.asString
         )
     )
     override val viewData: StateFlow<GalleryViewData>
@@ -76,7 +79,7 @@ class GalleryViewModel(
         }
     }
 
-    fun addSelectedCollage(collage: Collage) {
+    fun toggleSelectedCollageForDeletion(collage: Collage) {
         _viewData.update { currentState ->
             currentState.copy(
                 selectedCollages = if (currentState.selectedCollages.contains(collage)) {
@@ -88,10 +91,19 @@ class GalleryViewModel(
         }
     }
 
+    fun updateShowDeleteDialog(show: Boolean) {
+        _viewData.update { currentState ->
+            currentState.copy(
+                showDeleteDialog = show
+            )
+        }
+    }
+
     fun deleteSelectedCollages() {
         viewModelScope.launch {
             collageRepository.deleteCollages(_viewData.value.selectedCollages)
         }
+        updateShowDeleteDialog(false)
         toggleSelectMode()
     }
 

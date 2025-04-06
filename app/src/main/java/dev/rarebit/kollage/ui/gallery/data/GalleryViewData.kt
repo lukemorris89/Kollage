@@ -12,6 +12,9 @@ data class GalleryViewData(
     val collageList: PersistentList<CollageDayGroup>,
     val isSelectMode: Boolean,
     val selectedCollages: PersistentList<Collage>,
+    val showDeleteDialog: Boolean,
+    val deleteDialogTitle: String,
+    val deleteDialogDescription: String,
 ) : BaseViewData() {
     data class CollageDayGroup(
         val date: String,

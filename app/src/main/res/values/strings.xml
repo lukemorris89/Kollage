@@ -19,4 +19,9 @@
     <string name="background">Background</string>
     <string name="save_as">Save as</string>
     <string name="creating_kollage">Creating kollage…</string>
+    <string name="select">Select</string>
+    <string name="are_you_sure_you_want_to_delete_selected_collages">Are you sure you want to delete selected collages?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_collages">Delete collages</string>
 </resources>
