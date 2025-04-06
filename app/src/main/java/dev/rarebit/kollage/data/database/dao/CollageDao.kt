@@ -26,4 +26,7 @@ interface CollageDao {
 
     @Delete
     suspend fun deleteCollage(kollage: CollageData)
+
+    @Delete
+    suspend fun deleteCollages(collages: List<CollageData>)
 }

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.onboarding.ui.welcome.data.WelcomeViewEvent
 import dev.rarebit.kollage.onboarding.ui.welcome.data.WelcomeViewModel
@@ -28,7 +29,10 @@ fun WelcomeScreen(
         viewModel.viewEvent.collect { event ->
             when (event.consume()) {
                 WelcomeViewEvent.NavigateToHomeScreen -> {
-                    navHostController.navigate(AppRoute.Home)
+                    val navOptions = NavOptions.Builder().apply {
+                        setPopUpTo<AppRoute.Home>(true)
+                    }.build()
+                    navHostController.navigate(AppRoute.Home, navOptions)
                 }
                 else -> Unit
             }

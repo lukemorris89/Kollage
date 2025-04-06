@@ -38,6 +38,8 @@ class LocalDataSourceImpl(
 
     override suspend fun deleteCollage(collage: CollageData) = collageDao.deleteCollage(collage)
 
+    override suspend fun deleteCollages(collages: List<CollageData>) = collageDao.deleteCollages(collages)
+
     companion object {
         private const val KEY_HAS_COMPLETED_TUTORIAL = "has_completed_tutorial"
     }

@@ -19,6 +19,7 @@ fun GalleryScreen(
 ) {
     val context = LocalContext.current
     val viewData by viewModel.viewData.collectAsStateWithLifecycle()
+
     GalleryContent(
         viewData = viewData,
         onViewAction = {
@@ -34,6 +35,7 @@ fun GalleryScreen(
                 GalleryViewEvent.NavigateToTutorial -> {
                     navHostController.navigate(AppRoute.Tutorial)
                 }
+
                 GalleryViewEvent.NavigateToNewCollage -> {
                     if (context.hasCameraPermission()) {
                         navHostController.navigate(AppRoute.CreateCollage)
@@ -52,5 +54,15 @@ context(GalleryViewModel)
 private fun onViewAction(viewAction: GalleryViewAction) {
     when (viewAction) {
         is GalleryViewAction.OnClickCreateNew -> onClickAddNewCollage()
+        is GalleryViewAction.OnClickThumbnail -> TODO()
+        is GalleryViewAction.OnClickThumbnailSelectMode -> toggleSelectedCollageForDeletion(
+            viewAction.collage
+        )
+
+        is GalleryViewAction.OnLongClickThumbnail -> toggleSelectMode()
+        GalleryViewAction.OnClickSelect -> toggleSelectMode()
+        GalleryViewAction.OnClickDelete -> updateShowDeleteDialog(true)
+        GalleryViewAction.OnConfirmDelete -> deleteSelectedCollages()
+        GalleryViewAction.OnDismissConfirmDeleteDialog -> updateShowDeleteDialog(false)
     }
 }

@@ -1,4 +1,4 @@
-package dev.rarebit.kollage.util.fileutil
+package dev.rarebit.kollage.util.file
 
 import android.content.Context
 import android.net.Uri

@@ -13,4 +13,5 @@ interface LocalDataSource {
     suspend fun saveCollage(imagePath: String)
     suspend fun updateCollage(kollage: CollageData)
     suspend fun deleteCollage(kollage: CollageData)
+    suspend fun deleteCollages(collages: List<CollageData>)
 }

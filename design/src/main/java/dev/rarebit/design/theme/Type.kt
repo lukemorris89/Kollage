@@ -38,6 +38,13 @@ val Typography = Typography(
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
+    titleMedium = TextStyle(
+        fontFamily = bodyFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 19.sp,
+        lineHeight = 22.sp,
+        letterSpacing = 0.sp
+    ),
     labelLarge = TextStyle(
         fontFamily = bodyFontFamily,
         fontWeight = FontWeight.Bold,
