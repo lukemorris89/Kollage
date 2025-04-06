@@ -217,11 +217,7 @@ class CreateCollageViewModel(
                     onComplete = { collageLayer ->
                         _viewData.update { currentState ->
                             currentState.copy(
-                                previousCollageLayer = if (currentState.previousCollageLayer == null) {
-                                    collageLayer
-                                } else {
-                                    currentState.currentCollageLayer
-                                },
+                                previousCollageLayer = currentState.currentCollageLayer,
                                 currentCollageLayer = collageLayer,
                                 isUndoEnabled = true,
                             )
