@@ -31,7 +31,7 @@ fun ColumnScope.FloatingToolRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(ButtonHeight.Medium.height)
+                .height(ButtonHeight.Medium.height * 2)
                 .clip(
                     RoundedCornerShape(32.dp)
                 )

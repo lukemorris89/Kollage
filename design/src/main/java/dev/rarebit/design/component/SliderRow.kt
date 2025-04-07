@@ -1,10 +1,9 @@
-package dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools
+package dev.rarebit.design.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -14,48 +13,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.rarebit.design.component.HorizontalSpacer
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.DarkGrey
 import dev.rarebit.design.theme.LightGrey
 import dev.rarebit.design.theme.White
-import dev.rarebit.design.theme.paddingMedium
 import dev.rarebit.design.theme.paddingSmall
-import dev.rarebit.kollage.R
-import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
-import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
-
-@Composable
-fun AlphaRowContent(
-    viewData: CreateCollageViewData,
-    onViewAction: (CreateCollageViewAction) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = paddingMedium),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = stringResource(R.string.alpha),
-            style = MaterialTheme.typography.titleMedium.copy(
-                color = Black,
-            ),
-        )
-        HorizontalSpacer(paddingSmall)
-        SliderRow(
-            value = viewData.selectedAlpha,
-            onValueChanged = { onViewAction(CreateCollageViewAction.OnAlphaChanged(it)) },
-            valueRange = 0f..1f
-        )
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SliderRow(
+    label: String,
     value: Float,
     valueRange: ClosedFloatingPointRange<Float>,
     onValueChanged: (Float) -> Unit,
@@ -63,10 +31,17 @@ fun SliderRow(
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+            .height(ButtonHeight.Medium.height)
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.titleMedium.copy(
+                color = Black,
+            ),
+        )
+        HorizontalSpacer(paddingSmall)
         Slider(
             modifier = Modifier
                 .height(8.dp)

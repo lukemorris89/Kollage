@@ -52,7 +52,7 @@ class CollageRepositoryImpl(
         currentCollageLayer: CollageLayer?,
         cropShape: CropShape,
         layerColour: Color,
-        alpha: Float,
+        layerColourAlpha: Float,
         onComplete: (CollageLayer) -> Unit
     ) {
         createCollageLayer(
@@ -63,7 +63,7 @@ class CollageRepositoryImpl(
             currentCollageLayer = currentCollageLayer,
             cropShape = cropShape,
             layerColour = layerColour,
-            alpha = alpha,
+            layerColourAlpha = layerColourAlpha,
             onComplete = {
                 onComplete(it)
             }
