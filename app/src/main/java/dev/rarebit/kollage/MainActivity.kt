@@ -2,6 +2,7 @@ package dev.rarebit.kollage
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
@@ -15,7 +16,9 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(scrim = 0x00FFFFFF)
+        )
 
         setContent {
             KollageTheme {
