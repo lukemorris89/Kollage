@@ -33,7 +33,7 @@ fun GalleryScreen(
         viewModel.viewEvent.collect { event ->
             when (val consumedEvent = event.consume()) {
                 GalleryViewEvent.NavigateToTutorial -> {
-                    navHostController.navigate(AppRoute.Tutorial)
+                    navHostController.navigate(AppRoute.Tutorial(isFromSettings = false))
                 }
 
                 GalleryViewEvent.NavigateToNewCollage -> {

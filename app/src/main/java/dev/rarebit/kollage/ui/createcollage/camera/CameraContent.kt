@@ -39,7 +39,6 @@ import dev.rarebit.design.theme.paddingLarge
 import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
 import dev.rarebit.kollage.ui.createcollage.collage.CollageContent
 import dev.rarebit.kollage.ui.createcollage.collage.component.CollageToolRow
-import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.AlphaRowContent
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.ColourRowContent
 import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.CropShapeRowContent
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
@@ -128,7 +127,6 @@ fun CameraContent(
 
     CollageContent(
         viewData = viewData,
-        onViewAction = onViewAction,
         onCreateCollageLayer = { cropRect ->
             imageCapture.takePicture(
                 executor,
@@ -161,12 +159,6 @@ fun CameraContent(
                     when (it) {
                         CollageTool.SHAPE ->
                             CropShapeRowContent(
-                                viewData = viewData,
-                                onViewAction = onViewAction,
-                            )
-
-                        CollageTool.ALPHA ->
-                            AlphaRowContent(
                                 viewData = viewData,
                                 onViewAction = onViewAction,
                             )

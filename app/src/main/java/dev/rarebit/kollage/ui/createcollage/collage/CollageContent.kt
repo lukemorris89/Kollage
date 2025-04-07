@@ -8,25 +8,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.graphicsLayer
-import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
 import dev.rarebit.kollage.ui.createcollage.collage.component.CropShapeView
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import dev.rarebit.kollage.ui.createcollage.util.aspectratio.AspectRatioReference
 import dev.rarebit.kollage.ui.createcollage.util.aspectratio.aspectRatioReference
-import kotlin.math.min
 
 @Composable
 fun CollageContent(
     viewData: CreateCollageViewData,
-    onViewAction: (CreateCollageViewAction) -> Unit,
     onCreateCollageLayer: (Rect) -> Unit,
 ) {
-    val animatedAlpha by animateFloatAsState(
-        targetValue = viewData.selectedAlpha,
+    var isUserDragActive by remember { mutableStateOf(false) }
+    val animatedPreviousCollageAlpha by animateFloatAsState(
+        targetValue = if (isUserDragActive) {
+            0.5f
+        } else {
+            1f
+        },
         animationSpec = tween(durationMillis = 300, easing = FastOutLinearInEasing),
         label = "Collage layer alpha animation",
     )
@@ -44,7 +49,7 @@ fun CollageContent(
                         AspectRatioReference.MAX_PARENT_WIDTH_PARENT_HEIGHT
                     )
                     .graphicsLayer {
-                        alpha = animatedAlpha
+                        alpha = animatedPreviousCollageAlpha
                     }
                     .align(Alignment.Center),
                 bitmap = (
@@ -57,20 +62,11 @@ fun CollageContent(
         CropShapeView(
             viewData = viewData,
             onStart = {
-                onViewAction(
-                    CreateCollageViewAction.OnAlphaChanged(
-                        min(
-                            0.5f,
-                            viewData.defaultAlpha
-                        )
-                    )
-                )
+                isUserDragActive = true
             },
             onRelease = { rect ->
                 onCreateCollageLayer(rect)
-                onViewAction(
-                    CreateCollageViewAction.OnAlphaChanged(viewData.defaultAlpha)
-                )
+                isUserDragActive = false
             }
         )
     }

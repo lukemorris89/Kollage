@@ -1,14 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>LongParameterList:CollageRepository.kt$CollageRepository$( imageProxy: ImageProxy, rect: Rect, cameraLensFacing: Int, currentCollageLayer: CollageLayer?, cropShape: CropShape, layerColour: Color, alpha: Float, onComplete: (CollageLayer) -&gt; Unit, )</ID>
-    <ID>LongParameterList:CreateCollageLayer.kt$( context: Context, imageProxy: ImageProxy, rect: Rect, cameraLensFacing: Int, currentCollageLayer: CollageLayer?, cropShape: CropShape, layerColour: Color, alpha: Float, onComplete: (CollageLayer) -&gt; Unit, )</ID>
-    <ID>LongParameterList:CropShapeUtil.kt$( context: Context, canvas: Canvas, bitmap: ImageBitmap, cropShape: CropShape, layerColour: Color, alpha: Float, rect: Rect, )</ID>
-    <ID>SwallowedException:FileUtil.kt$e: FileNotFoundException</ID>
-    <ID>SwallowedException:FileUtil.kt$e: SecurityException</ID>
-    <ID>TooGenericExceptionCaught:CollageResultViewModel.kt$CollageResultViewModel$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:CreateCollageViewModel.kt$CreateCollageViewModel$e: Exception</ID>
-    <ID>UnusedParameter:MoreScreen.kt$navHostController: NavHostController</ID>
-  </CurrentIssues>
+  <CurrentIssues></CurrentIssues>
 </SmellBaseline>

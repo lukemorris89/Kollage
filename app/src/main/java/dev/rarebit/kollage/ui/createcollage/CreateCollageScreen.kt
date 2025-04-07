@@ -55,8 +55,8 @@ private fun onViewAction(viewAction: CreateCollageViewAction) {
         CreateCollageViewAction.OnColourClicked -> toggleColour()
 
         is CreateCollageViewAction.OnCropShapeChanged -> onCropShapeChanged(viewAction.shape)
-        is CreateCollageViewAction.OnAlphaChanged -> onAlphaChanged(viewAction.alpha)
-        is CreateCollageViewAction.OnColourChanged -> onColourChanged(viewAction.colour)
+        is CreateCollageViewAction.OnColourChanged -> onFilterColourChanged(viewAction.colour)
+        is CreateCollageViewAction.OnColourAlphaChanged -> onFilterColourAlphaChanged(viewAction.alpha)
         CreateCollageViewAction.OnBackPressed -> onBackPressed()
         is CreateCollageViewAction.OnCamerasLoaded -> updateHasCameras(
             viewAction.hasBackCamera,

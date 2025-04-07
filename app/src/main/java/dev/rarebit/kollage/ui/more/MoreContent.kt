@@ -1,15 +1,19 @@
 package dev.rarebit.kollage.ui.more
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import dev.rarebit.design.component.VerticalSpacer
 import dev.rarebit.design.component.WeightSpacer
 import dev.rarebit.design.theme.LightGrey
@@ -34,12 +38,29 @@ fun MoreContent(
                 .padding(paddingLarge)
                 .padding(contentPadding),
         ) {
-            Text(
-                text = viewData.title,
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    color = White
+            Row(
+                modifier = Modifier.height(64.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = viewData.title,
+                    style = MaterialTheme.typography.headlineLarge.copy(
+                        color = White
+                    )
                 )
-            )
+            }
+            VerticalSpacer(paddingLarge)
+            MoreButton(
+                text = viewData.reviewPermissionsText
+            ) {
+                onViewAction(MoreViewAction.OnClickReviewPermissions)
+            }
+            VerticalSpacer(paddingMedium)
+            MoreButton(
+                text = viewData.viewTutorialText
+            ) {
+                onViewAction(MoreViewAction.OnClickViewTutorial)
+            }
             VerticalSpacer(paddingLarge)
             Text(
                 text = viewData.legalTitle,
@@ -52,19 +73,6 @@ fun MoreContent(
                 text = viewData.privacyPolicyText
             ) {
                 onViewAction(MoreViewAction.OnClickPrivacyPolicy)
-            }
-            VerticalSpacer(paddingLarge)
-            Text(
-                text = viewData.settingsTitle,
-                style = MaterialTheme.typography.titleLarge.copy(
-                    color = White
-                )
-            )
-            VerticalSpacer(paddingMedium)
-            MoreButton(
-                text = viewData.reviewPermissionsText
-            ) {
-                onViewAction(MoreViewAction.OnClickReviewPermissions)
             }
             VerticalSpacer(paddingLarge)
             WeightSpacer(1f)
