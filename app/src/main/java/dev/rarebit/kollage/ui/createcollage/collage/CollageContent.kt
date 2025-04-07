@@ -15,12 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.graphicsLayer
-import dev.rarebit.kollage.ui.createcollage.CreateCollageViewAction
 import dev.rarebit.kollage.ui.createcollage.collage.component.CropShapeView
 import dev.rarebit.kollage.ui.createcollage.data.CreateCollageViewData
 import dev.rarebit.kollage.ui.createcollage.util.aspectratio.AspectRatioReference
 import dev.rarebit.kollage.ui.createcollage.util.aspectratio.aspectRatioReference
-import kotlin.math.min
 
 @Composable
 fun CollageContent(
@@ -64,7 +62,7 @@ fun CollageContent(
         CropShapeView(
             viewData = viewData,
             onStart = {
-                    isUserDragActive = true
+                isUserDragActive = true
             },
             onRelease = { rect ->
                 onCreateCollageLayer(rect)

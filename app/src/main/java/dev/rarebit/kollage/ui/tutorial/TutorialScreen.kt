@@ -10,7 +10,6 @@ import dev.rarebit.core.permission.hasCameraPermission
 import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.ui.tutorial.data.TutorialViewEvent
 import dev.rarebit.kollage.ui.tutorial.data.TutorialViewModel
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun TutorialScreen(

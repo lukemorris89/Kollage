@@ -15,7 +15,6 @@ import dev.rarebit.kollage.navigation.AppNavHost
 class MainActivity : ComponentActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
-
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
