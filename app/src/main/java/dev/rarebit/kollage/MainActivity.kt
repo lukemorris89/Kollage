@@ -1,5 +1,7 @@
 package dev.rarebit.kollage
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -11,6 +13,7 @@ import dev.rarebit.design.theme.KollageTheme
 import dev.rarebit.kollage.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         installSplashScreen()
@@ -27,5 +30,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 }
