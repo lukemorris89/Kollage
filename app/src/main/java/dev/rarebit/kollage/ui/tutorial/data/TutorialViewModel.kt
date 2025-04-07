@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class TutorialViewModel(
+    private val isFromSettings: Boolean,
     override val resourceProvider: ResourceProvider,
     private val dataRepository: DataRepository,
 ) : BaseViewModel<TutorialViewData, TutorialViewEvent>(),
@@ -83,13 +84,21 @@ class TutorialViewModel(
                 _viewData.update { currentState ->
                     currentState.copy(
                         currentPageIndex = currentState.currentPageIndex + 1,
-                        primaryCtaLabel = R.string.start.asString,
+                        primaryCtaLabel = if (isFromSettings) {
+                            R.string.done.asString
+                        } else {
+                            R.string.start.asString
+                        },
                     )
                 }
             }
             else -> {
                 dataRepository.updateHasCompletedTutorial(true)
-                _viewEvent.tryEmit(TutorialViewEvent.NavigateToNewCollage)
+                if (isFromSettings) {
+                    _viewEvent.tryEmit(TutorialViewEvent.NavigateBack)
+                } else {
+                    _viewEvent.tryEmit(TutorialViewEvent.NavigateToNewCollage)
+                }
             }
         }
     }

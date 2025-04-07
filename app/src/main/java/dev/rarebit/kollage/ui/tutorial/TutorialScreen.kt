@@ -15,7 +15,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun TutorialScreen(
     navHostController: NavHostController,
-    viewModel: TutorialViewModel = koinViewModel()
+    viewModel: TutorialViewModel,
 ) {
     val context = LocalContext.current
     val viewData = viewModel.viewData.collectAsStateWithLifecycle()

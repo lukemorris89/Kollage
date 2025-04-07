@@ -14,7 +14,7 @@ sealed interface AppRoute {
     data object Home : AppRoute
 
     @Serializable
-    data object Tutorial : AppRoute
+    data class Tutorial(val isFromSettings: Boolean) : AppRoute
 
     @Serializable
     data object CreateCollage : AppRoute

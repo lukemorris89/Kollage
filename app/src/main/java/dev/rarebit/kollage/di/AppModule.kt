@@ -45,7 +45,9 @@ val appModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { GalleryViewModel(get(), get(), get()) }
     viewModel { MoreViewModel(get()) }
-    viewModel { TutorialViewModel(get(), get()) }
+    viewModel { (isFromSettings: Boolean) ->
+        TutorialViewModel(isFromSettings = isFromSettings, get(), get())
+    }
     viewModel { CreateCollageViewModel(get(), get(), get()) }
     viewModel { CollageResultViewModel(get(), get(), get()) }
     viewModel { WelcomeViewModel(get()) }

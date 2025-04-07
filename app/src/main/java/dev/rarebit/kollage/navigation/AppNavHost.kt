@@ -1,6 +1,7 @@
 package dev.rarebit.kollage.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -46,8 +47,12 @@ fun AppNavHost(
         }
 
         composable<AppRoute.Tutorial> {
+            val args = it.toRoute<AppRoute.Tutorial>()
             TutorialScreen(
-                navHostController = navHostController
+                navHostController = navHostController,
+                viewModel = koinViewModel {
+                    parametersOf(args.isFromSettings)
+                }
             )
         }
 
