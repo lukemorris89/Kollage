@@ -3,6 +3,7 @@ package dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.rarebit.design.component.HorizontalSpacer
+import dev.rarebit.design.component.SliderRow
 import dev.rarebit.design.theme.Black
 import dev.rarebit.design.theme.DarkGrey
 import dev.rarebit.design.theme.White
@@ -37,38 +39,53 @@ fun ColourRowContent(
     viewData: CreateCollageViewData,
     onViewAction: (CreateCollageViewAction) -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = paddingMedium),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = stringResource(R.string.colour),
-            style = MaterialTheme.typography.titleMedium.copy(
-                color = Black,
-            ),
-        )
-        HorizontalSpacer(paddingSmall)
+    Column {
         Row(
-            modifier = Modifier.horizontalScroll(rememberScrollState()),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = paddingMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            ColourButton(
-                colour = Color.Transparent,
-                selected = viewData.selectedColor == Color.Transparent,
-                onClick = {
-                    onViewAction(CreateCollageViewAction.OnColourChanged(Color.Transparent))
-                }
+            SliderRow(
+                label = stringResource(R.string.alpha),
+                value = viewData.selectedFilterColourAlpha,
+                onValueChanged = { onViewAction(CreateCollageViewAction.OnColourAlphaChanged(it)) },
+                valueRange = 0f..1f
             )
-            LayerColour.entries.forEach {
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = paddingMedium),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.colour),
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = Black,
+                ),
+            )
+            HorizontalSpacer(paddingSmall)
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 ColourButton(
-                    colour = it.colour,
-                    selected = viewData.selectedColor == it.colour,
+                    colour = Color.Transparent,
+                    selected = viewData.selectedFilterColour == Color.Transparent,
                     onClick = {
-                        onViewAction(CreateCollageViewAction.OnColourChanged(it))
+                        onViewAction(CreateCollageViewAction.OnColourChanged(Color.Transparent))
                     }
                 )
+                LayerColour.entries.forEach {
+                    ColourButton(
+                        colour = it.colour,
+                        selected = viewData.selectedFilterColour == it.colour,
+                        onClick = {
+                            onViewAction(CreateCollageViewAction.OnColourChanged(it))
+                        }
+                    )
+                }
             }
         }
     }

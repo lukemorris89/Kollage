@@ -38,10 +38,10 @@
     <string name="next">Next</string>
     <string name="start">Start</string>
     <string name="skip">Skip</string>
-    <string name="tutorial_step_1_description">To create a kollage layer, drag your finger across the area of the screen you\'d like to capture.</string>
-    <string name="tutorial_step_2_description">To see camera options, tap the Settings button.</string>
-    <string name="tutorial_step_3_description">The bottom buttons help you modify and capture your kollage.</string>
-    <string name="tutorial_step_4_description">Once you\'ve captured your kollage, you can edit, save or share it.</string>
+    <string name="tutorial_step_1_description">To create a collage layer, drag your finger across the area of the screen you\'d like to capture.</string>
+    <string name="tutorial_step_2_description">On the Create Collage screen you can undo layers, switch which camera you\'re using, edit capture settings and save your changes.</string>
+    <string name="tutorial_step_3_description">The edit tools allow you to change your collage layer\'s crop shape and colour filter.</string>
+    <string name="tutorial_step_4_description">Once you\'ve captured your collage, you can change the image format, change the background and save the final image.</string>
     <string name="delete_collage">Delete collage?</string>
     <string name="are_you_sure_you_want_to_delete_this_collage">Are you sure you want to delete this collage?</string>
     <string name="share">Share</string>
@@ -49,4 +49,6 @@
     <string name="exit">Exit</string>
     <string name="confirm_exit">Confirm Exit</string>
     <string name="are_you_sure_you_want_to_exit_all_changes_will_be_lost">Are you sure you want to exit? All changes will be lost.</string>
+    <string name="view_tutorial">View tutorial</string>
+    <string name="done">Done</string>
 </resources>

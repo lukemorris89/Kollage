@@ -10,4 +10,5 @@ data class MoreViewData(
     val settingsTitle: String,
     val createdByText: String,
     val reviewPermissionsText: String,
+    val viewTutorialText: String,
 ) : BaseViewData()

@@ -10,8 +10,8 @@ import dev.rarebit.kollage.ui.createcollage.collage.component.secondarytools.Cro
 sealed class CreateCollageViewAction : BaseViewAction() {
     data object OnBackPressed : CreateCollageViewAction()
     data class OnCropShapeChanged(val shape: CropShape) : CreateCollageViewAction()
-    data class OnAlphaChanged(val alpha: Float) : CreateCollageViewAction()
     data class OnColourChanged(val colour: Color) : CreateCollageViewAction()
+    data class OnColourAlphaChanged(val alpha: Float) : CreateCollageViewAction()
     data class OnCamerasLoaded(val hasBackCamera: Boolean, val hasFrontCamera: Boolean) : CreateCollageViewAction()
     data class OnTorchDetected(val hasTorch: Boolean) : CreateCollageViewAction()
     data object OnTorchClicked : CreateCollageViewAction()

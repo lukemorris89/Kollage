@@ -36,7 +36,7 @@ suspend fun cropImage(
     bitmap: ImageBitmap,
     cropShape: CropShape,
     layerColour: Color,
-    alpha: Float,
+    layerColourAlpha: Float,
     rect: Rect,
 ) {
     withContext(Dispatchers.Default) {
@@ -83,7 +83,7 @@ suspend fun cropImage(
                 color = if (layerColour == Color.Transparent) {
                     layerColour
                 } else {
-                    layerColour.copy(alpha = alpha)
+                    layerColour.copy(alpha = layerColourAlpha)
                 }
                 style = PaintingStyle.Fill
             }

@@ -30,7 +30,7 @@ suspend fun createCollageLayer(
     currentCollageLayer: CollageLayer?,
     cropShape: CropShape,
     layerColour: Color,
-    alpha: Float,
+    layerColourAlpha: Float,
     onComplete: (CollageLayer) -> Unit,
 ) {
     if (imageProxy.image == null) return
@@ -53,7 +53,9 @@ suspend fun createCollageLayer(
         canvas.drawImage(
             it.image,
             Offset.Zero,
-            Paint()
+            Paint().apply {
+                this.alpha = alpha
+            }
         )
     }
 
@@ -64,7 +66,7 @@ suspend fun createCollageLayer(
         rect = rect,
         cropShape = cropShape,
         layerColour = layerColour,
-        alpha = alpha,
+        layerColourAlpha = layerColourAlpha,
     )
 
     val kollageRect = currentCollageLayer?.let {

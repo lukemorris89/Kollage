@@ -26,7 +26,8 @@ class MoreViewModel(
             privacyPolicyText = R.string.privacy_policy.asString,
             createdByText = R.string.created_by_rarebit.asString,
             settingsTitle = R.string.app_settings.asString,
-            reviewPermissionsText = R.string.review_permissions.asString
+            reviewPermissionsText = R.string.review_permissions.asString,
+            viewTutorialText = R.string.view_tutorial.asString,
         )
     )
     override val viewData: StateFlow<MoreViewData>
@@ -42,5 +43,9 @@ class MoreViewModel(
 
     fun onClickPrivacyPolicy() {
         _viewEvent.tryEmit(MoreViewEvent.OpenWebView(PRIVACY_POLICY_URL))
+    }
+
+    fun onClickViewTutorial() {
+        _viewEvent.tryEmit(MoreViewEvent.NavigateToTutorial)
     }
 }

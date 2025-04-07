@@ -40,9 +40,8 @@ class CreateCollageViewModel(
             isToolbarExpanded = false,
             selectedCropShape = CropShape.RECTANGLE,
             showFloatingToolRow = false,
-            defaultAlpha = 1f,
-            selectedAlpha = 1f,
-            selectedColor = Color.Transparent,
+            selectedFilterColour = Color.Transparent,
+            selectedFilterColourAlpha = 1f,
             cameraLensFacing = CameraSelector.LENS_FACING_BACK,
             hasBackCamera = true,
             hasFrontCamera = false,
@@ -212,20 +211,20 @@ class CreateCollageViewModel(
         }
     }
 
-    // Changes alpha of next collage layer
-    fun onAlphaChanged(alpha: Float) {
+    // Changes colour filter of next collage layer (combined with colour filter)
+    fun onFilterColourChanged(colour: Color) {
         _viewData.update { currentState ->
             currentState.copy(
-                selectedAlpha = alpha,
+                selectedFilterColour = colour,
             )
         }
     }
 
-    // Changes colour filter of next collage layer (combined with colour filter)
-    fun onColourChanged(colour: Color) {
+    // Changes alpha of next collage layer
+    fun onFilterColourAlphaChanged(alpha: Float) {
         _viewData.update { currentState ->
             currentState.copy(
-                selectedColor = colour,
+                selectedFilterColourAlpha = alpha,
             )
         }
     }
@@ -241,8 +240,8 @@ class CreateCollageViewModel(
                     cameraLensFacing = cameraLensFacing,
                     currentCollageLayer = currentCollageLayer,
                     cropShape = selectedCropShape,
-                    layerColour = selectedColor,
-                    alpha = selectedAlpha,
+                    layerColour = selectedFilterColour,
+                    layerColourAlpha = selectedFilterColourAlpha,
                     onComplete = { collageLayer ->
                         _viewData.update { currentState ->
                             currentState.copy(

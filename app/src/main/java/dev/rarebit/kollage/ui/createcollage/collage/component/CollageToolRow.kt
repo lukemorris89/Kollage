@@ -70,13 +70,6 @@ fun CollageToolRow(
             }
         ),
         Tool(
-            iconRes = DR.drawable.ic_alpha,
-            name = CollageTool.ALPHA,
-            onClick = {
-                onViewAction(CreateCollageViewAction.OnAlphaClicked)
-            }
-        ),
-        Tool(
             iconRes = DR.drawable.ic_filter,
             name = CollageTool.COLOUR,
             onClick = {

@@ -26,7 +26,7 @@ interface CollageRepository {
         currentCollageLayer: CollageLayer?,
         cropShape: CropShape,
         layerColour: Color,
-        alpha: Float,
+        layerColourAlpha: Float,
         onComplete: (CollageLayer) -> Unit,
     )
     suspend fun updateFinalCollage(

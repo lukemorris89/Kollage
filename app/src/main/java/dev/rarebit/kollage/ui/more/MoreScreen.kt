@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import dev.rarebit.core.permission.openAppSettings
+import dev.rarebit.kollage.navigation.AppRoute
 import dev.rarebit.kollage.ui.more.data.MoreViewEvent
 import dev.rarebit.kollage.ui.more.data.MoreViewModel
 import dev.rarebit.kollage.util.webview.navigateWebView
@@ -35,6 +36,9 @@ fun MoreScreen(
                 is MoreViewEvent.OpenWebView -> {
                     navigateWebView(navHostController, consumedEvent.url)
                 }
+                MoreViewEvent.NavigateToTutorial -> {
+                    navHostController.navigate(AppRoute.Tutorial(isFromSettings = true))
+                }
 
                 null -> Unit
             }
@@ -47,5 +51,6 @@ private fun onViewAction(viewAction: MoreViewAction) {
     when (viewAction) {
         MoreViewAction.OnClickReviewPermissions -> onClickReviewPermissions()
         MoreViewAction.OnClickPrivacyPolicy -> onClickPrivacyPolicy()
+        MoreViewAction.OnClickViewTutorial -> onClickViewTutorial()
     }
 }
