@@ -5,7 +5,7 @@ A real-time collage creator which allows users to create collages using the devi
 Point the device camera at the scene you'd like to turn into a collage layer and drag finger across the area to be captured. Repeat as desired to build up layers and then tap the camera button to capture the collage.
 
 ## Example
-![vinyl cover canvas](https://i.imgur.com/ogWQc5v.png)
+![vinyl cover canvas](https://imgur.com/CDLhDKF.png)
 
 ## Features 
 - Build a collage with as many layers as needed
