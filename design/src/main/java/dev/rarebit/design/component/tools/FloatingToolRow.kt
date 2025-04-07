@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,7 +32,7 @@ fun ColumnScope.FloatingToolRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(ButtonHeight.Medium.height * 2)
+                .wrapContentHeight()
                 .clip(
                     RoundedCornerShape(32.dp)
                 )
